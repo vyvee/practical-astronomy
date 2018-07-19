@@ -2,12 +2,25 @@
 
 #include <cmath>
 
+constexpr double PA::Date::J1900_JAN_0_5;
+constexpr double PA::Date::J2000_JAN_1_5;
+constexpr double PA::Date::J2010;
+
 PA::Date::Date()
 {
 }
 
-PA::Date::~Date()
+PA::Date::Date(int year, int month, double day)
+    : calendar_date_is_valid_(true), year_(year), month_(month), day_(day)
 {
+}
+
+PA::Date::Date(double julian_date)
+{
+    if(julian_date >= 0.0) {
+        julian_date_ = julian_date;
+        julian_date_is_valid_ = true;
+    }
 }
 
 bool PA::Date::SetCalendarDate(int year, int month, double day)
@@ -28,10 +41,9 @@ bool PA::Date::SetJulianDate(double julian_date)
     return true;
 }
 
-bool PA::Date::GetCalendarDate(int *p_year, int *p_month, double *p_day)
+bool PA::Date::GetCalendarDate(int *p_year, int *p_month, double *p_day) const
 {
-    // Reference: PA Section 5
-
+    // Reference: [Peter11] Section 5
     if(!calendar_date_is_valid_) {
         if(!julian_date_is_valid_) {
             return false;
@@ -66,10 +78,9 @@ bool PA::Date::GetCalendarDate(int *p_year, int *p_month, double *p_day)
     return true;
 }
 
-bool PA::Date::GetJulianDate(double *p_julian_date)
+bool PA::Date::GetJulianDate(double *p_julian_date) const
 {
-    // Reference: PA Section 4
-
+    // Reference: [Peter11] Section 5
     if(!julian_date_is_valid_) {
         if(!calendar_date_is_valid_) {
             return false;
@@ -114,4 +125,15 @@ bool PA::Date::GetJulianDate(double *p_julian_date)
 
     *p_julian_date = julian_date_;
     return true;
+}
+
+double PA::Date::GetJulianDate() const
+{
+    bool status;
+    double jd;
+    status = GetJulianDate(&jd);
+    if(!status) {
+        return -1.0;
+    }
+    return jd;
 }

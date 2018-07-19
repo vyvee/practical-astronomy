@@ -6,16 +6,27 @@ Aims to implement algorithms to calculate *approximate* (and NOT high precision)
 In particular, aims to use formulae or algorithms that do not involve large number of arithmetic operations.
 Currently, the main reference is \[Peter11\].
 
-For high precision calculations, you are recommended to check \[Jean99\], \[VOSP87\], \[XEphem\], etc.
+For very high precision calculations, you are recommended to check \[Jean99\], \[VOSP87\], \[XEphem\], etc.
 
 ## Completed
 
+- Angle: Degree, Radian, DMS, HMS
 - Julian Date Conversion
+- Earth: Obliquity, Nutation
+- Sun: Position
 
 ## TODOs
 
-- Project is still in VERY EARLY stage.
-- Too many to list down!
+The project is still in EARLY stage.
+
+- Time: TDT, Delta-T
+- Coordinate Transformation
+- Sun: Higher precision for position
+- Moon
+- Planets
+- Better error handling: Invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.
+- C++: Better and more use of constexpr, move semantics, noexcept, etc.
+- Many others...
 
 ## References
 
