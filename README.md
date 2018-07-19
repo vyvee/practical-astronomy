@@ -30,7 +30,7 @@ The project is still in EARLY stage.
 
 ## References
 
-- [\[Peter11\] Peter Duffett-Smith and Jonathan Zwart, "Practical Astronomy with your Calculator or Spreadsheet", 4th Edition, 2011.](https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator)
-- [\[Jean99\] Jean Meeus, "Astronomical Algorithms," 2nd Edition, 1999.](https://www.willbell.com/MATH/MC1.HTM)
+- [\[Peter11\] Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.](https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator)
+- [\[Jean99\] Jean Meeus, *Astronomical Algorithms*, 2nd Edition, 1999.](https://www.willbell.com/MATH/MC1.HTM)
 - [\[VOSP87\] Planetary Solutions VSOP87](http://cdsarc.u-strasbg.fr/viz-bin/Cat?cat=VI/81)
 - [\[XEphem\] XEphem: The Cross-Platform Astronomy Software](http://www.clearskyinstitute.com/xephem/)
