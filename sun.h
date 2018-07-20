@@ -23,15 +23,15 @@ class Sun
 
     // ??? Need to specify which epoch this is for??
     void ComputeMeanEclipticLongitude() const;
-    mutable bool ecliptic_longitude_mean_is_valid_;
+    mutable bool ecliptic_longitude_mean_is_valid_{false};
     mutable Angle ecliptic_longitude_mean_;
 
     void ComputePerigeeLongitude() const;
-    mutable bool perigee_longitude_is_valid_;
+    mutable bool perigee_longitude_is_valid_{false};
     mutable Angle perigee_longitude_;
 
     void ComputeEccentricity() const;
-    mutable bool eccentricity_is_valid_;
+    mutable bool eccentricity_is_valid_{false};
     mutable double eccentricity_;
 };
 
