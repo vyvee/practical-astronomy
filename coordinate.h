@@ -13,6 +13,8 @@ class Coordinate
     void SetEcliptic(const Angle& lon, const Angle& lat, double jd);
 
     // bool GetEquatorial(double* p_ra, double* p_decl) const;
+    Angle GetEclipticLongitude() const;
+    Angle GetEclipticLatitude() const;
     Angle GetEquatorialRightAscension() const;
     Angle GetEquatorialDeclination() const;
 

@@ -14,16 +14,16 @@ For very high precision calculations, you are recommended to check \[Jean99\], \
 - Julian Date Conversion
 - Earth: Obliquity, Nutation
 - Sun: Position
+- Solver for Kepler's equation
 
 ## TODOs
 
 The project is still in EARLY stage.
 
 - Time: TDT, Delta-T
+- Moon: Position
+- Planets: Position
 - Coordinate Transformation
-- Sun: Higher precision for position
-- Moon
-- Planets
 - Better error handling: Invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.
 - C++: Better and more use of constexpr, move semantics, noexcept, etc.
 - Many others...

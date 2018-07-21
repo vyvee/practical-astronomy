@@ -31,6 +31,24 @@ void Coordinate::SetEcliptic(const Angle& lon, const Angle& lat, double jd)
     equatorial_is_valid_ = false;
 }
 
+Angle Coordinate::GetEclipticLongitude() const
+{
+    if(!ecliptic_is_valid_) {
+        return Angle(0.0);
+    }
+
+    return ecliptic_longitude_;
+}
+
+Angle Coordinate::GetEclipticLatitude() const
+{
+    if(!ecliptic_is_valid_) {
+        return Angle(0.0);
+    }
+
+    return ecliptic_latitude_;
+}
+
 Angle Coordinate::GetEquatorialRightAscension() const
 {
     if(!equatorial_is_valid_) {
@@ -56,7 +74,7 @@ Angle Coordinate::GetEquatorialDeclination() const
 bool Coordinate::ComputeEquatorial() const
 {
     if(ecliptic_is_valid_) {
-        // Reference: [Peter11] Section 27
+        // Reference: [Peter11] Section 27, p.51.
         Earth earth(julian_date_);
         Angle obliq{earth.GetObliquity()};
         double sin_delta{sin(ecliptic_latitude_) * cos(obliq) +
@@ -66,7 +84,7 @@ bool Coordinate::ComputeEquatorial() const
         double y{sin(ecliptic_longitude_) * cos(obliq) -
                  tan(ecliptic_latitude_) * sin(obliq)};
         double x{cos(ecliptic_longitude_)};
-        equatorial_right_ascension_ = atan2(y, x);
+        equatorial_right_ascension_ = Angle(atan2(y, x)).turn();
         equatorial_is_valid_ = true;
 #ifdef DEBUG
         std::cout << "Coordinate::ComputeEquatorial():" << std::endl;

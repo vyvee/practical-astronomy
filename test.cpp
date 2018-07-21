@@ -3,6 +3,7 @@
 #include "coordinate.h"
 #include "date.h"
 #include "earth.h"
+#include "solver.h"
 #include "sun.h"
 
 #include <cmath>
@@ -33,18 +34,8 @@ bool test_julian_date()
         double day;
         double julian_date;
     } date_test_data[] = {
-        {
-            -4712,
-            1,
-            1.5,
-            0.0,
-        },
-        {
-            2009,
-            6,
-            19.75,
-            2455002.25,
-        },
+        {-4712, 1, 1.5, 0.0},
+        {2009, 6, 19.75, 2455002.25},
     };
     for(auto& td : date_test_data) {
         double julian_date;
@@ -199,23 +190,93 @@ bool test_sun()
         }
         if(!double_is_close(decl.rad(),
                             (19.0_deg + 21.0_arcmin + 16.0_arcsec).rad(), 0.0,
-                            (10.0_arcmin).rad())) {
+                            (1.0_arcmin).rad())) {
+            return false;
+        }
+    }
+
+    {
+        // [Peter11] p.109
+        Sun sun{Date(1988, 7, 27)};
+        Coordinate coord;
+        coord = sun.GetPosition();
+        Angle ra{coord.GetEquatorialRightAscension()};
+        Angle decl{coord.GetEquatorialDeclination()};
+#ifdef DEBUG
+        std::cout << ra.hms_str() << std::endl;
+        std::cout << decl.dms_str() << std::endl;
+#endif
+        if(!double_is_close(ra.rad(),
+                            (8.0_hour + 26.0_minute + 3.0_second).rad(), 0.0,
+                            (15.0_second).rad())) {
+            return false;
+        }
+        if(!double_is_close(decl.rad(),
+                            (19.0_deg + 12.0_arcmin + 43.0_arcsec).rad(), 0.0,
+                            (1.0_arcmin).rad())) {
+            return false;
+        }
+    }
+
+    {
+        // [Jean99] p.165
+        // http://www.astro.com/swisseph/ae/1900/ae_1992d.pdf
+        Sun sun{Date(1992, 10, 13)};
+        Coordinate coord;
+        coord = sun.GetPosition();
+        Angle ra{coord.GetEquatorialRightAscension()};
+        Angle decl{coord.GetEquatorialDeclination()};
+#ifdef DEBUG
+        std::cout << coord.GetEclipticLongitude().dms_str() << std::endl;
+        std::cout << ra.hms_str() << std::endl;
+        std::cout << decl.dms_str() << std::endl;
+#endif
+        if(!double_is_close(coord.GetEclipticLongitude().rad(),
+                            (199.0_deg + 54.0_arcmin + 24.0_arcsec).rad(), 0.0,
+                            (15.0_arcsec).rad())) {
+            return false;
+        }
+        if(!double_is_close(decl.rad(), (-(7.0_deg + 47.0_arcmin)).rad(), 0.0,
+                            (1.0_arcmin).rad())) {
             return false;
         }
     }
     std::cout << "OK!" << std::endl;
 
-#if 0
-    {
-        // [Peter11] p.109
-        Sun sun{Date(1988, 7, 27)};
-    }
+    return true;
+}
 
+bool test_solver()
+{
+    std::cout << "Solver: Kepler... ";
     {
-        // [Jean99] p.165
-        Sun sun{Date(1992, 10, 13)};
+        struct {
+            double ecc;
+            double m;
+        } kepler_test_data[] = {
+            {0.0167076, -40.4695}, {0.0167139, -134.702}, {0.0167121, -108.228},
+            {0.9673, 5.31},        {0.9673, 6.108598},    {0.98, 6.28},
+            {0.99, 6.29},
+        };
+        for(auto& td : kepler_test_data) {
+            double e{Solver::solve_kepler(td.ecc, td.m)};
+            if(!double_is_close(td.m, e - td.ecc * std::sin(e), 1.0e-9, 0.0)) {
+                return false;
+            }
+        }
+        for(double ecc_100 = 0.0; ecc_100 < 100.0; ecc_100 += 1.0) {
+            for(double m_100 = 0.0; m_100 < 700.0; m_100 += 1.0) {
+                double e{Solver::solve_kepler(ecc_100 / 100.0, m_100 / 100.0)};
+                if(!double_is_close(m_100 / 100.0,
+                                    e - ecc_100 / 100.0 * std::sin(e), 1.0e-9,
+                                    0.0)) {
+                    return false;
+                }
+            }
+        }
     }
-#endif
+    std::cout << "OK!" << std::endl;
+
     return true;
 }
 
@@ -231,6 +292,9 @@ bool test_internal()
         return false;
     }
     if(!test_sun()) {
+        return false;
+    }
+    if(!test_solver()) {
         return false;
     }
 

@@ -72,6 +72,7 @@ class Angle
 
     friend constexpr Angle operator*(const Angle &x, const double y);
     friend constexpr Angle operator*(const double x, const Angle &y);
+    friend constexpr Angle operator/(const Angle &x, const double y);
 
     constexpr double rad() const noexcept
     {
@@ -91,26 +92,20 @@ class Angle
     std::string dms_str(int s_prec = 2) const noexcept
     {
         std::ostringstream ss;
-        double s{deg()};
-        int d{static_cast<int>(floor(s))};
-        s = (s - d) * 60.0;
-        int m{static_cast<int>(floor(s))};
-        s = (s - m) * 60.0;
-        ss << std::setw(3) << d << '\xb0';
-        ss << std::setw(2) << m << '\'';
+        double d, m, s;
+        s = 60.0 * modf(60.0 * modf(deg(), &d), &m);
+        ss << std::setw(4) << d << '\xb0';
+        ss << std::setw(2) << fabs(m) << '\'';
         ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
-           << s << '"';
+           << fabs(s) << '"';
         return ss.str();
     }
 
     std::string hms_str(int s_prec = 2) const noexcept
     {
         std::ostringstream ss;
-        double s{deg() / 15.0};
-        int h{static_cast<int>(floor(s))};
-        s = (s - h) * 60.0;
-        int m{static_cast<int>(floor(s))};
-        s = (s - m) * 60.0;
+        double h, m, s;
+        s = 60.0 * modf(60.0 * modf(deg() / 15.0, &h), &m);
         ss << std::setw(2) << h << 'h';
         ss << std::setw(2) << m << 'm';
         ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
@@ -183,16 +178,17 @@ constexpr inline Angle operator-(const Angle &x, const Angle &y)
 
 constexpr inline Angle operator*(const Angle &x, const double y)
 {
-    Angle z;
-    z.rad_ = x.rad_ * y;
-    return z;
+    return Angle{x.rad_ * y};
 }
 
 constexpr inline Angle operator*(const double x, const Angle &y)
 {
-    Angle z;
-    z.rad_ = x * y.rad_;
-    return z;
+    return Angle{x * y.rad_};
+}
+
+constexpr inline Angle operator/(const Angle &x, const double y)
+{
+    return Angle{x.rad_ / y};
 }
 
 constexpr inline double sin(const Angle &x)
