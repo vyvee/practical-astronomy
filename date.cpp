@@ -23,7 +23,7 @@ PA::Date::Date(double julian_date)
     }
 }
 
-bool PA::Date::SetCalendarDate(int year, int month, double day)
+bool PA::Date::SetTT(int year, int month, double day)
 {
     year_ = year;
     month_ = month;
@@ -41,7 +41,7 @@ bool PA::Date::SetJulianDate(double julian_date)
     return true;
 }
 
-bool PA::Date::GetCalendarDate(int *p_year, int *p_month, double *p_day) const
+bool PA::Date::GetTT(int *p_year, int *p_month, double *p_day) const
 {
     // Reference: [Peter11] Section 5
     if(!calendar_date_is_valid_) {

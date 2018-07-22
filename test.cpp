@@ -39,7 +39,7 @@ bool test_julian_date()
     };
     for(auto& td : date_test_data) {
         double julian_date;
-        date.SetCalendarDate(td.year, td.month, td.day);
+        date.SetTT(td.year, td.month, td.day);
         if(!date.GetJulianDate(&julian_date)) {
             return false;
         }
@@ -49,7 +49,7 @@ bool test_julian_date()
         int year, month;
         double day;
         date.SetJulianDate(td.julian_date);
-        if(!date.GetCalendarDate(&year, &month, &day)) {
+        if(!date.GetTT(&year, &month, &day)) {
             return false;
         }
         if(!(year == td.year && month == td.month &&

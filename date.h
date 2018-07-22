@@ -15,10 +15,10 @@ class Date
     Date(double julian_date);
     ~Date(){};
 
-    bool SetCalendarDate(int year, int month, double day);
+    bool SetTT(int year, int month, double day);
     bool SetJulianDate(double julian_date);
 
-    bool GetCalendarDate(int *p_year, int *p_month, double *p_day) const;
+    bool GetTT(int *p_year, int *p_month, double *p_day) const;
     bool GetJulianDate(double *p_julian_date) const;
     double GetJulianDate() const;
 
