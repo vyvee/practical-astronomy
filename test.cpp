@@ -27,6 +27,7 @@ static bool double_is_close(double x1,
 
 bool test_julian_date()
 {
+    std::cout << "Date Conversion: TT <-> Julian Date... ";
     Date date;
     struct {
         int year;
@@ -34,7 +35,8 @@ bool test_julian_date()
         double day;
         double julian_date;
     } date_test_data[] = {
-        {-4712, 1, 1.5, 0.0},
+        {1899, 12, 31.5, 2415020.0},  {2000, 1, 1.5, 2451545.0},
+        {2009, 12, 31, 2455196.5},    {-4712, 1, 1.5, 0.0},
         {2009, 6, 19.75, 2455002.25},
     };
     for(auto& td : date_test_data) {
@@ -57,6 +59,8 @@ bool test_julian_date()
             return false;
         }
     }
+    std::cout << "OK!" << std::endl;
+
     return true;
 }
 

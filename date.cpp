@@ -11,65 +11,65 @@ PA::Date::Date()
 }
 
 PA::Date::Date(int year, int month, double day)
-    : calendar_date_is_valid_(true), year_(year), month_(month), day_(day)
+    : terrestrial_time_is_valid_(true), year_(year), month_(month), day_(day)
 {
 }
 
 PA::Date::Date(double julian_date)
 {
-    if(julian_date >= 0.0) {
-        julian_date_ = julian_date;
-        julian_date_is_valid_ = true;
-    }
+    julian_date_ = julian_date;
+    julian_date_is_valid_ = true;
 }
 
-bool PA::Date::SetTT(int year, int month, double day)
+void PA::Date::SetTT(int year, int month, double day)
 {
     year_ = year;
     month_ = month;
     day_ = day;
-    calendar_date_is_valid_ = true;
+    terrestrial_time_is_valid_ = true;
+
     julian_date_is_valid_ = false;
-    return true;
 }
 
-bool PA::Date::SetJulianDate(double julian_date)
+void PA::Date::SetJulianDate(double julian_date)
 {
     julian_date_ = julian_date;
     julian_date_is_valid_ = true;
-    calendar_date_is_valid_ = false;
+
+    terrestrial_time_is_valid_ = false;
+}
+
+bool PA::Date::GetJulianDate(double *p_julian_date) const
+{
+    if(!julian_date_is_valid_) {
+        ComputeJulianDate();
+        if(!julian_date_is_valid_) {
+            return false;
+        }
+    }
+
+    *p_julian_date = julian_date_;
     return true;
+}
+
+double PA::Date::GetJulianDate() const
+{
+    bool status;
+    double jd;
+    status = GetJulianDate(&jd);
+    if(!status) {
+        return -1.0;
+    }
+    return jd;
 }
 
 bool PA::Date::GetTT(int *p_year, int *p_month, double *p_day) const
 {
-    // Reference: [Peter11] Section 5
-    if(!calendar_date_is_valid_) {
-        if(!julian_date_is_valid_) {
+    if(!terrestrial_time_is_valid_) {
+        ComputeTT();
+        if(!terrestrial_time_is_valid_) {
             return false;
         }
-
-        double jd{julian_date_ + 0.5};
-        int i{static_cast<int>(trunc(jd))};
-        double f{jd - i};
-
-        int b;
-        if(i > 2299160) {
-            int a;
-            a = trunc((i - 1867216.25) / 36524.25);
-            b = i + a - trunc(a / 4.0) + 1;
-        } else {
-            b = i;
-        }
-
-        int c{b + 1524};
-        int d{static_cast<int>(trunc((c - 122.1) / 365.25))};
-        int e{static_cast<int>(trunc(365.25 * d))};
-        int g{static_cast<int>(trunc((c - e) / 30.6001))};
-        day_ = c - e + f - trunc(30.6001 * g);
-        month_ = (g <= 13) ? (g - 1) : (g - 13);
-        year_ = (month_ >= 3) ? (d - 4716) : (d - 4715);
-        calendar_date_is_valid_ = true;
     }
 
     *p_year = year_;
@@ -78,14 +78,10 @@ bool PA::Date::GetTT(int *p_year, int *p_month, double *p_day) const
     return true;
 }
 
-bool PA::Date::GetJulianDate(double *p_julian_date) const
+void PA::Date::ComputeJulianDate() const
 {
-    // Reference: [Peter11] Section 5
-    if(!julian_date_is_valid_) {
-        if(!calendar_date_is_valid_) {
-            return false;
-        }
-
+    if(terrestrial_time_is_valid_) {
+        // Reference: [Peter11] Section 5
         int y, m;
         if(month_ < 3) {
             y = year_ - 1;
@@ -122,18 +118,39 @@ bool PA::Date::GetJulianDate(double *p_julian_date) const
         julian_date_ = b + c + d + day_ + 1720994.5;
         julian_date_is_valid_ = true;
     }
-
-    *p_julian_date = julian_date_;
-    return true;
 }
 
-double PA::Date::GetJulianDate() const
+void PA::Date::ComputeTT() const
 {
-    bool status;
-    double jd;
-    status = GetJulianDate(&jd);
-    if(!status) {
-        return -1.0;
+    if(julian_date_is_valid_) {
+        // Reference: [Peter11] Section 5
+        double jd{julian_date_ + 0.5};
+        int i{static_cast<int>(trunc(jd))};
+        double f{jd - i};
+
+        int b;
+        if(i > 2299160) {
+            int a;
+            a = trunc((i - 1867216.25) / 36524.25);
+            b = i + a - trunc(a / 4.0) + 1;
+        } else {
+            b = i;
+        }
+
+        int c{b + 1524};
+        int d{static_cast<int>(trunc((c - 122.1) / 365.25))};
+        int e{static_cast<int>(trunc(365.25 * d))};
+        int g{static_cast<int>(trunc((c - e) / 30.6001))};
+        day_ = c - e + f - trunc(30.6001 * g);
+        month_ = (g <= 13) ? (g - 1) : (g - 13);
+        year_ = (month_ >= 3) ? (d - 4716) : (d - 4715);
+        terrestrial_time_is_valid_ = true;
     }
-    return jd;
 }
+
+#if 0
+double PA::Date::GetDeltaT() const
+{
+    return 0.0;
+}
+#endif

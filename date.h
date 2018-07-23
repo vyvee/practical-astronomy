@@ -15,12 +15,13 @@ class Date
     Date(double julian_date);
     ~Date(){};
 
-    bool SetTT(int year, int month, double day);
-    bool SetJulianDate(double julian_date);
+    void SetTT(int year, int month, double day);
+    void SetJulianDate(double julian_date);
 
     bool GetTT(int *p_year, int *p_month, double *p_day) const;
     bool GetJulianDate(double *p_julian_date) const;
     double GetJulianDate() const;
+    // double GetDeltaT() const;
 
     operator double() const
     {
@@ -28,10 +29,13 @@ class Date
     }
 
    private:
-    mutable bool calendar_date_is_valid_{false};
+    void ComputeTT() const;
+    mutable bool terrestrial_time_is_valid_{false};
     mutable int year_;
     mutable int month_;
     mutable double day_;
+
+    void ComputeJulianDate() const;
     mutable bool julian_date_is_valid_{false};
     mutable double julian_date_;
 };
