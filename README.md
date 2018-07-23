@@ -20,8 +20,8 @@ For very high precision calculations, you are recommended to check \[Jean99\], \
 
 The project is still in EARLY stage.
 
-- Time: TDT, Delta-T
 - Moon: Position
+- Time: UT
 - Planets: Position
 - Coordinate Transformation
 - Better error handling: Invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.
