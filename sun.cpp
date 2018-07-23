@@ -73,7 +73,7 @@ void Sun::ComputeEccentricity() const
 #else
     double t{(julian_date_ - Date::J1900_JAN_0_5) / 36525.0};
 #endif
-    eccentricity_ = 0.01675104 - 0.0000418 * t - 0.000000126 * t * t;
+    eccentricity_ = 0.01675104 + (-0.0000418 - 0.000000126 * t) * t;
     eccentricity_is_valid_ = true;
 }
 
@@ -84,7 +84,6 @@ Coordinate Sun::GetPosition()
     Angle n{d * 2 * M_PI / 365.242191};
     Angle epsilon_g{GetMeanEclipticLongitude()};
     Angle omega_g{GetPerigeeLongitude()};
-    n += 0.00004_deg;
     Angle mean_anomaly{n + epsilon_g.turn() - omega_g.turn()};
     double ecc{GetEccentricity()};
 #ifdef DEBUG

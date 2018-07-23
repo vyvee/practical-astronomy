@@ -21,7 +21,7 @@ class Date
     bool GetTT(int *p_year, int *p_month, double *p_day) const;
     bool GetJulianDate(double *p_julian_date) const;
     double GetJulianDate() const;
-    // double GetDeltaT() const;
+    double GetDeltaT() const;
 
     operator double() const
     {
@@ -38,6 +38,10 @@ class Date
     void ComputeJulianDate() const;
     mutable bool julian_date_is_valid_{false};
     mutable double julian_date_;
+
+    void ComputeDeltaT() const;
+    mutable bool delta_t_is_valid_{false};
+    mutable double delta_t_;
 };
 
 }  // namespace PA

@@ -27,36 +27,100 @@ static bool double_is_close(double x1,
 
 bool test_julian_date()
 {
-    std::cout << "Date Conversion: TT <-> Julian Date... ";
-    Date date;
-    struct {
-        int year;
-        int month;
-        double day;
-        double julian_date;
-    } date_test_data[] = {
-        {1899, 12, 31.5, 2415020.0},  {2000, 1, 1.5, 2451545.0},
-        {2009, 12, 31, 2455196.5},    {-4712, 1, 1.5, 0.0},
-        {2009, 6, 19.75, 2455002.25},
-    };
-    for(auto& td : date_test_data) {
-        double julian_date;
-        date.SetTT(td.year, td.month, td.day);
-        if(!date.GetJulianDate(&julian_date)) {
-            return false;
+    std::cout << "Date: TT <-> Julian Date... ";
+    {
+        Date date;
+        struct {
+            int year;
+            int month;
+            double day;
+            double julian_date;
+        } date_test_data[] = {
+            {1899, 12, 31.5, 2415020.0},  {2000, 1, 1.5, 2451545.0},
+            {2009, 12, 31, 2455196.5},    {-4712, 1, 1.5, 0.0},
+            {2009, 6, 19.75, 2455002.25},
+        };
+        for(auto& td : date_test_data) {
+            double julian_date;
+            date.SetTT(td.year, td.month, td.day);
+            if(!date.GetJulianDate(&julian_date)) {
+                return false;
+            }
+            if(!double_is_close(julian_date, td.julian_date, 1.0e-9, 0.0)) {
+                return false;
+            }
+            int year, month;
+            double day;
+            date.SetJulianDate(td.julian_date);
+            if(!date.GetTT(&year, &month, &day)) {
+                return false;
+            }
+            if(!(year == td.year && month == td.month &&
+                 double_is_close(day, td.day, 1.0e-9, 0.0))) {
+                return false;
+            }
         }
-        if(!double_is_close(julian_date, td.julian_date, 1.0e-9, 0.0)) {
-            return false;
-        }
-        int year, month;
-        double day;
-        date.SetJulianDate(td.julian_date);
-        if(!date.GetTT(&year, &month, &day)) {
-            return false;
-        }
-        if(!(year == td.year && month == td.month &&
-             double_is_close(day, td.day, 1.0e-9, 0.0))) {
-            return false;
+    }
+    std::cout << "OK!" << std::endl;
+
+    std::cout << "Date: Delta-T... ";
+    {
+        struct {
+            int year;
+            double delta_t;
+            double standard_error;
+        } delta_t_test_data[] = {
+            /* {-500, 17190, 430}, */
+            {-400, 15530, 390},
+            {-300, 14080, 360},
+            {-200, 12790, 330},
+            {-100, 11640, 290},
+            {0, 10580, 260},
+            {100, 9600, 240},
+            {200, 8640, 210},
+            {300, 7680, 180},
+            {400, 6700, 160},
+            {500, 5710, 140},
+            {600, 4740, 120},
+            {700, 3810, 100},
+            {800, 2960, 80},
+            {900, 2200, 70},
+            {1000, 1570, 55},
+            {1100, 1090, 40},
+            {1200, 740, 30},
+            {1300, 490, 20},
+            {1400, 320, 20},
+            {1500, 200, 20},
+            {1600, 120, 20},
+            {1700, 9, 5},
+            {1750, 13, 2},
+            {1800, 14, 1},
+            {1850, 7, 1 /*<1.0*/},
+            {1900, -3, 1 /*<1.0*/},
+            {1950, 29, 0.1 /*<0.1*/},
+            {1955, +31.1, 1.0},
+            {1960, +33.2, 1.0},
+            {1965, +35.7, 1.0},
+            {1970, +40.2, 1.0},
+            {1975, +45.5, 1.0},
+            {1980, +50.5, 1.0},
+            {1985, +54.3, 1.0},
+            {1990, +56.9, 1.0},
+            {1995, +60.8, 1.0},
+            {2000, +63.8, 1.0},
+            {2005, +64.7, 1.0},
+            {2010, +66.0, 1.0},
+            {2015, +67.6, 1.0},
+        };
+        for(auto& td : delta_t_test_data) {
+            Date date{td.year, 1, 1};
+            std::cout << td.year << '\t' << date.GetDeltaT() << '\t'
+                      << date.GetDeltaT() - td.delta_t << std::endl;
+            if(std::fabs(date.GetDeltaT() - td.delta_t) > 5.0) {
+                std::cout << td.year << '\t' << date.GetDeltaT() << '\t'
+                          << date.GetDeltaT() - td.delta_t << std::endl;
+                return false;
+            }
         }
     }
     std::cout << "OK!" << std::endl;
