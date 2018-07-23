@@ -176,9 +176,10 @@ void PA::Date::ComputeDeltaT() const
         // Error can be up to 2.0s for recent years. Not ideal but usable.
         // References:
         // - https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
+        // - [Actual Data] http://maia.usno.navy.mil/ser7/deltat.data
+        // - http://stjarnhimlen.se/comp/time.html
         // - http://astro.altspu.ru/~aw/DeltaT/
         // - https://www.hindawi.com/journals/jas/2014/480964/
-        // - [Actual Data] http://maia.usno.navy.mil/ser7/deltat.data
         double y{year_ + (month_ - 0.5) / 12.0};
         // double y{static_cast<double>(year_)};
         if(y >= +2150) {
