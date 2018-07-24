@@ -1,6 +1,8 @@
 #ifndef DATE_H_
 #define DATE_H_
 
+#include <iostream>
+
 namespace PA
 {
 class Date
@@ -11,14 +13,27 @@ class Date
     static constexpr double J2010{2455196.5};
 
     Date();
-    Date(int year, int month, double day);
+    Date(int year, int month = 1, double day = 1.0);
+    Date(int year,
+         int month,
+         int day,
+         int hour,
+         int minute = 0,
+         double second = 0.0);
     Date(double julian_date);
     ~Date(){};
 
-    void SetTT(int year, int month, double day);
+    void SetCalendarTT(int year, int month = 1, double day = 1.0);
+    void SetCalendarTT(int year,
+                       int month,
+                       int day,
+                       int hour,
+                       int minute = 0,
+                       double second = 0.0);
     void SetJulianDate(double julian_date);
 
-    bool GetTT(int *p_year, int *p_month, double *p_day) const;
+    bool GetCalendarTT(int *p_year, int *p_month, double *p_day) const;
+    std::string GetTTString() const;
     bool GetJulianDate(double *p_julian_date) const;
     double GetJulianDate() const;
     double GetDeltaT() const;
@@ -29,11 +44,20 @@ class Date
     }
 
    private:
-    void ComputeTT() const;
-    mutable bool terrestrial_time_is_valid_{false};
-    mutable int year_;
-    mutable int month_;
-    mutable double day_;
+    static bool JulianDateFromCalendar(double *p_jd,
+                                       int year,
+                                       int month,
+                                       double day);
+    static bool CalendarFromJulianDate(int *p_year,
+                                       int *p_month,
+                                       double *p_day,
+                                       double jd);
+
+    void ComputeCalendarTT() const;
+    mutable bool calendar_tt_is_valid_{false};
+    mutable int calendar_tt_year_;
+    mutable int calendar_tt_month_;
+    mutable double calendar_tt_day_;
 
     void ComputeJulianDate() const;
     mutable bool julian_date_is_valid_{false};

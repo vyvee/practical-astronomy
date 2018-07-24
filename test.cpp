@@ -42,7 +42,7 @@ bool test_julian_date()
         };
         for(auto& td : date_test_data) {
             double julian_date;
-            date.SetTT(td.year, td.month, td.day);
+            date.SetCalendarTT(td.year, td.month, td.day);
             if(!date.GetJulianDate(&julian_date)) {
                 return false;
             }
@@ -52,7 +52,7 @@ bool test_julian_date()
             int year, month;
             double day;
             date.SetJulianDate(td.julian_date);
-            if(!date.GetTT(&year, &month, &day)) {
+            if(!date.GetCalendarTT(&year, &month, &day)) {
                 return false;
             }
             if(!(year == td.year && month == td.month &&
@@ -114,8 +114,6 @@ bool test_julian_date()
         };
         for(auto& td : delta_t_test_data) {
             Date date{td.year, 1, 1};
-            std::cout << td.year << '\t' << date.GetDeltaT() << '\t'
-                      << date.GetDeltaT() - td.delta_t << std::endl;
             if(std::fabs(date.GetDeltaT() - td.delta_t) > 5.0) {
                 std::cout << td.year << '\t' << date.GetDeltaT() << '\t'
                           << date.GetDeltaT() - td.delta_t << std::endl;
