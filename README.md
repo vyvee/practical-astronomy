@@ -11,7 +11,7 @@ For very high precision calculations, you are recommended to check \[Jean99\], \
 ## Completed
 
 - Angle: Degree, Radian, DMS, HMS
-- Julian Date Conversion
+- Date: Julian Date, Calendar (TT), Delta-T
 - Earth: Obliquity, Nutation
 - Sun: Position
 - Solver for Kepler's equation
