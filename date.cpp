@@ -143,13 +143,6 @@ bool PA::Date::GetCalendarTT(int *p_year, int *p_month, double *p_day) const
 
 double PA::Date::GetDeltaT() const
 {
-    // Many formulas exist. We implement the one available from NASA.
-    // References:
-    // - https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
-    // - http://astro.altspu.ru/~aw/DeltaT/
-    // - https://www.hindawi.com/journals/jas/2014/480964/
-    // - https://www.ucolick.org/~sla/leapsecs/dutc.html
-
     if(!delta_t_is_valid_) {
         ComputeDeltaT();
         if(!delta_t_is_valid_) {
@@ -262,7 +255,7 @@ void PA::Date::ComputeDeltaT() const
         // Error can be up to 2.0s for recent years. Not ideal but usable.
         // References:
         // - https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
-        // - [Actual Data] http://maia.usno.navy.mil/ser7/deltat.data
+        // - [Actual Data] ftp://maia.usno.navy.mil/ser7/deltat.data
         // - http://stjarnhimlen.se/comp/time.html
         // - http://astro.altspu.ru/~aw/DeltaT/
         // - https://www.hindawi.com/journals/jas/2014/480964/
