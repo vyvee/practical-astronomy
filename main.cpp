@@ -21,6 +21,8 @@ void ephemeris_now(void)
     std::cout << "JD " << std::fixed << std::setprecision(6)
               << date.GetJulianDate() << std::endl;
     std::cout << date.GetTTString() << std::endl;
+    std::cout << "Delta-T: " << std::showpos << std::fixed
+              << std::setprecision(2) << date.GetDeltaT() << "s" << std::endl;
 }
 
 int main(void)

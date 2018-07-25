@@ -52,6 +52,10 @@ class Date
                                        int *p_month,
                                        double *p_day,
                                        double jd);
+    static bool DeltaTFromCalendar(double *p_delta_t,
+                                   int year,
+                                   int month,
+                                   double day);
 
     void ComputeCalendarTT() const;
     mutable bool calendar_tt_is_valid_{false};
