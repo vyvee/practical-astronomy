@@ -28,7 +28,6 @@ double PA::Solver::solve_kepler(double ecc, double m)
 #endif
     int iteration{0};
     while(++iteration <= 35) {
-        iteration;
         delta = e - m - ecc * std::sin(e);
         delta /= ecc * cos(e) - 1.0;
         e += delta;
