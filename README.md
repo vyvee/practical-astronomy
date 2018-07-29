@@ -1,12 +1,12 @@
 # Practical Astronomy
 
-Implementations of astronomical algorithms. Main source is \[Peter11\].
+Implementations of astronomical algorithms.
 
 Aims to implement algorithms to calculate *approximate* (and NOT high precision) positions of solar system objects.
 In particular, aims to use formulae or algorithms that do not involve large number of arithmetic operations.
-Currently, the main reference is \[Peter11\].
+Currently, the main reference includes \[Peter11\].
 
-For very high precision calculations, you are recommended to check \[Jean99\], \[VOSP87\], \[XEphem\], etc.
+For very high precision calculations, you are recommended to refer to \[Jean99\], \[VOSP87\], \[XEphem\], etc.
 
 ## Completed
 
@@ -14,7 +14,7 @@ For very high precision calculations, you are recommended to check \[Jean99\], \
 - Date: Julian Date, Calendar (TT), Delta-T
 - Earth: Obliquity, Nutation
 - Sun: Position
-- Solver for Kepler's equation
+- Solver: Kepler's equation
 
 ## TODOs
 
