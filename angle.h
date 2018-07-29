@@ -94,7 +94,7 @@ class Angle
         std::ostringstream ss;
         double d, m, s;
         s = 60.0 * modf(60.0 * modf(deg(), &d), &m);
-        ss << std::setw(4) << d << '\xb0';
+        ss << std::setw(3) << d << '\xb0';
         ss << std::setw(2) << fabs(m) << '\'';
         ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
            << fabs(s) << '"';
