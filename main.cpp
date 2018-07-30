@@ -38,7 +38,7 @@ void ephemeris_now(void)
         Angle nutation_obliquity{earth.GetNutationObliquity()};
         std::cout << "   Nutation Lon.: " << nutation_longitude.arcsec() << '\"'
                   << std::endl;
-        std::cout << "   Nutation Lat.: " << nutation_obliquity.arcsec() << '\"'
+        std::cout << "   Nutation Obl.: " << nutation_obliquity.arcsec() << '\"'
                   << std::endl;
     }
 
