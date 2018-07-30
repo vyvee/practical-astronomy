@@ -36,10 +36,15 @@ void ephemeris_now(void)
         Earth earth{date};
         Angle nutation_longitude{earth.GetNutationLongitude()};
         Angle nutation_obliquity{earth.GetNutationObliquity()};
+        Angle obliquity_mean{earth.GetObliquityMean()};
+        Angle obliquity{earth.GetObliquity()};
         std::cout << "   Nutation Lon.: " << nutation_longitude.arcsec() << '\"'
                   << std::endl;
-        std::cout << "   Nutation Obl.: " << nutation_obliquity.arcsec() << '\"'
+        std::cout << " Nutation Obliq.: " << nutation_obliquity.arcsec() << '\"'
                   << std::endl;
+        std::cout << "     Mean Obliq.: " << obliquity_mean.dms_str()
+                  << std::endl;
+        std::cout << "      Obliquity.: " << obliquity.dms_str() << std::endl;
     }
 
     {
