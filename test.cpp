@@ -30,6 +30,22 @@ bool test_julian_date()
     std::cout << "Date: TT <-> Julian Date... ";
     {
         Date date;
+
+        struct {
+            double julian_date_1;
+            double julian_date_2;
+        } const_date_test_data[] = {
+            {Date::J1900_JAN_0_5, 2415020.0},
+            {Date::J2000_JAN_1_5, 2451545.0},
+            {Date::J2010, 2455196.5},
+        };
+        for(auto& td : const_date_test_data) {
+            if(!double_is_close(td.julian_date_1, td.julian_date_2, 1.0e-9,
+                                0.0)) {
+                return false;
+            }
+        }
+
         struct {
             int year;
             int month;
@@ -40,6 +56,7 @@ bool test_julian_date()
             {2009, 12, 31, 2455196.5},    {-4712, 1, 1.5, 0.0},
             {2009, 6, 19.75, 2455002.25},
         };
+
         for(auto& td : date_test_data) {
             double julian_date;
             date.SetCalendarTT(td.year, td.month, td.day);
