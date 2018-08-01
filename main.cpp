@@ -53,11 +53,14 @@ void ephemeris_now(void)
         Coordinate coord;
         coord = sun.GetPosition();
         Angle lon{coord.GetEclipticLongitude()};
+        std::cout << std::fixed << std::setprecision(6);
         std::cout << "   Ecliptic Lon.: " << lon.dms_str() << std::endl;
         Angle ra{coord.GetEquatorialRightAscension()};
         Angle decl{coord.GetEquatorialDeclination()};
-        std::cout << " Equatorial R.A.: " << ra.hms_str() << std::endl;
-        std::cout << " Equatorial Dec.: " << decl.dms_str() << std::endl;
+        std::cout << " Equatorial R.A.: " << ra.hms_str() << " ("
+                  << ra.hour_str() << ")" << std::endl;
+        std::cout << " Equatorial Dec.: " << decl.dms_str() << " ("
+                  << decl.deg_str() << ")" << std::endl;
     }
 }
 
