@@ -16,10 +16,6 @@ Sun::Sun(const Date& date)
     julian_date_ = date.GetJulianDate();
 }
 
-Sun::~Sun()
-{
-}
-
 Angle Sun::GetMeanEclipticLongitude() const
 {
     if(!ecliptic_longitude_mean_is_valid_) {

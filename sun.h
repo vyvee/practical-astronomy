@@ -11,7 +11,6 @@ class Sun
 {
    public:
     Sun(const Date& date);
-    ~Sun();
     Coordinate GetPosition();
 
     Angle GetMeanEclipticLongitude() const;
