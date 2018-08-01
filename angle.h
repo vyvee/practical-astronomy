@@ -89,6 +89,18 @@ class Angle
         return rad_ * 180.0 * 3600.0 / M_PI;
     }
 
+    constexpr double hour() const noexcept
+    {
+        return deg() / 15.0;
+    }
+
+    std::string deg_str(int s_prec = 6) const noexcept
+    {
+        std::ostringstream ss;
+        ss << std::fixed << std::setprecision(s_prec) << deg() << '\xb0';
+        return ss.str();
+    }
+
     std::string dms_str(int s_prec = 2) const noexcept
     {
         std::ostringstream ss;
@@ -101,11 +113,18 @@ class Angle
         return ss.str();
     }
 
+    std::string hour_str(int s_prec = 6) const noexcept
+    {
+        std::ostringstream ss;
+        ss << std::fixed << std::setprecision(s_prec) << hour() << 'h';
+        return ss.str();
+    }
+
     std::string hms_str(int s_prec = 2) const noexcept
     {
         std::ostringstream ss;
         double h, m, s;
-        s = 60.0 * modf(60.0 * modf(deg() / 15.0, &h), &m);
+        s = 60.0 * modf(60.0 * modf(hour(), &h), &m);
         ss << std::setw(2) << h << 'h';
         ss << std::setw(2) << m << 'm';
         ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
