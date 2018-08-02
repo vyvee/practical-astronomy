@@ -2,11 +2,10 @@
 
 Implementations of astronomical algorithms.
 
-Aims to implement algorithms to calculate *approximate* (and NOT high precision) positions of solar system objects.
-In particular, aims to use formulae or algorithms that do not involve large number of arithmetic operations.
-Currently, the main reference includes \[Peter11\].
+Aims to implement algorithms to calculate positions of solar system objects with moderate accuracy, or to about a few arcseconds.
+Currently, the main references include \[Jean99\], \[Peter11\].
 
-For very high precision calculations, you are recommended to refer to \[Jean99\], \[VOSP87\], \[XEphem\], etc.
+Does not aim to provide results with extremely high accuracy. For highly accurate results, you are recommended to refer to \[VOSP87\], \[XEphem\], etc.
 
 ## Completed
 
@@ -20,6 +19,7 @@ For very high precision calculations, you are recommended to refer to \[Jean99\]
 
 The project is still in EARLY stage.
 
+- Change to use more algorithms in \[Jean99\] which provide more accurate results
 - Moon: Position
 - Time: UT
 - Planets: Position
@@ -30,8 +30,8 @@ The project is still in EARLY stage.
 
 ## References
 
-- [\[Peter11\] Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.](https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator)
 - [\[Jean99\] Jean Meeus, *Astronomical Algorithms*, 2nd Edition, 1999.](https://www.willbell.com/MATH/MC1.HTM)
+- [\[Peter11\] Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.](https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator)
 - [Polynomial Expressions for Delta T (ΔT)](https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html)
 - [\[VOSP87\] Planetary Solutions VSOP87](http://cdsarc.u-strasbg.fr/viz-bin/Cat?cat=VI/81)
 - [\[XEphem\] XEphem: The Cross-Platform Astronomy Software](http://www.clearskyinstitute.com/xephem/)
