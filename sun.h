@@ -11,11 +11,11 @@ class Sun
 {
    public:
     Sun(const Date& date);
-    Coordinate GetPosition();
+    Coordinate GetPosition() const;
 
     Angle GetMeanEclipticLongitude() const;
     Angle GetPerigeeLongitude() const;
-    Angle GetEccentricity() const;
+    double GetEccentricity() const;
 
    private:
     double julian_date_;

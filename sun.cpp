@@ -32,7 +32,7 @@ Angle Sun::GetPerigeeLongitude() const
     return perigee_longitude_;
 }
 
-Angle Sun::GetEccentricity() const
+double Sun::GetEccentricity() const
 {
     if(!eccentricity_is_valid_) {
         ComputeEccentricity();
@@ -73,14 +73,14 @@ void Sun::ComputeEccentricity() const
     eccentricity_is_valid_ = true;
 }
 
-Coordinate Sun::GetPosition()
+Coordinate Sun::GetPosition() const
 {
     // Reference: [Peter11] Section 46, p.103
     double d{julian_date_ - Date::J2010};
     Angle n{d * 2 * M_PI / 365.242191};
     Angle epsilon_g{GetMeanEclipticLongitude()};
     Angle omega_g{GetPerigeeLongitude()};
-    Angle mean_anomaly{n + epsilon_g.turn() - omega_g.turn()};
+    Angle mean_anomaly{n + epsilon_g - omega_g};
     double ecc{GetEccentricity()};
 #ifdef DEBUG
     std::cout << std::fixed << std::setprecision(12);

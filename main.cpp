@@ -31,6 +31,8 @@ void ephemeris_now(void)
                   << std::endl;
     }
 
+    // date.SetCalendarTT(2003, 9, 1.0);
+
     {
         std::cout << "Earth:" << std::endl;
         Earth earth{date};
@@ -54,7 +56,8 @@ void ephemeris_now(void)
         coord = sun.GetPosition();
         Angle lon{coord.GetEclipticLongitude()};
         std::cout << std::fixed << std::setprecision(6);
-        std::cout << "   Ecliptic Lon.: " << lon.dms_str() << std::endl;
+        std::cout << "   Ecliptic Lon.: " << lon.dms_str() << " ("
+                  << lon.deg_str() << ")" << std::endl;
         Angle ra{coord.GetEquatorialRightAscension()};
         Angle decl{coord.GetEquatorialDeclination()};
         std::cout << " Equatorial R.A.: " << ra.hms_str() << " ("
