@@ -7,6 +7,7 @@
 
 #include "angle.h"
 #include "coordinate.h"
+#include "date.h"
 #include "solver.h"
 
 using namespace PA;
@@ -16,7 +17,8 @@ Sun::Sun(const Date& date)
     julian_date_ = date.GetJulianDate();
 }
 
-Angle Sun::GetMeanEclipticLongitude() const
+#if 0
+Degree Sun::GetMeanEclipticLongitude() const
 {
     if(!ecliptic_longitude_mean_is_valid_) {
         ComputeMeanEclipticLongitude();
@@ -24,7 +26,7 @@ Angle Sun::GetMeanEclipticLongitude() const
     return ecliptic_longitude_mean_;
 }
 
-Angle Sun::GetPerigeeLongitude() const
+Degree Sun::GetPerigeeLongitude() const
 {
     if(!perigee_longitude_is_valid_) {
         ComputePerigeeLongitude();
@@ -39,9 +41,9 @@ double Sun::GetEccentricity() const
     }
     return eccentricity_;
 }
+#endif
 
-#include <iostream>
-
+#if 0
 void Sun::ComputeMeanEclipticLongitude() const
 {
     double t{(Date::J2010 - Date::J1900_JAN_0_5) / 36525.0};
@@ -72,52 +74,58 @@ void Sun::ComputeEccentricity() const
     eccentricity_ = 0.01675104 + (-0.0000418 - 0.000000126 * t) * t;
     eccentricity_is_valid_ = true;
 }
+#endif
 
+#define DEBUG
+
+#if 0
 Coordinate Sun::GetPosition() const
 {
     // Reference: [Peter11] Section 46, p.103
     double d{julian_date_ - Date::J2010};
-    Angle n{d * 2 * M_PI / 365.242191};
-    Angle epsilon_g{GetMeanEclipticLongitude()};
-    Angle omega_g{GetPerigeeLongitude()};
-    Angle mean_anomaly{n + epsilon_g - omega_g};
+    Degree n{d * 360.0 / 365.242191};
+    Degree epsilon_g{GetMeanEclipticLongitude()};
+    Degree omega_g{GetPerigeeLongitude()};
+    Degree mean_anomaly{n + epsilon_g - omega_g};
     double ecc{GetEccentricity()};
 #ifdef DEBUG
     std::cout << std::fixed << std::setprecision(12);
     std::cout << "D (days): " << d << std::endl;
-    std::cout << " N (deg): " << n.turn().deg() << std::endl;
-    std::cout << "eg (deg): " << epsilon_g.turn().deg() << std::endl;
-    std::cout << "    N+eg: " << (n + epsilon_g).turn().deg() << std::endl;
-    std::cout << "og (deg): " << omega_g.turn().deg() << std::endl;
-    std::cout << " M (deg): " << mean_anomaly.turn().deg() << std::endl;
+    std::cout << " N (deg): " << n.GetUnwind().DegStr() << std::endl;
+    std::cout << "eg (deg): " << epsilon_g.GetUnwind().DegStr() << std::endl;
+    std::cout << "    N+eg: " << (n + epsilon_g).GetUnwind().DegStr()
+              << std::endl;
+    std::cout << "og (deg): " << omega_g.GetUnwind().DegStr() << std::endl;
+    std::cout << " M (deg): " << mean_anomaly.GetUnwind().DegStr() << std::endl;
     std::cout << "     ecc: " << ecc << std::endl;
 #endif
 
 #ifdef DEBUG_SUN_TRUE_ANOMALY_SINGLE_STEP
-    Angle e_c{2 * ecc * sin(mean_anomaly)};
-    Angle l_s{n + e_c + epsilon_g};
+    Degree e_c{360.0 / M_PI * ecc * sin(mean_anomaly)};
+    Degree l_s{n + e_c + epsilon_g};
 #ifdef DEBUG
-    std::cout << "Ec (deg): " << e_c.turn().deg() << std::endl;
-    std::cout << "Ls (deg): " << l_s.turn().deg() << std::endl;
+    std::cout << "Ec (deg): " << e_c.GetUnwind().DegStr() << std::endl;
+    std::cout << "Ls (deg): " << l_s.GetUnwind().DegStr() << std::endl;
 #endif
 
 #else
 #ifdef DEBUG
-    std::cout << " M (rad): " << mean_anomaly.turn().rad() << std::endl;
+    std::cout << " M (rad): " << mean_anomaly.GetUnwind().Rad() << std::endl;
 #endif
-    Angle e{Solver::solve_kepler(ecc, mean_anomaly.rad())};
-    Angle v{2.0 * std::atan(std::sqrt((1 + ecc) / (1 - ecc)) * tan(e / 2.0))};
-    Angle l_s{v + omega_g};
+    Degree e{Solver::solve_kepler(ecc, mean_anomaly)};
+    Degree v{std::atan(std::sqrt((1 + ecc) / (1 - ecc)) * tan(e / 2.0)) * 2.0};
+    Degree l_s{v + omega_g};
 #ifdef DEBUG
     std::cout << "----------" << std::endl;
     std::cout << "tan(v/2): " << std::sqrt((1 + ecc) / (1 - ecc)) * tan(e / 2.0)
               << std::endl;
-    std::cout << " v (deg): " << v.turn().deg() << std::endl;
-    std::cout << "Ls (deg): " << l_s.turn().deg() << std::endl;
+    std::cout << " v (deg): " << v.GetUnwind().DegStr() << std::endl;
+    std::cout << "Ls (deg): " << l_s.GetUnwind().DegStr() << std::endl;
 #endif
 #endif
 
     Coordinate coord;
-    coord.SetEcliptic(l_s, 0.0, julian_date_);
+    coord.SetEcliptic(l_s, Degree(0.0), julian_date_);
     return coord;
 }
+#endif

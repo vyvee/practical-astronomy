@@ -22,7 +22,7 @@ Coordinate::~Coordinate()
 {
 }
 
-void Coordinate::SetEcliptic(const Angle& lon, const Angle& lat, double jd)
+void Coordinate::SetEcliptic(const Degree& lon, const Degree& lat, double jd)
 {
     ecliptic_longitude_ = lon;
     ecliptic_latitude_ = lat;
@@ -31,40 +31,40 @@ void Coordinate::SetEcliptic(const Angle& lon, const Angle& lat, double jd)
     equatorial_is_valid_ = false;
 }
 
-Angle Coordinate::GetEclipticLongitude() const
+Degree Coordinate::GetEclipticLongitude() const
 {
     if(!ecliptic_is_valid_) {
-        return Angle(0.0);
+        return Degree(0.0);
     }
 
     return ecliptic_longitude_;
 }
 
-Angle Coordinate::GetEclipticLatitude() const
+Degree Coordinate::GetEclipticLatitude() const
 {
     if(!ecliptic_is_valid_) {
-        return Angle(0.0);
+        return Degree(0.0);
     }
 
     return ecliptic_latitude_;
 }
 
-Angle Coordinate::GetEquatorialRightAscension() const
+Degree Coordinate::GetEquatorialRightAscension() const
 {
     if(!equatorial_is_valid_) {
         if(!ComputeEquatorial()) {
-            return Angle(0.0);
+            return Degree(0.0);
         }
     }
 
     return equatorial_right_ascension_;
 }
 
-Angle Coordinate::GetEquatorialDeclination() const
+Degree Coordinate::GetEquatorialDeclination() const
 {
     if(!equatorial_is_valid_) {
         if(!ComputeEquatorial()) {
-            return Angle(0.0);
+            return Degree(0.0);
         }
     }
 
@@ -76,26 +76,27 @@ bool Coordinate::ComputeEquatorial() const
     if(ecliptic_is_valid_) {
         // Reference: [Peter11] Section 27, p.51.
         Earth earth(julian_date_);
-        Angle obliq{earth.GetObliquity()};
+        Degree obliq{earth.GetObliquity()};
         double sin_delta{sin(ecliptic_latitude_) * cos(obliq) +
                          cos(ecliptic_latitude_) * sin(obliq) *
                              sin(ecliptic_longitude_)};
-        equatorial_declination_ = asin(sin_delta);
+        equatorial_declination_ = Degree(Radian(asin(sin_delta)).Deg());
         double y{sin(ecliptic_longitude_) * cos(obliq) -
                  tan(ecliptic_latitude_) * sin(obliq)};
         double x{cos(ecliptic_longitude_)};
-        equatorial_right_ascension_ = Angle(atan2(y, x)).turn();
+        equatorial_right_ascension_ =
+            Degree(Radian(atan2(y, x)).Deg()).GetUnwind();
         equatorial_is_valid_ = true;
 #ifdef DEBUG
         std::cout << "Coordinate::ComputeEquatorial():" << std::endl;
         std::cout << std::setprecision(12);
-        std::cout << "    lon.: " << ecliptic_longitude_.deg() << std::endl;
-        std::cout << "    lat.: " << ecliptic_latitude_.deg() << std::endl;
+        std::cout << "    lon.: " << ecliptic_longitude_.Deg() << std::endl;
+        std::cout << "    lat.: " << ecliptic_latitude_.Deg() << std::endl;
         std::cout << "  sin(d): " << sin_delta << std::endl;
-        std::cout << "   decl.: " << equatorial_declination_.deg() << std::endl;
+        std::cout << "   decl.: " << equatorial_declination_.Deg() << std::endl;
         std::cout << "       y: " << y << std::endl;
         std::cout << "       x: " << x << std::endl;
-        std::cout << "     ra.: " << equatorial_right_ascension_.deg()
+        std::cout << "     ra.: " << equatorial_right_ascension_.Deg()
                   << std::endl;
 #endif
         return true;

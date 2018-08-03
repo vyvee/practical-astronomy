@@ -10,25 +10,25 @@ class Coordinate
    public:
     Coordinate();
     ~Coordinate();
-    void SetEcliptic(const Angle& lon, const Angle& lat, double jd);
+    void SetEcliptic(const Degree& lon, const Degree& lat, double jd);
 
     // bool GetEquatorial(double* p_ra, double* p_decl) const;
-    Angle GetEclipticLongitude() const;
-    Angle GetEclipticLatitude() const;
-    Angle GetEquatorialRightAscension() const;
-    Angle GetEquatorialDeclination() const;
+    Degree GetEclipticLongitude() const;
+    Degree GetEclipticLatitude() const;
+    Degree GetEquatorialRightAscension() const;
+    Degree GetEquatorialDeclination() const;
 
    private:
     double julian_date_;
 
     mutable bool ecliptic_is_valid_{false};
-    mutable Angle ecliptic_longitude_;
-    mutable Angle ecliptic_latitude_;
+    mutable Degree ecliptic_longitude_{0.0};
+    mutable Degree ecliptic_latitude_{0.0};
 
     bool ComputeEquatorial() const;
     mutable bool equatorial_is_valid_{false};
-    mutable Angle equatorial_right_ascension_;
-    mutable Angle equatorial_declination_;
+    mutable Degree equatorial_right_ascension_{0.0};
+    mutable Degree equatorial_declination_{0.0};
 };
 
 }  // namespace PA

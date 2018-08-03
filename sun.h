@@ -11,11 +11,11 @@ class Sun
 {
    public:
     Sun(const Date& date);
-    Coordinate GetPosition() const;
+    // Coordinate GetPosition() const;
 
-    Angle GetMeanEclipticLongitude() const;
-    Angle GetPerigeeLongitude() const;
-    double GetEccentricity() const;
+    // Degree GetMeanEclipticLongitude() const;
+    // Degree GetPerigeeLongitude() const;
+    // double GetEccentricity() const;
 
    private:
     double julian_date_;
@@ -23,15 +23,15 @@ class Sun
     // ??? Need to specify which epoch this is for??
     void ComputeMeanEclipticLongitude() const;
     mutable bool ecliptic_longitude_mean_is_valid_{false};
-    mutable Angle ecliptic_longitude_mean_;
+    mutable Degree ecliptic_longitude_mean_{0.0};
 
     void ComputePerigeeLongitude() const;
     mutable bool perigee_longitude_is_valid_{false};
-    mutable Angle perigee_longitude_;
+    mutable Degree perigee_longitude_{0.0};
 
     void ComputeEccentricity() const;
     mutable bool eccentricity_is_valid_{false};
-    mutable double eccentricity_;
+    mutable double eccentricity_{0.0};
 };
 
 }  // namespace PA

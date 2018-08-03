@@ -16,6 +16,7 @@ void ephemeris_now(void)
 
     {
         std::cout << "Date & Time:" << std::endl;
+#if 1
         std::time_t now;
         now = std::chrono::system_clock::to_time_t(
             std::chrono::system_clock::now());
@@ -23,6 +24,9 @@ void ephemeris_now(void)
         ptm = std::gmtime(&now);
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
+#else
+        date.SetCalendarTT(1987, 4, 10.0);
+#endif
         std::cout << "     Julian Date: " << std::fixed << std::setprecision(6)
                   << date.GetJulianDate() << std::endl;
         std::cout << "       Date (TT): " << date.GetTTString() << std::endl;
@@ -31,40 +35,40 @@ void ephemeris_now(void)
                   << std::endl;
     }
 
-    // date.SetCalendarTT(2003, 9, 1.0);
-
     {
         std::cout << "Earth:" << std::endl;
         Earth earth{date};
-        Angle nutation_longitude{earth.GetNutationLongitude()};
-        Angle nutation_obliquity{earth.GetNutationObliquity()};
-        Angle obliquity_mean{earth.GetObliquityMean()};
-        Angle obliquity{earth.GetObliquity()};
-        std::cout << "   Nutation Lon.: " << nutation_longitude.arcsec() << '\"'
+        Degree nutation_longitude{earth.GetNutationLongitude()};
+        Degree nutation_obliquity{earth.GetNutationObliquity()};
+        Degree obliquity_mean{earth.GetObliquityMean()};
+        Degree obliquity{earth.GetObliquity()};
+        std::cout << "   Nutation Lon.: " << nutation_longitude.ArcSec() << '\"'
                   << std::endl;
-        std::cout << " Nutation Obliq.: " << nutation_obliquity.arcsec() << '\"'
+        std::cout << " Nutation Obliq.: " << nutation_obliquity.ArcSec() << '\"'
                   << std::endl;
-        std::cout << "     Mean Obliq.: " << obliquity_mean.dms_str()
+        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr()
                   << std::endl;
-        std::cout << "      Obliquity.: " << obliquity.dms_str() << std::endl;
+        std::cout << "      Obliquity.: " << obliquity.DMSStr() << std::endl;
     }
 
+#if 0
     {
         std::cout << "Sun:" << std::endl;
         Sun sun{date};
         Coordinate coord;
         coord = sun.GetPosition();
-        Angle lon{coord.GetEclipticLongitude()};
+        Degree lon{coord.GetEclipticLongitude()};
         std::cout << std::fixed << std::setprecision(6);
-        std::cout << "   Ecliptic Lon.: " << lon.dms_str() << " ("
-                  << lon.deg_str() << ")" << std::endl;
-        Angle ra{coord.GetEquatorialRightAscension()};
-        Angle decl{coord.GetEquatorialDeclination()};
-        std::cout << " Equatorial R.A.: " << ra.hms_str() << " ("
-                  << ra.hour_str() << ")" << std::endl;
-        std::cout << " Equatorial Dec.: " << decl.dms_str() << " ("
-                  << decl.deg_str() << ")" << std::endl;
+        std::cout << "   Ecliptic Lon.: " << lon.DMSStr() << " ("
+                  << lon.DegStr() << ")" << std::endl;
+        Degree ra{coord.GetEquatorialRightAscension()};
+        Degree decl{coord.GetEquatorialDeclination()};
+        std::cout << " Equatorial R.A.: " << ra.HMSStr() << " (" << ra.HourStr()
+                  << ")" << std::endl;
+        std::cout << " Equatorial Dec.: " << decl.DMSStr() << " ("
+                  << decl.DegStr() << ")" << std::endl;
     }
+#endif
 }
 
 int main(void)

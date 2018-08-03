@@ -1,12 +1,14 @@
 #ifndef SOLVER_H_
 #define SOLVER_H_
 
+#include "angle.h"
+
 namespace PA
 {
 class Solver
 {
    public:
-    static double solve_kepler(double ecc, double m);
+    static Radian solve_kepler(double ecc, const Radian& m);
 
    private:
     Solver(){};
