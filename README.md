@@ -1,6 +1,6 @@
 # Practical Astronomy
 
-Implementations of astronomical algorithms.
+Implementations of astronomical algorithms. Assumed C++17 and tested with GCC.
 
 Aims to implement algorithms to calculate positions of solar system objects with moderate accuracy, or to about a few arcseconds.
 Currently, the main references include \[Jean99\], \[Peter11\].
