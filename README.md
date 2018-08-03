@@ -12,7 +12,6 @@ Does not aim to provide results with extremely high accuracy. For highly accurat
 - Angle: Degree, Radian, DMS, HMS
 - Date: Julian Date, Calendar (TT), Delta-T
 - Earth: Obliquity, Nutation
-- Sun: Position
 - Solver: Kepler's equation
 
 ## TODOs
@@ -20,6 +19,7 @@ Does not aim to provide results with extremely high accuracy. For highly accurat
 The project is still in EARLY stage.
 
 - Change to use more algorithms in \[Jean99\] which provide more accurate results
+- Sun: Position
 - Moon: Position
 - Time: UT
 - Planets: Position
