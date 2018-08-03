@@ -17,10 +17,10 @@ class Earth
     }
     ~Earth(){};
 
-    Degree GetObliquity() const;
+    Degree GetObliquity();
     Degree GetObliquityMean() const;
-    Degree GetNutationLongitude() const;
-    Degree GetNutationObliquity() const;
+    Degree GetNutationLongitude();
+    Degree GetNutationObliquity();
 
    private:
     Date date_;
@@ -29,10 +29,10 @@ class Earth
     mutable bool obliquity_mean_is_valid_{false};
     mutable Degree obliquity_mean_{0.0};
 
-    void ComputeNutation() const;
-    mutable bool nutation_is_valid_{false};
-    mutable Degree nutation_longitude_{0.0};
-    mutable Degree nutation_obliquity_{0.0};
+    void ComputeNutation();
+    bool nutation_is_valid_{false};
+    Degree nutation_longitude_{0.0};
+    Degree nutation_obliquity_{0.0};
 
     mutable bool obliquity_is_valid_{false};
     mutable Degree obliquity_{0.0};

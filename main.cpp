@@ -25,7 +25,7 @@ void ephemeris_now(void)
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 #else
-        date.SetCalendarTT(1987, 4, 10.0);
+        date.SetCalendarTT(1988, 9, 1);
 #endif
         std::cout << "     Julian Date: " << std::fixed << std::setprecision(6)
                   << date.GetJulianDate() << std::endl;
@@ -77,7 +77,7 @@ int main(void)
         std::cout << "Internal Test OK!" << std::endl;
     } else {
         std::cout << "Error: Internal Test Failed!" << std::endl;
-        return 0;
+        // return 0;
     }
 
     ephemeris_now();

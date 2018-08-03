@@ -181,12 +181,12 @@ bool test_earth()
         std::cout << "- Nutation in Obliquity: " << nutation_obliquity.arcsec()
                   << std::endl;
 #endif
-        if(!is_close(nutation_longitude.Rad(), (5.5_arcsec).Rad(), 0.0,
-                     (0.5_arcsec).Rad())) {
+        if(!is_close(nutation_longitude.Deg(), (5.1_arcsec).Deg(), 0.0,
+                     (0.1_arcsec).Deg())) {
             return false;
         }
-        if(!is_close(nutation_obliquity.Rad(), (9.2_arcsec).Rad(), 0.0,
-                     (0.5_arcsec).Rad())) {
+        if(!is_close(nutation_obliquity.Deg(), (9.2_arcsec).Deg(), 0.0,
+                     (0.1_arcsec).Deg())) {
             return false;
         }
     }
