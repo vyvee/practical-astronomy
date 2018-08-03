@@ -25,7 +25,7 @@ void ephemeris_now(void)
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 #else
-        date.SetCalendarTT(1988, 9, 1);
+        date.SetCalendarTT(1987, 4, 10);
 #endif
         std::cout << "     Julian Date: " << std::fixed << std::setprecision(6)
                   << date.GetJulianDate() << std::endl;
@@ -42,13 +42,13 @@ void ephemeris_now(void)
         Degree nutation_obliquity{earth.GetNutationObliquity()};
         Degree obliquity_mean{earth.GetObliquityMean()};
         Degree obliquity{earth.GetObliquity()};
-        std::cout << "   Nutation Lon.: " << nutation_longitude.ArcSec() << '\"'
+        std::cout << "   Nutation Lon.: " << nutation_longitude.ArcSecStr(3)
                   << std::endl;
-        std::cout << " Nutation Obliq.: " << nutation_obliquity.ArcSec() << '\"'
+        std::cout << " Nutation Obliq.: " << nutation_obliquity.ArcSecStr(3)
                   << std::endl;
-        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr()
+        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr(2)
                   << std::endl;
-        std::cout << "      Obliquity.: " << obliquity.DMSStr() << std::endl;
+        std::cout << "      Obliquity.: " << obliquity.DMSStr(2) << std::endl;
     }
 
 #if 0

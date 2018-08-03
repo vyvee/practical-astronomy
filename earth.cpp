@@ -173,28 +173,21 @@ void Earth::ComputeNutation()
     nutation_is_valid_ = true;
 }
 
-void Earth::ComputeObliquityMean() const
+void Earth::ComputeObliquityMean()
 {
-    // Reference: [Peter11] Section 27
-    double t{(date_.GetJulianDate() - PA::Date::J2000_JAN_1_5) / 36525.0};
+    // References:
+    // - http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
+    // - [Jean99] Chapter 22, p.147
+    double u{(date_.GetJulianDate() - PA::Date::J2000_JAN_1_5) / 3652500.0};
     obliquity_mean_ =
-        -((46.815_arcsec + (0.0006_arcsec - 0.00181_arcsec * t) * t) * t);
-#ifdef DEBUG
-    std::cout << "Earth::GetObliquity():" << std::endl;
-    std::cout << std::fixed << std::setprecision(12);
-    std::cout << "      JD: " << date_.GetJulianDate() << std::endl;
-    std::cout << "       T: " << t << std::endl;
-    std::cout << "   DE(\"): " << -obliquity_mean.arcsec() << std::endl;
-    std::cout << "   DE(\"): " << -obliquity_mean.deg() << std::endl;
-#endif
-    obliquity_mean_ += 23.0_deg + 26.0_arcmin + 21.45_arcsec;
-#ifdef DEBUG
-    std::cout << " epsilon: " << obliquity_mean.deg() << std::endl;
-#endif
+        Degree(horner_polynomial({+84381.448, -4680.93, -1.55, +1999.25, -51.38,
+                                  -249.67, -39.05, +7.12, +27.87, +5.79, +2.45},
+                                 u) /
+               3600.0);
     obliquity_mean_is_valid_ = true;
 }
 
-Degree Earth::GetObliquityMean() const
+Degree Earth::GetObliquityMean()
 {
     if(!obliquity_mean_is_valid_) {
         ComputeObliquityMean();

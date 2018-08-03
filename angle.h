@@ -177,6 +177,13 @@ class Degree
         return ss.str();
     }
 
+    std::string ArcSecStr(int s_prec = 2) const noexcept
+    {
+        std::ostringstream ss;
+        ss << std::fixed << std::setprecision(s_prec) << ArcSec() << '\"';
+        return ss.str();
+    }
+
     std::string DMSStr(int s_prec = 2) const noexcept
     {
         std::ostringstream ss;
@@ -212,6 +219,14 @@ class Degree
     double deg_;
 };
 
+constexpr Radian::Radian(const Degree &deg) : rad_(deg.Deg() * M_PI / 180.0)
+{
+}
+
+constexpr Degree::Degree(const Radian &rad) : deg_(rad.Rad() * 180.0 / M_PI)
+{
+}
+
 constexpr Degree operator"" _deg(long double d)
 {
     return Degree(d);
@@ -242,6 +257,11 @@ constexpr Degree operator"" _second(long double s)
     return Degree(s * 15.0 / 3600.0);
 }
 
+constexpr Radian operator"" _rad(long double r)
+{
+    return Radian(r);
+}
+
 constexpr double sin(const Degree &x)
 {
     return std::sin(x.Rad());
@@ -255,14 +275,6 @@ constexpr double cos(const Degree &x)
 constexpr double tan(const Degree &x)
 {
     return std::tan(x.Rad());
-}
-
-constexpr Radian::Radian(const Degree &deg) : rad_(deg.Deg() * M_PI / 180.0)
-{
-}
-
-constexpr Degree::Degree(const Radian &rad) : deg_(rad.Rad() * 180.0 / M_PI)
-{
 }
 
 }  // namespace PA

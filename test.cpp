@@ -171,15 +171,34 @@ bool test_earth()
 {
     std::cout << "Earth: Nutation... ";
     {
+        // [Jean99] p.148
+        // https://www.erdrotation.de/sofa_001.html
+        Earth earth{Date{1987, 4, 10}};
+        Degree nutation_longitude{earth.GetNutationLongitude()};
+        Degree nutation_obliquity{earth.GetNutationObliquity()};
+#if 0
+        std::cout << nutation_longitude.ArcSecStr(3) << std::endl;
+        std::cout << nutation_obliquity.ArcSecStr(3) << std::endl;
+#endif
+        if(!is_close(nutation_longitude.Deg(),
+                     (-0.0000183306021758759992_rad).Deg(), 0.0,
+                     (0.003_arcsec).Deg())) {
+            return false;
+        }
+        if(!is_close(nutation_obliquity.Deg(),
+                     (0.0000457927984038134921_rad).Deg(), 0.0,
+                     (0.003_arcsec).Deg())) {
+            return false;
+        }
+    }
+    {
         // [Peter11] p.77
         Earth earth{Date{1988, 9, 1}};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
-#ifdef DEBUG
-        std::cout << "- Nutation in Longitude: " << nutation_longitude.arcsec()
-                  << std::endl;
-        std::cout << "- Nutation in Obliquity: " << nutation_obliquity.arcsec()
-                  << std::endl;
+#if 0
+        std::cout << nutation_longitude.ArcSecStr() << std::endl;
+        std::cout << nutation_obliquity.ArcSecStr() << std::endl;
 #endif
         if(!is_close(nutation_longitude.Deg(), (5.1_arcsec).Deg(), 0.0,
                      (0.1_arcsec).Deg())) {
@@ -195,12 +214,9 @@ bool test_earth()
         Earth earth{Date{2018, 8, 1}};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
-#ifdef DEBUG
-        std::cout << std::endl << std::fixed << std::setprecision(12);
-        std::cout << "- Nutation in Longitude: " << nutation_longitude.arcsec()
-                  << std::endl;
-        std::cout << "- Nutation in Obliquity: " << nutation_is_closec()
-                  << std::endl;
+#if 0
+        std::cout << nutation_longitude.ArcSecStr() << std::endl;
+        std::cout << nutation_obliquity.ArcSecStr() << std::endl;
 #endif
         if(!is_close(nutation_longitude.Deg(), (-13.0_arcsec).Deg(), 0.0,
                      (0.5_arcsec).Deg())) {
@@ -211,15 +227,15 @@ bool test_earth()
 
     std::cout << "Earth: Mean Obliquity... ";
     {
-        // [Peter11] p.52
-        Earth earth{Date{2009, 7, 6}};
+        // [Jean99] p.148
+        Earth earth{Date{1987, 4, 10.0}};
         Degree obliquity_mean{earth.GetObliquityMean()};
-#ifdef DEBUG
-        std::cout << std::endl << std::fixed << std::setprecision(12);
-        std::cout << "- Mean Obliquity: " << obliquity_mean.Deg() << std::endl;
+#if 0
+        std::cout << obliquity_mean.DMSStr() << std::endl;
 #endif
-        if(!is_close(obliquity_mean.Deg(), (23.438054979133_deg).Deg(), 1.0e-9,
-                     0.0)) {
+        if(!is_close(obliquity_mean.Deg(),
+                     (23.0_deg + 26.0_arcmin + 27.41_arcsec).Deg(), 0.0,
+                     (0.01_arcsec).Deg())) {
             return false;
         }
     }
@@ -227,13 +243,25 @@ bool test_earth()
 
     std::cout << "Earth: Obliquity... ";
     {
+        // [Jean99] p.148
+        Earth earth{Date{1987, 4, 10.0}};
+        Degree obliquity{earth.GetObliquity()};
+#if 0
+        std::cout << obliquity.DMSStr() << std::endl;
+#endif
+        if(!is_close(obliquity.Deg(),
+                     (23.0_deg + 26.0_arcmin + 36.85_arcsec).Deg(), 0.0,
+                     (0.01_arcsec).Deg())) {
+            return false;
+        }
+    }
+    {
         // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
         // [Peter11] p.54
         Earth earth{Date{2018, 8, 1}};
         Degree obliquity{earth.GetObliquity()};
-#ifdef DEBUG
-        std::cout << std::endl << std::fixed << std::setprecision(12);
-        std::cout << "- Obliquity: " is_closes_str() << std::endl;
+#if 0
+        std::cout << obliquity.DMSStr() << std::endl;
 #endif
         if(!is_close(obliquity.Deg(),
                      (23.0_deg + 26.0_arcmin + 7.0_arcsec).Deg(), 0.0,
