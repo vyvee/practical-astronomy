@@ -14,7 +14,8 @@ using namespace PA;
 
 Sun::Sun(const Date& date)
 {
-    julian_date_ = date.GetJulianDate();
+    Date d{date};
+    julian_date_ = d.GetJulianDate();
 }
 
 #if 0

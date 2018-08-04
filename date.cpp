@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-std::string PA::Date::GetTTString() const
+std::string PA::Date::GetTTString()
 {
     if(!calendar_tt_is_valid_) {
         ComputeCalendarTT();

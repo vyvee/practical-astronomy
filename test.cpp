@@ -32,9 +32,10 @@ bool test_julian_date()
             double julian_date_1;
             double julian_date_2;
         } const_date_test_data[] = {
-            {Date::J1900_JAN_0_5, 2415020.0},
-            {Date::J2000_JAN_1_5, 2451545.0},
+            {EpochJ1900, 2415020.0}, {EpochJ2000, 2451545.0},
+            /*
             {Date::J2010, 2455196.5},
+             */
         };
         for(auto& td : const_date_test_data) {
             if(!is_close(td.julian_date_1, td.julian_date_2, 1.0e-9, 0.0)) {
@@ -146,10 +147,10 @@ bool test_coordinate()
         // [Peter11] p.54
         Date date{2009, 7, 6};
         Coordinate coord;
-        coord.SetEcliptic(139.686111_deg, 4.875278_deg, date);
+        coord.SetEcliptic(139.686111_deg, 4.875278_deg, date.GetJulianDate());
         Degree ra{coord.GetEquatorialRightAscension()};
         Degree decl{coord.GetEquatorialDeclination()};
-#ifdef DEBUG
+#if 0
         std::cout << ra.hms_str() << std::endl;
         std::cout << decl.dms_str() << std::endl;
 #endif

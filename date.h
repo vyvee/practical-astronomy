@@ -11,10 +11,6 @@ namespace PA
 class Date
 {
    public:
-    static const double J1900_JAN_0_5;
-    static const double J2000_JAN_1_5;
-    static const double J2010;
-
     constexpr Date(){};
     constexpr Date(int year, int month = 1, double day = 1.0)
         : calendar_tt_is_valid_(true)
@@ -52,17 +48,17 @@ class Date
 
     constexpr bool GetCalendarTT(int *p_year,
                                  int *p_month,
-                                 double *p_day) const;
-    constexpr bool GetJulianDate(double *p_julian_date) const;
-    constexpr double GetJulianDate() const;
-    constexpr double GetDeltaT() const;
+                                 double *p_day) noexcept;
+    constexpr bool GetJulianDate(double *p_julian_date) noexcept;
+    constexpr double GetJulianDate() noexcept;
+    constexpr double GetDeltaT() noexcept;
 
-    constexpr operator double() const
+    constexpr explicit operator double()
     {
         return GetJulianDate();
     }
 
-    std::string GetTTString() const;
+    std::string GetTTString();
 
    private:
     static constexpr bool JulianDateFromCalendar(double *p_jd,
@@ -78,24 +74,20 @@ class Date
                                              int month,
                                              double day);
 
-    constexpr void ComputeCalendarTT() const;
-    mutable bool calendar_tt_is_valid_{false};
-    mutable int calendar_tt_year_{-1};
-    mutable int calendar_tt_month_{-1};
-    mutable double calendar_tt_day_{-1.0};
+    constexpr void ComputeCalendarTT();
+    bool calendar_tt_is_valid_{false};
+    int calendar_tt_year_{-1};
+    int calendar_tt_month_{-1};
+    double calendar_tt_day_{-1.0};
 
-    constexpr void ComputeJulianDate() const;
-    mutable bool julian_date_is_valid_{false};
-    mutable double julian_date_{-1.0};
+    constexpr void ComputeJulianDate();
+    bool julian_date_is_valid_{false};
+    double julian_date_{-1.0};
 
-    constexpr void ComputeDeltaT() const;
-    mutable bool delta_t_is_valid_{false};
-    mutable double delta_t_{-1.0};
+    constexpr void ComputeDeltaT();
+    bool delta_t_is_valid_{false};
+    double delta_t_{-1.0};
 };
-
-inline const double Date::J1900_JAN_0_5{Date{1899, 12, 31.5}.GetJulianDate()};
-inline const double Date::J2000_JAN_1_5{Date{2000, 1, 1.5}.GetJulianDate()};
-inline const double Date::J2010{Date{2009, 12, 31.0}.GetJulianDate()};
 
 constexpr void Date::SetCalendarTT(int year, int month, double day)
 {
@@ -133,7 +125,7 @@ constexpr void Date::SetJulianDate(double julian_date)
 
 constexpr bool Date::GetCalendarTT(int *p_year,
                                    int *p_month,
-                                   double *p_day) const
+                                   double *p_day) noexcept
 {
     if(!calendar_tt_is_valid_) {
         ComputeCalendarTT();
@@ -148,7 +140,7 @@ constexpr bool Date::GetCalendarTT(int *p_year,
     return true;
 }
 
-constexpr bool Date::GetJulianDate(double *p_julian_date) const
+constexpr bool Date::GetJulianDate(double *p_julian_date) noexcept
 {
     if(!julian_date_is_valid_) {
         ComputeJulianDate();
@@ -161,7 +153,7 @@ constexpr bool Date::GetJulianDate(double *p_julian_date) const
     return true;
 }
 
-constexpr double Date::GetJulianDate() const
+constexpr double Date::GetJulianDate() noexcept
 {
     double jd{0.0};
     if(!GetJulianDate(&jd)) {
@@ -170,7 +162,7 @@ constexpr double Date::GetJulianDate() const
     return jd;
 }
 
-constexpr double PA::Date::GetDeltaT() const
+constexpr double PA::Date::GetDeltaT() noexcept
 {
     if(!delta_t_is_valid_) {
         ComputeDeltaT();
@@ -314,7 +306,7 @@ constexpr bool Date::DeltaTFromCalendar(double *p_delta_t,
     return true;
 }
 
-constexpr void Date::ComputeCalendarTT() const
+constexpr void Date::ComputeCalendarTT()
 {
     if(julian_date_is_valid_) {
         calendar_tt_is_valid_ =
@@ -323,7 +315,7 @@ constexpr void Date::ComputeCalendarTT() const
     }
 }
 
-constexpr void Date::ComputeJulianDate() const
+constexpr void Date::ComputeJulianDate()
 {
     if(calendar_tt_is_valid_) {
         julian_date_is_valid_ =
@@ -332,13 +324,17 @@ constexpr void Date::ComputeJulianDate() const
     }
 }
 
-constexpr void Date::ComputeDeltaT() const
+constexpr void Date::ComputeDeltaT()
 {
     if(calendar_tt_is_valid_) {
         delta_t_is_valid_ = DeltaTFromCalendar(
             &delta_t_, calendar_tt_year_, calendar_tt_month_, calendar_tt_day_);
     }
 }
+
+constexpr double EpochJ1900{Date{1899, 12, 31.5}.GetJulianDate()};
+constexpr double EpochJ2000{Date{2000, 1, 1.5}.GetJulianDate()};
+// constexpr double EpochJ2010{Date{2009, 12, 31.0}.GetJulianDate()};
 
 }  // namespace PA
 
