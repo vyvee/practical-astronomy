@@ -214,8 +214,8 @@ constexpr void Earth::ComputeNutation() noexcept
     double sum_deps{0.0};
     for(auto& pt : periodic_terms) {
         Degree arg{l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 + om * pt.m5};
-        double dpsi{(pt.aa + pt.bb * t) * sin(arg) + pt.cc * cos(Degree(arg))};
-        double deps{(pt.dd + pt.ee * t) * cos(arg) + pt.ff * sin(Degree(arg))};
+        double dpsi{(pt.aa + pt.bb * t) * sin(arg) + pt.cc * cos(arg)};
+        double deps{(pt.dd + pt.ee * t) * cos(arg) + pt.ff * sin(arg)};
         sum_dpsi += dpsi;
         sum_deps += deps;
     }
