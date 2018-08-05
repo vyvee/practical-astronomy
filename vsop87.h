@@ -23,7 +23,7 @@ class VSOP87
 
 constexpr void VSOP87::ComputePlanetPosition(Planet /*planet*/)
 {
-    // [Jean99] includes VSOP87B
+    // [Jean99] includes VSOP87D
     // [Jean99] Chapter 25 (Solar Coordinates), p.163 (Conversion to FK5 system)
     // [Jean99] Chapter 26 (Rectangular Coordinates of the Sun), p.171
     // [Jean99] Chapter 32 (Positions of Planets), p.217 (Conversion to FK5
