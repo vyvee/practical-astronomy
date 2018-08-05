@@ -7,6 +7,7 @@
 #include "earth.h"
 #include "sun.h"
 #include "test.h"
+#include "vsop87.h"
 
 using namespace PA;
 
@@ -81,6 +82,9 @@ int main(void)
     }
 
     ephemeris_now();
+
+    VSOP87 vsop87;
+    vsop87.ComputePlanetPosition(VSOP87::Planet::kEarth);
 
     return 0;
 }

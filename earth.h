@@ -96,41 +96,6 @@ constexpr void Earth::ComputeNutation() noexcept
     // -
     // https://www.iers.org/SharedDocs/Publikationen/EN/IERS/Publications/tn/TechnNote32/tn32_033.pdf
     // - [Jean99] Chapter, p.143
-    // double t{(date_.GetJulianDate() - PA::Date::J2000_JAN_1_5) /
-    // 36525.0};
-    double t{(date_.GetJulianDate() - PA::EpochJ2000) / 36525.0};
-    Degree l{horner_polynomial({+485868.249036, +1717915923.2178, +31.8792,
-                                +0.051635, -0.00024470},
-                               t) /
-             3600.0};
-    Degree lp{horner_polynomial({+1287104.79305, +129596581.0481, -0.5532,
-                                 +0.000136, -0.00001149},
-                                t) /
-              3600.0};
-    Degree f{horner_polynomial({+335779.526232, +1739527262.8478, -12.7512,
-                                -0.001037, +0.00000417},
-                               t) /
-             3600.0};
-    Degree d{horner_polynomial({+1072260.70369, +1602961601.2090, -6.3706,
-                                +0.006593, -0.00003169},
-                               t) /
-             3600.0};
-    Degree om{horner_polynomial({450160.398036, -6962890.5431, +7.4722,
-                                 +0.007702, -0.00005939},
-                                t) /
-              3600.0};
-#if 0
-        std::cout << "=>  L: " << l.DegStr() << " = " << l.GetUnwind().DegStr()
-                  << std::endl;
-        std::cout << "=> L': " << lp.DegStr() << " = "
-                  << lp.GetUnwind().DegStr() << std::endl;
-        std::cout << "=>  F: " << f.DegStr() << " = " << f.GetUnwind().DegStr()
-                  << std::endl;
-        std::cout << "=>  D: " << d.DegStr() << " = " << d.GetUnwind().DegStr()
-                  << std::endl;
-        std::cout << "=> Om: " << om.DegStr() << " = "
-                  << om.GetUnwind().DegStr() << std::endl;
-#endif
     struct {
         int m1;
         int m2;
@@ -222,6 +187,29 @@ constexpr void Earth::ComputeNutation() noexcept
         {-1, 0, 0, 0, 2, 1405, 0, 4, -610, 0, 2},
         {1, 1, 2, -2, 2, 1290, 0, 0, -556, 0, 0},
     };
+
+    double t{(date_.GetJulianDate() - PA::EpochJ2000) / 36525.0};
+    Degree l{horner_polynomial({+485868.249036, +1717915923.2178, +31.8792,
+                                +0.051635, -0.00024470},
+                               t) /
+             3600.0};
+    Degree lp{horner_polynomial({+1287104.79305, +129596581.0481, -0.5532,
+                                 +0.000136, -0.00001149},
+                                t) /
+              3600.0};
+    Degree f{horner_polynomial({+335779.526232, +1739527262.8478, -12.7512,
+                                -0.001037, +0.00000417},
+                               t) /
+             3600.0};
+    Degree d{horner_polynomial({+1072260.70369, +1602961601.2090, -6.3706,
+                                +0.006593, -0.00003169},
+                               t) /
+             3600.0};
+    Degree om{horner_polynomial({450160.398036, -6962890.5431, +7.4722,
+                                 +0.007702, -0.00005939},
+                                t) /
+              3600.0};
+
     double sum_dpsi{0.0};
     double sum_deps{0.0};
     for(auto& pt : periodic_terms) {
