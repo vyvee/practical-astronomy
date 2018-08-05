@@ -11,8 +11,8 @@ namespace PA
 class Date
 {
    public:
-    constexpr Date(){};
-    constexpr Date(int year, int month = 1, double day = 1.0)
+    constexpr Date() noexcept {};
+    constexpr Date(int year, int month = 1, double day = 1.0) noexcept
         : calendar_tt_is_valid_(true)
         , calendar_tt_year_(year)
         , calendar_tt_month_(month)
@@ -24,7 +24,7 @@ class Date
                    int day,
                    int hour,
                    int minute = 0,
-                   double second = 0.0)
+                   double second = 0.0) noexcept
         : calendar_tt_is_valid_(true)
         , calendar_tt_year_(year)
         , calendar_tt_month_(month)
@@ -32,19 +32,21 @@ class Date
                            second / (24 * 60.0 * 60.0))
     {
     }
-    constexpr Date(double julian_date)
+    constexpr Date(double julian_date) noexcept
         : julian_date_is_valid_(true), julian_date_(julian_date)
     {
     }
 
-    constexpr void SetCalendarTT(int year, int month = 1, double day = 1.0);
+    constexpr void SetCalendarTT(int year,
+                                 int month = 1,
+                                 double day = 1.0) noexcept;
     constexpr void SetCalendarTT(int year,
                                  int month,
                                  int day,
                                  int hour,
                                  int minute = 0,
-                                 double second = 0.0);
-    constexpr void SetJulianDate(double julian_date);
+                                 double second = 0.0) noexcept;
+    constexpr void SetJulianDate(double julian_date) noexcept;
 
     constexpr bool GetCalendarTT(int *p_year,
                                  int *p_month,
@@ -53,7 +55,7 @@ class Date
     constexpr double GetJulianDate() noexcept;
     constexpr double GetDeltaT() noexcept;
 
-    constexpr explicit operator double()
+    constexpr explicit operator double() noexcept
     {
         return GetJulianDate();
     }
@@ -64,32 +66,32 @@ class Date
     static constexpr bool JulianDateFromCalendar(double *p_jd,
                                                  int year,
                                                  int month,
-                                                 double day);
+                                                 double day) noexcept;
     static constexpr bool CalendarFromJulianDate(int *p_year,
                                                  int *p_month,
                                                  double *p_day,
-                                                 double jd);
+                                                 double jd) noexcept;
     static constexpr bool DeltaTFromCalendar(double *p_delta_t,
                                              int year,
                                              int month,
-                                             double day);
+                                             double day) noexcept;
 
-    constexpr void ComputeCalendarTT();
+    constexpr void ComputeCalendarTT() noexcept;
     bool calendar_tt_is_valid_{false};
     int calendar_tt_year_{-1};
     int calendar_tt_month_{-1};
     double calendar_tt_day_{-1.0};
 
-    constexpr void ComputeJulianDate();
+    constexpr void ComputeJulianDate() noexcept;
     bool julian_date_is_valid_{false};
     double julian_date_{-1.0};
 
-    constexpr void ComputeDeltaT();
+    constexpr void ComputeDeltaT() noexcept;
     bool delta_t_is_valid_{false};
     double delta_t_{-1.0};
 };
 
-constexpr void Date::SetCalendarTT(int year, int month, double day)
+constexpr void Date::SetCalendarTT(int year, int month, double day) noexcept
 {
     calendar_tt_year_ = year;
     calendar_tt_month_ = month;
@@ -104,7 +106,7 @@ constexpr void Date::SetCalendarTT(int year,
                                    int day,
                                    int hour,
                                    int minute,
-                                   double second)
+                                   double second) noexcept
 {
     calendar_tt_year_ = year;
     calendar_tt_month_ = month;
@@ -115,7 +117,7 @@ constexpr void Date::SetCalendarTT(int year,
     julian_date_is_valid_ = false;
 }
 
-constexpr void Date::SetJulianDate(double julian_date)
+constexpr void Date::SetJulianDate(double julian_date) noexcept
 {
     julian_date_ = julian_date;
     julian_date_is_valid_ = true;
@@ -177,7 +179,7 @@ constexpr double PA::Date::GetDeltaT() noexcept
 constexpr bool Date::JulianDateFromCalendar(double *p_jd,
                                             int year,
                                             int month,
-                                            double day)
+                                            double day) noexcept
 {
     // Reference: [Peter11] Section 5
     const auto [y, m]{(month < 3) ? std::tuple(year - 1, month + 12) :
@@ -203,7 +205,7 @@ constexpr bool Date::JulianDateFromCalendar(double *p_jd,
 constexpr bool PA::Date::CalendarFromJulianDate(int *p_year,
                                                 int *p_month,
                                                 double *p_day,
-                                                double jd)
+                                                double jd) noexcept
 {
     // Reference: [Peter11] Section 5
     if(jd < 0.0) {
@@ -233,7 +235,7 @@ constexpr bool PA::Date::CalendarFromJulianDate(int *p_year,
 constexpr bool Date::DeltaTFromCalendar(double *p_delta_t,
                                         int year,
                                         int month,
-                                        double /*day*/)
+                                        double /*day*/) noexcept
 {
     // Many formulas exist. We implement the one available from NASA.
     // Error can be up to 2.0s for recent years. Not ideal but usable.
@@ -306,7 +308,7 @@ constexpr bool Date::DeltaTFromCalendar(double *p_delta_t,
     return true;
 }
 
-constexpr void Date::ComputeCalendarTT()
+constexpr void Date::ComputeCalendarTT() noexcept
 {
     if(julian_date_is_valid_) {
         calendar_tt_is_valid_ =
@@ -315,7 +317,7 @@ constexpr void Date::ComputeCalendarTT()
     }
 }
 
-constexpr void Date::ComputeJulianDate()
+constexpr void Date::ComputeJulianDate() noexcept
 {
     if(calendar_tt_is_valid_) {
         julian_date_is_valid_ =
@@ -324,7 +326,7 @@ constexpr void Date::ComputeJulianDate()
     }
 }
 
-constexpr void Date::ComputeDeltaT()
+constexpr void Date::ComputeDeltaT() noexcept
 {
     if(calendar_tt_is_valid_) {
         delta_t_is_valid_ = DeltaTFromCalendar(

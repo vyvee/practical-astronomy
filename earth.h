@@ -9,10 +9,10 @@ namespace PA
 class Earth
 {
    public:
-    constexpr Earth(double jd) : date_(Date(jd))
+    constexpr Earth(double jd) noexcept : date_(Date(jd))
     {
     }
-    constexpr Earth(const Date& date) : date_(date)
+    constexpr Earth(const Date& date) noexcept : date_(date)
     {
     }
 

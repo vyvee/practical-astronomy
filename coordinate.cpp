@@ -14,15 +14,9 @@
 
 using namespace PA;
 
-Coordinate::Coordinate()
-{
-}
-
-Coordinate::~Coordinate()
-{
-}
-
-void Coordinate::SetEcliptic(const Degree& lon, const Degree& lat, double jd)
+void Coordinate::SetEcliptic(const Degree& lon,
+                             const Degree& lat,
+                             double jd) noexcept
 {
     ecliptic_longitude_ = lon;
     ecliptic_latitude_ = lat;
@@ -31,7 +25,7 @@ void Coordinate::SetEcliptic(const Degree& lon, const Degree& lat, double jd)
     equatorial_is_valid_ = false;
 }
 
-Degree Coordinate::GetEclipticLongitude() const
+Degree Coordinate::GetEclipticLongitude() const noexcept
 {
     if(!ecliptic_is_valid_) {
         return Degree(0.0);
@@ -40,7 +34,7 @@ Degree Coordinate::GetEclipticLongitude() const
     return ecliptic_longitude_;
 }
 
-Degree Coordinate::GetEclipticLatitude() const
+Degree Coordinate::GetEclipticLatitude() const noexcept
 {
     if(!ecliptic_is_valid_) {
         return Degree(0.0);
@@ -49,7 +43,7 @@ Degree Coordinate::GetEclipticLatitude() const
     return ecliptic_latitude_;
 }
 
-Degree Coordinate::GetEquatorialRightAscension() const
+Degree Coordinate::GetEquatorialRightAscension() const noexcept
 {
     if(!equatorial_is_valid_) {
         if(!ComputeEquatorial()) {
@@ -60,7 +54,7 @@ Degree Coordinate::GetEquatorialRightAscension() const
     return equatorial_right_ascension_;
 }
 
-Degree Coordinate::GetEquatorialDeclination() const
+Degree Coordinate::GetEquatorialDeclination() const noexcept
 {
     if(!equatorial_is_valid_) {
         if(!ComputeEquatorial()) {
@@ -71,7 +65,7 @@ Degree Coordinate::GetEquatorialDeclination() const
     return equatorial_declination_;
 }
 
-bool Coordinate::ComputeEquatorial() const
+bool Coordinate::ComputeEquatorial() const noexcept
 {
     if(ecliptic_is_valid_) {
         // Reference: [Peter11] Section 27, p.51.

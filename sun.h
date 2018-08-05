@@ -10,7 +10,7 @@ namespace PA
 class Sun
 {
    public:
-    Sun(const Date& date);
+    Sun(const Date& date) noexcept;
     // Coordinate GetPosition() const;
 
     // Degree GetMeanEclipticLongitude() const;

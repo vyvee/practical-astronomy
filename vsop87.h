@@ -16,12 +16,12 @@ class VSOP87
     {
     }
 
-    constexpr void ComputePlanetPosition(Planet planet);
+    constexpr void ComputePlanetPosition(Planet planet) noexcept;
 
    private:
 };
 
-constexpr void VSOP87::ComputePlanetPosition(Planet /*planet*/)
+constexpr void VSOP87::ComputePlanetPosition(Planet /*planet*/) noexcept
 {
     // [Jean99] includes VSOP87D
     // [Jean99] Chapter 25 (Solar Coordinates), p.163 (Conversion to FK5 system)

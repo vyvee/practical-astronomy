@@ -12,7 +12,7 @@
 
 using namespace PA;
 
-Sun::Sun(const Date& date)
+Sun::Sun(const Date& date) noexcept
 {
     Date d{date};
     julian_date_ = d.GetJulianDate();
