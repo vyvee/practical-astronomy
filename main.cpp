@@ -11,23 +11,10 @@
 
 using namespace PA;
 
-void ephemeris_now(void)
+void ephemeris(Date date)
 {
-    PA::Date date;
-
     {
         std::cout << "Date & Time:" << std::endl;
-#if 1
-        std::time_t now;
-        now = std::chrono::system_clock::to_time_t(
-            std::chrono::system_clock::now());
-        struct tm *ptm;
-        ptm = std::gmtime(&now);
-        date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
-                           ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
-#else
-        date.SetCalendarTT(1987, 4, 10);
-#endif
         std::cout << "     Julian Date: " << std::fixed << std::setprecision(6)
                   << date.GetJulianDate() << std::endl;
         std::cout << "       Date (TT): " << date.GetTTString() << std::endl;
@@ -81,7 +68,24 @@ int main(void)
         // return 0;
     }
 
-    ephemeris_now();
+    PA::Date date;
+    {
+#if 1
+        std::time_t now;
+        now = std::chrono::system_clock::to_time_t(
+            std::chrono::system_clock::now());
+        struct tm *ptm;
+        ptm = std::gmtime(&now);
+        date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
+                           ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
+        ephemeris(date);
+#else
+        for(int d = 1; d <= 30; d++) {
+            date.SetCalendarTT(1987, 4, d);
+            ephemeris(date);
+        }
+#endif
+    }
 
     VSOP87 vsop87;
     vsop87.ComputePlanetPosition(VSOP87::Planet::kEarth);
