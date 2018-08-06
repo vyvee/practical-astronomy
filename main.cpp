@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 #include "date.h"
 #include "earth.h"
@@ -39,16 +40,26 @@ void ephemeris(Date date)
         std::cout << "      Obliquity.: " << obliquity.DMSStr(2) << std::endl;
     }
 
-#if 0
     {
         std::cout << "Sun:" << std::endl;
-        Sun sun{date};
-        Coordinate coord;
-        coord = sun.GetPosition();
-        Degree lon{coord.GetEclipticLongitude()};
-        std::cout << std::fixed << std::setprecision(6);
-        std::cout << "   Ecliptic Lon.: " << lon.DMSStr() << " ("
-                  << lon.DegStr() << ")" << std::endl;
+        Sun sun{date.GetJulianDate()};
+        Degree geometric_longitude{sun.GetGeometricLongitude()};
+        Degree apparent_longitude{sun.GetApparentLongitude()};
+        Degree geometric_latitude{sun.GetGeometricLatitude()};
+        double radius_vector_au{sun.GetRadiusVectorAU()};
+        std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
+                  << " (" << geometric_longitude.DegStr() << ")" << std::endl;
+        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
+                  << apparent_longitude.DegStr() << ")" << std::endl;
+        std::cout << "  Geometric Lat.: " << geometric_latitude.ArcSecStr()
+                  << std::endl;
+        std::cout << std::fixed << std::setprecision(8);
+        std::cout << "   Radius Vector: " << radius_vector_au << " AU"
+                  << std::endl;
+    }
+
+#if 0
+    {
         Degree ra{coord.GetEquatorialRightAscension()};
         Degree decl{coord.GetEquatorialDeclination()};
         std::cout << " Equatorial R.A.: " << ra.HMSStr() << " (" << ra.HourStr()
@@ -68,6 +79,8 @@ int main(void)
         // return 0;
     }
 
+    // VSOP87ProcessDataFiles();
+
     PA::Date date;
     {
 #if 1
@@ -78,17 +91,12 @@ int main(void)
         ptm = std::gmtime(&now);
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
-        ephemeris(date);
 #else
-        for(int d = 1; d <= 30; d++) {
-            date.SetCalendarTT(1987, 4, d);
-            ephemeris(date);
-        }
+        date.SetCalendarTT(1992, 10, 13);
+        // date.SetCalendarTT(1992, 12, 20);
 #endif
+        ephemeris(date);
     }
-
-    VSOP87 vsop87;
-    vsop87.ComputePlanetPosition(VSOP87::Planet::kEarth);
 
     return 0;
 }

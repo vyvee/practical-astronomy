@@ -29,6 +29,26 @@ class Radian
         return rad_ * 180.0 / M_PI;
     }
 
+    constexpr void Unwind() noexcept
+    {
+        rad_ -= 2 * M_PI * floor(rad_ / (2 * M_PI));
+    }
+
+    constexpr Radian GetUnwind() const noexcept
+    {
+        return Radian(rad_ - 2 * M_PI * floor(rad_ / (2 * M_PI)));
+    }
+
+    constexpr void Normalize() noexcept
+    {
+        rad_ -= 2 * M_PI * floor((rad_ + M_PI) / (2 * M_PI));
+    }
+
+    constexpr Radian GetNormalize() const noexcept
+    {
+        return Radian(rad_ - 2 * M_PI * floor((rad_ + M_PI) / (2 * M_PI)));
+    }
+
     constexpr Radian operator-() const noexcept
     {
         return Radian(-rad_);

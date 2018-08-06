@@ -10,4 +10,6 @@ constexpr auto horner_polynomial(const T (&coeffs)[SZ], T x) noexcept
     return value;
 }
 
+void VSOP87ProcessDataFiles();
+
 #endif  // MISC_H_
