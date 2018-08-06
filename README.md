@@ -10,16 +10,19 @@ The project is still in EARLY stage.
 
 - Angle: Degree, Radian, DMS, HMS
 - Date: Julian Date, Calendar (TT), Delta-T
+- Sun: Position
 - Earth: Obliquity, Nutation
+- Planets: VSOP87 (Full)
 - Solver: Kepler's equation
 - Develops with GCC
 
 ## TODOs
 
-- NEXT: VSOP87 for Earth
-- Positions of Sun, Moon, and other planets (with [VSOP87], [LEA-406], etc.) 
-- Time: UT
+- Apparent position of the Sun
 - Coordinate Transformation
+- Positions of Moon and other planets (with [VSOP87], [LEA-406], etc.) 
+- Time: UT
+- Calculation of Eclipses
 - Better error handling: Invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.
 - C++: Better and more use move semantics, noexcept, etc.
 - Many others...
