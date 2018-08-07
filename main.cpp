@@ -4,7 +4,9 @@
 #include <iostream>
 #include <vector>
 
+#include "angle.h"
 #include "date.h"
+
 #include "earth.h"
 #include "sun.h"
 #include "test.h"
@@ -44,18 +46,27 @@ void ephemeris(Date date)
         std::cout << "Sun:" << std::endl;
         Sun sun{date.GetJulianDate()};
         Degree geometric_longitude{sun.GetGeometricLongitude()};
-        Degree apparent_longitude{sun.GetApparentLongitude()};
         Degree geometric_latitude{sun.GetGeometricLatitude()};
+        Degree aberration_longitude{sun.GetAberrationLongitude()};
+        Degree aberration_latitude{sun.GetAberrationLatitude()};
+        Degree apparent_longitude{sun.GetApparentLongitude()};
+        Degree apparent_latitude{sun.GetApparentLatitude()};
         double radius_vector_au{sun.GetRadiusVectorAU()};
         std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
                   << " (" << geometric_longitude.DegStr() << ")" << std::endl;
         std::cout << "  Geometric Lat.: " << geometric_latitude.ArcSecStr()
                   << std::endl;
-        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
-                  << apparent_longitude.DegStr() << ")" << std::endl;
-        std::cout << std::fixed << std::setprecision(8);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;
+        std::cout << " Aberration Lon.: " << aberration_longitude.ArcSecStr(9)
+                  << " (" << aberration_longitude.DegStr(9) << ")" << std::endl;
+        std::cout << " Aberration Lat.: " << aberration_latitude.ArcSecStr(9)
+                  << " (" << aberration_latitude.DegStr(9) << ")" << std::endl;
+        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
+                  << apparent_longitude.DegStr() << ")" << std::endl;
+        std::cout << "   Apparent Lat.: " << apparent_latitude.DMSStr() << " ("
+                  << apparent_latitude.DegStr() << ")" << std::endl;
+        std::cout << std::fixed << std::setprecision(8);
     }
 
 #if 0
