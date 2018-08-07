@@ -6887,7 +6887,7 @@ static constexpr struct PeriodicTermTableDegree mercury_l_table_degrees[]{
     {mercury_l4, mercury_l4_size},
     {mercury_l5, mercury_l5_size},
 };
-static constexpr struct PeriodicTermTable mercury_l_table {mercury_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable mercury_l_table {.degrees = mercury_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mercury_b_table_degrees[]{
     {mercury_b0, mercury_b0_size},
     {mercury_b1, mercury_b1_size},
@@ -6896,7 +6896,7 @@ static constexpr struct PeriodicTermTableDegree mercury_b_table_degrees[]{
     {mercury_b4, mercury_b4_size},
     {mercury_b5, mercury_b5_size},
 };
-static constexpr struct PeriodicTermTable mercury_b_table {mercury_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable mercury_b_table {.degrees = mercury_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mercury_r_table_degrees[]{
     {mercury_r0, mercury_r0_size},
     {mercury_r1, mercury_r1_size},
@@ -6905,7 +6905,7 @@ static constexpr struct PeriodicTermTableDegree mercury_r_table_degrees[]{
     {mercury_r4, mercury_r4_size},
     {mercury_r5, mercury_r5_size},
 };
-static constexpr struct PeriodicTermTable mercury_r_table {mercury_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable mercury_r_table {.degrees = mercury_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm venus_l0[]{
     {      3.17614666774,  0.00000000000,        0.00000000000 },
     {      0.01353968419,  5.59313319619,    10213.28554621100 },
@@ -8650,7 +8650,7 @@ static constexpr struct PeriodicTermTableDegree venus_l_table_degrees[]{
     {venus_l4, venus_l4_size},
     {venus_l5, venus_l5_size},
 };
-static constexpr struct PeriodicTermTable venus_l_table {venus_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable venus_l_table {.degrees = venus_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree venus_b_table_degrees[]{
     {venus_b0, venus_b0_size},
     {venus_b1, venus_b1_size},
@@ -8659,7 +8659,7 @@ static constexpr struct PeriodicTermTableDegree venus_b_table_degrees[]{
     {venus_b4, venus_b4_size},
     {venus_b5, venus_b5_size},
 };
-static constexpr struct PeriodicTermTable venus_b_table {venus_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable venus_b_table {.degrees = venus_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree venus_r_table_degrees[]{
     {venus_r0, venus_r0_size},
     {venus_r1, venus_r1_size},
@@ -8668,7 +8668,7 @@ static constexpr struct PeriodicTermTableDegree venus_r_table_degrees[]{
     {venus_r4, venus_r4_size},
     {venus_r5, venus_r5_size},
 };
-static constexpr struct PeriodicTermTable venus_r_table {venus_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable venus_r_table {.degrees = venus_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm earth_l0[]{
     {      1.75347045673,  0.00000000000,        0.00000000000 },
     {      0.03341656456,  4.66925680417,     6283.07584999140 },
@@ -11156,7 +11156,7 @@ static constexpr struct PeriodicTermTableDegree earth_l_table_degrees[]{
     {earth_l4, earth_l4_size},
     {earth_l5, earth_l5_size},
 };
-static constexpr struct PeriodicTermTable earth_l_table {earth_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable earth_l_table {.degrees = earth_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree earth_b_table_degrees[]{
     {earth_b0, earth_b0_size},
     {earth_b1, earth_b1_size},
@@ -11165,7 +11165,7 @@ static constexpr struct PeriodicTermTableDegree earth_b_table_degrees[]{
     {earth_b4, earth_b4_size},
     {earth_b5, earth_b5_size},
 };
-static constexpr struct PeriodicTermTable earth_b_table {earth_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable earth_b_table {.degrees = earth_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree earth_r_table_degrees[]{
     {earth_r0, earth_r0_size},
     {earth_r1, earth_r1_size},
@@ -11174,7 +11174,7 @@ static constexpr struct PeriodicTermTableDegree earth_r_table_degrees[]{
     {earth_r4, earth_r4_size},
     {earth_r5, earth_r5_size},
 };
-static constexpr struct PeriodicTermTable earth_r_table {earth_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable earth_r_table {.degrees = earth_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm mars_l0[]{
     {      6.20347711583,  0.00000000000,        0.00000000000 },
     {      0.18656368100,  5.05037100303,     3340.61242669980 },
@@ -16720,7 +16720,7 @@ static constexpr struct PeriodicTermTableDegree mars_l_table_degrees[]{
     {mars_l4, mars_l4_size},
     {mars_l5, mars_l5_size},
 };
-static constexpr struct PeriodicTermTable mars_l_table {mars_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable mars_l_table {.degrees = mars_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mars_b_table_degrees[]{
     {mars_b0, mars_b0_size},
     {mars_b1, mars_b1_size},
@@ -16729,7 +16729,7 @@ static constexpr struct PeriodicTermTableDegree mars_b_table_degrees[]{
     {mars_b4, mars_b4_size},
     {mars_b5, mars_b5_size},
 };
-static constexpr struct PeriodicTermTable mars_b_table {mars_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable mars_b_table {.degrees = mars_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mars_r_table_degrees[]{
     {mars_r0, mars_r0_size},
     {mars_r1, mars_r1_size},
@@ -16738,7 +16738,7 @@ static constexpr struct PeriodicTermTableDegree mars_r_table_degrees[]{
     {mars_r4, mars_r4_size},
     {mars_r5, mars_r5_size},
 };
-static constexpr struct PeriodicTermTable mars_r_table {mars_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable mars_r_table {.degrees = mars_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm jupiter_l0[]{
     {      0.59954691495,  0.00000000000,        0.00000000000 },
     {      0.09695898711,  5.06191793105,      529.69096509460 },
@@ -20284,7 +20284,7 @@ static constexpr struct PeriodicTermTableDegree jupiter_l_table_degrees[]{
     {jupiter_l4, jupiter_l4_size},
     {jupiter_l5, jupiter_l5_size},
 };
-static constexpr struct PeriodicTermTable jupiter_l_table {jupiter_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable jupiter_l_table {.degrees = jupiter_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree jupiter_b_table_degrees[]{
     {jupiter_b0, jupiter_b0_size},
     {jupiter_b1, jupiter_b1_size},
@@ -20293,7 +20293,7 @@ static constexpr struct PeriodicTermTableDegree jupiter_b_table_degrees[]{
     {jupiter_b4, jupiter_b4_size},
     {jupiter_b5, jupiter_b5_size},
 };
-static constexpr struct PeriodicTermTable jupiter_b_table {jupiter_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable jupiter_b_table {.degrees = jupiter_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree jupiter_r_table_degrees[]{
     {jupiter_r0, jupiter_r0_size},
     {jupiter_r1, jupiter_r1_size},
@@ -20302,7 +20302,7 @@ static constexpr struct PeriodicTermTableDegree jupiter_r_table_degrees[]{
     {jupiter_r4, jupiter_r4_size},
     {jupiter_r5, jupiter_r5_size},
 };
-static constexpr struct PeriodicTermTable jupiter_r_table {jupiter_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable jupiter_r_table {.degrees = jupiter_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm saturn_l0[]{
     {      0.87401354029,  0.00000000000,        0.00000000000 },
     {      0.11107659780,  3.96205090194,      213.29909543800 },
@@ -26124,7 +26124,7 @@ static constexpr struct PeriodicTermTableDegree saturn_l_table_degrees[]{
     {saturn_l4, saturn_l4_size},
     {saturn_l5, saturn_l5_size},
 };
-static constexpr struct PeriodicTermTable saturn_l_table {saturn_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable saturn_l_table {.degrees = saturn_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree saturn_b_table_degrees[]{
     {saturn_b0, saturn_b0_size},
     {saturn_b1, saturn_b1_size},
@@ -26133,7 +26133,7 @@ static constexpr struct PeriodicTermTableDegree saturn_b_table_degrees[]{
     {saturn_b4, saturn_b4_size},
     {saturn_b5, saturn_b5_size},
 };
-static constexpr struct PeriodicTermTable saturn_b_table {saturn_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable saturn_b_table {.degrees = saturn_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree saturn_r_table_degrees[]{
     {saturn_r0, saturn_r0_size},
     {saturn_r1, saturn_r1_size},
@@ -26142,7 +26142,7 @@ static constexpr struct PeriodicTermTableDegree saturn_r_table_degrees[]{
     {saturn_r4, saturn_r4_size},
     {saturn_r5, saturn_r5_size},
 };
-static constexpr struct PeriodicTermTable saturn_r_table {saturn_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable saturn_r_table {.degrees = saturn_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm uranus_l0[]{
     {      5.48129294299,  0.00000000000,        0.00000000000 },
     {      0.09260408252,  0.89106421530,       74.78159856730 },
@@ -30194,7 +30194,7 @@ static constexpr struct PeriodicTermTableDegree uranus_l_table_degrees[]{
     {uranus_l4, uranus_l4_size},
     {uranus_l5, uranus_l5_size},
 };
-static constexpr struct PeriodicTermTable uranus_l_table {uranus_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable uranus_l_table {.degrees = uranus_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree uranus_b_table_degrees[]{
     {uranus_b0, uranus_b0_size},
     {uranus_b1, uranus_b1_size},
@@ -30203,7 +30203,7 @@ static constexpr struct PeriodicTermTableDegree uranus_b_table_degrees[]{
     {uranus_b4, uranus_b4_size},
     {uranus_b5, uranus_b5_size},
 };
-static constexpr struct PeriodicTermTable uranus_b_table {uranus_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable uranus_b_table {.degrees = uranus_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree uranus_r_table_degrees[]{
     {uranus_r0, uranus_r0_size},
     {uranus_r1, uranus_r1_size},
@@ -30212,7 +30212,7 @@ static constexpr struct PeriodicTermTableDegree uranus_r_table_degrees[]{
     {uranus_r4, uranus_r4_size},
     {uranus_r5, uranus_r5_size},
 };
-static constexpr struct PeriodicTermTable uranus_r_table {uranus_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable uranus_r_table {.degrees = uranus_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTerm neptune_l0[]{
     {      5.31188633047,  0.00000000000,        0.00000000000 },
     {      0.01798475509,  2.90101273050,       38.13303563780 },
@@ -32204,7 +32204,7 @@ static constexpr struct PeriodicTermTableDegree neptune_l_table_degrees[]{
     {neptune_l4, neptune_l4_size},
     {neptune_l5, neptune_l5_size},
 };
-static constexpr struct PeriodicTermTable neptune_l_table {neptune_l_table_degrees, 6};
+static constexpr struct PeriodicTermTable neptune_l_table {.degrees = neptune_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree neptune_b_table_degrees[]{
     {neptune_b0, neptune_b0_size},
     {neptune_b1, neptune_b1_size},
@@ -32213,7 +32213,7 @@ static constexpr struct PeriodicTermTableDegree neptune_b_table_degrees[]{
     {neptune_b4, neptune_b4_size},
     {neptune_b5, neptune_b5_size},
 };
-static constexpr struct PeriodicTermTable neptune_b_table {neptune_b_table_degrees, 6};
+static constexpr struct PeriodicTermTable neptune_b_table {.degrees = neptune_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree neptune_r_table_degrees[]{
     {neptune_r0, neptune_r0_size},
     {neptune_r1, neptune_r1_size},
@@ -32222,4 +32222,4 @@ static constexpr struct PeriodicTermTableDegree neptune_r_table_degrees[]{
     {neptune_r4, neptune_r4_size},
     {neptune_r5, neptune_r5_size},
 };
-static constexpr struct PeriodicTermTable neptune_r_table {neptune_r_table_degrees, 6};
+static constexpr struct PeriodicTermTable neptune_r_table {.degrees = neptune_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };

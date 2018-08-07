@@ -112,9 +112,12 @@ void VSOP87ProcessDataFiles()
             outfile << "static constexpr struct PeriodicTermTable ";
             outfile << planet_name << '_' << coord_index_char[coord_index_curr]
                     << "_table ";
-            outfile << '{' << planet_name << '_'
-                    << coord_index_char[coord_index_curr] << "_table_degrees, "
-                    << (kDegreeMax + 1) << "};" << std::endl;
+            outfile << '{';
+            outfile << ".degrees = " << planet_name << '_'
+                    << coord_index_char[coord_index_curr] << "_table_degrees, ";
+            outfile << ".size = " << (kDegreeMax + 1) << ", ";
+            outfile << ".method = PeriodicTermTable::Method::kCos ";
+            outfile << "};" << std::endl;
         }
 
         infile.close();

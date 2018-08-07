@@ -28,23 +28,45 @@ struct PeriodicTermTableDegree {
 struct PeriodicTermTable {
     const struct PeriodicTermTableDegree *degrees;
     int size;
+    enum class Method {
+        kSin,
+        kCos,
+    } method;
 };
 
-constexpr double PeriodicTermCosCompute(const PeriodicTermTable &table,
-                                        double t) noexcept
+constexpr double PeriodicTermCompute(const PeriodicTermTable &table,
+                                     double t) noexcept
 {
     double value{0.0};
-    int degree{table.size - 1};
-    while(true) {
-        for(int i = 0; i < table.degrees[degree].size; i++) {
-            const PeriodicTerm &pt{table.degrees[degree].terms[i]};
-            value += pt.a * std::cos(pt.b + pt.c * t);
+    switch(table.method) {
+    case PeriodicTermTable::Method::kSin: {
+        int degree{table.size - 1};
+        while(true) {
+            for(int i = 0; i < table.degrees[degree].size; i++) {
+                const PeriodicTerm &pt{table.degrees[degree].terms[i]};
+                value += pt.a * std::sin(pt.b + pt.c * t);
+            }
+            if(degree == 0) {
+                break;
+            }
+            value *= t;
+            degree--;
         }
-        if(degree == 0) {
-            break;
+    } break;
+    case PeriodicTermTable::Method::kCos: {
+        int degree{table.size - 1};
+        while(true) {
+            for(int i = 0; i < table.degrees[degree].size; i++) {
+                const PeriodicTerm &pt{table.degrees[degree].terms[i]};
+                value += pt.a * std::cos(pt.b + pt.c * t);
+            }
+            if(degree == 0) {
+                break;
+            }
+            value *= t;
+            degree--;
         }
-        value *= t;
-        degree--;
+    } break;
     }
     return value;
 }

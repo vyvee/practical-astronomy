@@ -49,10 +49,10 @@ void ephemeris(Date date)
         double radius_vector_au{sun.GetRadiusVectorAU()};
         std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
                   << " (" << geometric_longitude.DegStr() << ")" << std::endl;
-        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
-                  << apparent_longitude.DegStr() << ")" << std::endl;
         std::cout << "  Geometric Lat.: " << geometric_latitude.ArcSecStr()
                   << std::endl;
+        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
+                  << apparent_longitude.DegStr() << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;

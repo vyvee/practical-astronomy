@@ -97,11 +97,11 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
     double latitude{0.0};
     double radius_vector_au{0.0};
 
-    longitude = PeriodicTermCosCompute(
+    longitude = PeriodicTermCompute(
         periodic_term_l_tables[static_cast<int>(planet)], tau);
-    latitude = PeriodicTermCosCompute(
+    latitude = PeriodicTermCompute(
         periodic_term_b_tables[static_cast<int>(planet)], tau);
-    radius_vector_au = PeriodicTermCosCompute(
+    radius_vector_au = PeriodicTermCompute(
         periodic_term_r_tables[static_cast<int>(planet)], tau);
 
     // Conversion of reference frame to FK5
