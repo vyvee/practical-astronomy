@@ -34,7 +34,8 @@ constexpr double PeriodicTermCosCompute(const PeriodicTermTable &table,
                                         double t) noexcept
 {
     double value{0.0};
-    for(int degree{table.size - 1}; degree >= 0; degree--) {
+    int degree{table.size - 1};
+    while(true) {
         for(int i = 0; i < table.degrees[degree].size; i++) {
             const PeriodicTerm &pt{table.degrees[degree].terms[i]};
             value += pt.a * std::cos(pt.b + pt.c * t);
@@ -43,6 +44,7 @@ constexpr double PeriodicTermCosCompute(const PeriodicTermTable &table,
             break;
         }
         value *= t;
+        degree--;
     }
     return value;
 }
