@@ -71,7 +71,7 @@ constexpr void Sun::ComputePosition() noexcept
         (vsop87.GetPlanetLongitude(VSOP87::Planet::kEarth) + Radian(M_PI))
             .GetUnwind();
     geometric_latitude_ = -vsop87.GetPlanetLatitude(VSOP87::Planet::kEarth);
-    radius_vector_au_ = vsop87.GetPlanetDistanceAU(VSOP87::Planet::kEarth);
+    radius_vector_au_ = vsop87.GetPlanetRadiusVectorAU(VSOP87::Planet::kEarth);
     Earth earth{Date(julian_date_)};
     apparent_longitude_ = geometric_longitude_;
     apparent_longitude_ += earth.GetNutationLongitude();

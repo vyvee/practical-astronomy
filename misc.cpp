@@ -13,7 +13,7 @@ void VSOP87ProcessDataFiles()
     };
     static constexpr char coord_index_char[]{'\0', 'l', 'b', 'r'};
 
-    std::ofstream outfile("/tmp/vsop87_dat.cpp");
+    std::ofstream outfile("/tmp/vsop87_internal.dat");
     for(const std::string &planet_name : planet_names) {
         std::string filename{"/tmp/VSOP87D."};
         filename += planet_name.substr(0, 3);
@@ -46,8 +46,9 @@ void VSOP87ProcessDataFiles()
 
             int coord_seq{(kDegreeMax + 1) * coord_index + coord_degree};
             while(true) {
-                outfile << "static constexpr PeriodicTerm " << planet_name
-                        << "_" << coord_index_char[coord_index_curr]
+                outfile << "static constexpr struct PeriodicTerm ";
+                outfile << planet_name << "_"
+                        << coord_index_char[coord_index_curr]
                         << coord_degree_curr << "[]{" << std::endl;
                 int coord_seq_curr{(kDegreeMax + 1) * coord_index_curr +
                                    coord_degree_curr};
@@ -55,7 +56,8 @@ void VSOP87ProcessDataFiles()
                     break;
                 }
                 outfile << "};" << std::endl;
-                outfile << "static constexpr int " << planet_name << "_"
+                outfile << "static constexpr int ";
+                outfile << planet_name << "_"
                         << coord_index_char[coord_index_curr]
                         << coord_degree_curr << "_size{0};" << std::endl;
                 if(coord_degree_curr < kDegreeMax) {
@@ -76,9 +78,10 @@ void VSOP87ProcessDataFiles()
                         << " }," << std::endl;
             }
             outfile << "};" << std::endl;
-            outfile << "static constexpr int " << planet_name << "_"
-                    << coord_index_char[coord_index_curr] << coord_degree_curr
-                    << "_size{" << num_terms << "};" << std::endl;
+            outfile << "static constexpr int ";
+            outfile << planet_name << "_" << coord_index_char[coord_index_curr]
+                    << coord_degree_curr << "_size{" << num_terms << "};"
+                    << std::endl;
 
             if(coord_degree_curr < kDegreeMax) {
                 coord_degree_curr++;
@@ -93,9 +96,9 @@ void VSOP87ProcessDataFiles()
         }
 
         for(coord_index_curr = 1; coord_index_curr <= 3; coord_index_curr++) {
-            outfile << "static constexpr PeriodicTermTable " << planet_name
-                    << '_' << coord_index_char[coord_index_curr] << "_table[]{"
-                    << std::endl;
+            outfile << "static constexpr struct PeriodicTermTableDegree ";
+            outfile << planet_name << '_' << coord_index_char[coord_index_curr]
+                    << "_table_degrees[]{" << std::endl;
             for(coord_degree_curr = 0; coord_degree_curr <= kDegreeMax;
                 coord_degree_curr++) {
                 outfile << "    {" << planet_name << '_'
@@ -105,6 +108,13 @@ void VSOP87ProcessDataFiles()
                         << coord_degree_curr << "_size}," << std::endl;
             }
             outfile << "};" << std::endl;
+
+            outfile << "static constexpr struct PeriodicTermTable ";
+            outfile << planet_name << '_' << coord_index_char[coord_index_curr]
+                    << "_table ";
+            outfile << '{' << planet_name << '_'
+                    << coord_index_char[coord_index_curr] << "_table_degrees, "
+                    << (kDegreeMax + 1) << "};" << std::endl;
         }
 
         infile.close();

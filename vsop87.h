@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "angle.h"
+#include "misc.h"
 
 namespace PA
 {
@@ -27,29 +28,47 @@ class VSOP87
 
     constexpr Radian GetPlanetLongitude(Planet planet) noexcept;
     constexpr Radian GetPlanetLatitude(Planet planet) noexcept;
-    constexpr double GetPlanetDistanceAU(Planet planet) noexcept;
+    constexpr double GetPlanetRadiusVectorAU(Planet planet) noexcept;
 
    private:
     double julian_date_;
 
-    struct PeriodicTerm {
-        double a;
-        double b;
-        double c;
-    };
-
-    struct PeriodicTermTable {
-        const PeriodicTerm *terms;
-        int size;
-    };
-
 #include "vsop87_internal.dat"
 
+    static constexpr PeriodicTermTable periodic_term_l_tables[]{
+        [static_cast<int>(Planet::kMercury)] = mercury_l_table,
+        [static_cast<int>(Planet::kVenus)] = venus_l_table,
+        [static_cast<int>(Planet::kEarth)] = earth_l_table,
+        [static_cast<int>(Planet::kMars)] = mars_l_table,
+        [static_cast<int>(Planet::kJupiter)] = jupiter_l_table,
+        [static_cast<int>(Planet::kSaturn)] = saturn_l_table,
+        [static_cast<int>(Planet::kUranus)] = uranus_l_table,
+        [static_cast<int>(Planet::kNeptune)] = neptune_l_table,
+    };
+
+    static constexpr PeriodicTermTable periodic_term_b_tables[]{
+        [static_cast<int>(Planet::kMercury)] = mercury_b_table,
+        [static_cast<int>(Planet::kVenus)] = venus_b_table,
+        [static_cast<int>(Planet::kEarth)] = earth_b_table,
+        [static_cast<int>(Planet::kMars)] = mars_b_table,
+        [static_cast<int>(Planet::kJupiter)] = jupiter_b_table,
+        [static_cast<int>(Planet::kSaturn)] = saturn_b_table,
+        [static_cast<int>(Planet::kUranus)] = uranus_b_table,
+        [static_cast<int>(Planet::kNeptune)] = neptune_b_table,
+    };
+
+    static constexpr PeriodicTermTable periodic_term_r_tables[]{
+        [static_cast<int>(Planet::kMercury)] = mercury_r_table,
+        [static_cast<int>(Planet::kVenus)] = venus_r_table,
+        [static_cast<int>(Planet::kEarth)] = earth_r_table,
+        [static_cast<int>(Planet::kMars)] = mars_r_table,
+        [static_cast<int>(Planet::kJupiter)] = jupiter_r_table,
+        [static_cast<int>(Planet::kSaturn)] = saturn_r_table,
+        [static_cast<int>(Planet::kUranus)] = uranus_r_table,
+        [static_cast<int>(Planet::kNeptune)] = neptune_r_table,
+    };
+
     constexpr void ComputePlanetPosition(Planet planet) noexcept;
-    template <int N>
-    static constexpr double PeriodicTermCompute(
-        const PeriodicTermTable (&periodic_term_table)[N],
-        double tau) noexcept;
 
     bool planet_position_valid_[8]{false};
     Radian planet_longitude_[8]{Radian(0.0), Radian(0.0), Radian(0.0),
@@ -58,25 +77,10 @@ class VSOP87
     Radian planet_latitude_[8]{Radian(0.0), Radian(0.0), Radian(0.0),
                                Radian(0.0), Radian(0.0), Radian(0.0),
                                Radian(0.0), Radian(0.0)};
-    double planet_distance_au_[8]{0.0};
+    double planet_radius_vector_au_[8]{0.0};
 
     static inline void ProcessDataFiles();
 };
-
-template <int N>
-constexpr double VSOP87::PeriodicTermCompute(
-    const PeriodicTermTable (&periodic_term_table)[N],
-    double tau) noexcept
-{
-    double values[N]{0.0};
-    for(int i = 0; i < N; i++) {
-        for(int j = 0; j < periodic_term_table[i].size; j++) {
-            const PeriodicTerm &pt{periodic_term_table[i].terms[j]};
-            values[i] += pt.a * std::cos(pt.b + pt.c * tau);
-        }
-    }
-    return horner_polynomial(values, tau);
-}
 
 constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
 {
@@ -91,57 +95,14 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
     double tau{t / 10.0};
     double longitude{0.0};
     double latitude{0.0};
-    double distance_au{0.0};
+    double radius_vector_au{0.0};
 
-    switch(planet) {
-    case Planet::kMercury:
-        longitude = PeriodicTermCompute(mercury_l_table, tau);
-        latitude = PeriodicTermCompute(mercury_b_table, tau);
-        distance_au = PeriodicTermCompute(mercury_r_table, tau);
-        break;
-
-    case Planet::kVenus:
-        longitude = PeriodicTermCompute(venus_l_table, tau);
-        latitude = PeriodicTermCompute(venus_b_table, tau);
-        distance_au = PeriodicTermCompute(venus_r_table, tau);
-        break;
-
-    case Planet::kEarth:
-        longitude = PeriodicTermCompute(earth_l_table, tau);
-        latitude = PeriodicTermCompute(earth_b_table, tau);
-        distance_au = PeriodicTermCompute(earth_r_table, tau);
-        break;
-
-    case Planet::kMars:
-        longitude = PeriodicTermCompute(mars_l_table, tau);
-        latitude = PeriodicTermCompute(mars_b_table, tau);
-        distance_au = PeriodicTermCompute(mars_r_table, tau);
-        break;
-
-    case Planet::kJupiter:
-        longitude = PeriodicTermCompute(jupiter_l_table, tau);
-        latitude = PeriodicTermCompute(jupiter_b_table, tau);
-        distance_au = PeriodicTermCompute(jupiter_r_table, tau);
-        break;
-
-    case Planet::kSaturn:
-        longitude = PeriodicTermCompute(saturn_l_table, tau);
-        latitude = PeriodicTermCompute(saturn_b_table, tau);
-        distance_au = PeriodicTermCompute(saturn_r_table, tau);
-        break;
-
-    case Planet::kUranus:
-        longitude = PeriodicTermCompute(uranus_l_table, tau);
-        latitude = PeriodicTermCompute(uranus_b_table, tau);
-        distance_au = PeriodicTermCompute(uranus_r_table, tau);
-        break;
-
-    case Planet::kNeptune:
-        longitude = PeriodicTermCompute(neptune_l_table, tau);
-        latitude = PeriodicTermCompute(neptune_b_table, tau);
-        distance_au = PeriodicTermCompute(neptune_r_table, tau);
-        break;
-    }
+    longitude = PeriodicTermCosCompute(
+        periodic_term_l_tables[static_cast<int>(planet)], tau);
+    latitude = PeriodicTermCosCompute(
+        periodic_term_b_tables[static_cast<int>(planet)], tau);
+    radius_vector_au = PeriodicTermCosCompute(
+        periodic_term_r_tables[static_cast<int>(planet)], tau);
 
     // Conversion of reference frame to FK5
     // [Jean99] p.219
@@ -158,7 +119,7 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
     planet_longitude_[static_cast<int>(planet)] = Radian(longitude).GetUnwind();
     planet_latitude_[static_cast<int>(planet)] =
         Radian(latitude).GetNormalize();
-    planet_distance_au_[static_cast<int>(planet)] = distance_au;
+    planet_radius_vector_au_[static_cast<int>(planet)] = radius_vector_au;
 
     planet_position_valid_[static_cast<int>(planet)] = true;
 }
@@ -179,12 +140,12 @@ constexpr Radian VSOP87::GetPlanetLatitude(Planet planet) noexcept
     return planet_latitude_[static_cast<int>(planet)];
 }
 
-constexpr double VSOP87::GetPlanetDistanceAU(Planet planet) noexcept
+constexpr double VSOP87::GetPlanetRadiusVectorAU(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);
     }
-    return planet_distance_au_[static_cast<int>(planet)];
+    return planet_radius_vector_au_[static_cast<int>(planet)];
 }
 
 }  // namespace PA
