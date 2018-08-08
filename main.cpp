@@ -28,7 +28,7 @@ void ephemeris(Date date)
 
     {
         std::cout << "Earth:" << std::endl;
-        Earth earth{date};
+        Earth earth{date.GetJulianDate()};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
         Degree obliquity_mean{earth.GetObliquityMean()};

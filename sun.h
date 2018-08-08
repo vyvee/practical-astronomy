@@ -197,7 +197,7 @@ constexpr void Sun::ComputeAberration() noexcept
 
 constexpr void Sun::ComputeApparentPosition() noexcept
 {
-    Earth earth{Date(julian_date_)};
+    Earth earth{julian_date_};
     apparent_longitude_ = GetGeometricLongitude() +
                           earth.GetNutationLongitude() +
                           GetAberrationLongitude();

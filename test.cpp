@@ -172,9 +172,10 @@ bool test_earth()
 {
     std::cout << "Earth: Nutation... ";
     {
+        Date date{1987, 4, 10};
         // [Jean99] p.148
         // https://www.erdrotation.de/sofa_001.html
-        Earth earth{Date{1987, 4, 10}};
+        Earth earth{date.GetJulianDate()};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
@@ -193,8 +194,9 @@ bool test_earth()
         }
     }
     {
+        Date date{1988, 9, 1};
         // [Peter11] p.77
-        Earth earth{Date{1988, 9, 1}};
+        Earth earth{date.GetJulianDate()};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
@@ -211,8 +213,9 @@ bool test_earth()
         }
     }
     {
+        Date date{2018, 8, 1};
         // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
-        Earth earth{Date{2018, 8, 1}};
+        Earth earth{date.GetJulianDate()};
         Degree nutation_longitude{earth.GetNutationLongitude()};
         Degree nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
@@ -228,8 +231,9 @@ bool test_earth()
 
     std::cout << "Earth: Mean Obliquity... ";
     {
+        Date date{1987, 4, 10.0};
         // [Jean99] p.148
-        Earth earth{Date{1987, 4, 10.0}};
+        Earth earth{date.GetJulianDate()};
         Degree obliquity_mean{earth.GetObliquityMean()};
 #if 0
         std::cout << obliquity_mean.DMSStr() << std::endl;
@@ -244,8 +248,9 @@ bool test_earth()
 
     std::cout << "Earth: Obliquity... ";
     {
+        Date date{1987, 4, 10.0};
         // [Jean99] p.148
-        Earth earth{Date{1987, 4, 10.0}};
+        Earth earth{date.GetJulianDate()};
         Degree obliquity{earth.GetObliquity()};
 #if 0
         std::cout << obliquity.DMSStr() << std::endl;
@@ -257,9 +262,10 @@ bool test_earth()
         }
     }
     {
+        Date date{2018, 8, 1};
         // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
         // [Peter11] p.54
-        Earth earth{Date{2018, 8, 1}};
+        Earth earth{date.GetJulianDate()};
         Degree obliquity{earth.GetObliquity()};
 #if 0
         std::cout << obliquity.DMSStr() << std::endl;
