@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "angle.h"
+#include "coordinate.h"
 #include "date.h"
 
 #include "earth.h"
@@ -37,25 +38,34 @@ void ephemeris(Date date)
                   << std::endl;
         std::cout << " Nutation Obliq.: " << nutation_obliquity.ArcSecStr(3)
                   << std::endl;
-        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr(2)
-                  << std::endl;
-        std::cout << "      Obliquity.: " << obliquity.DMSStr(2) << std::endl;
+        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr(2) << " ("
+                  << obliquity_mean.DegStr(9) << ")" << std::endl;
+        std::cout << "      Obliquity.: " << obliquity.DMSStr(2) << " ("
+                  << obliquity.DegStr(9) << ")" << std::endl;
     }
 
     {
         std::cout << "Sun:" << std::endl;
         Sun sun{date.GetJulianDate()};
+        EarthObliquity earth_obliquity{date.GetJulianDate()};
         Degree geometric_longitude{sun.GetGeometricLongitude()};
         Degree geometric_latitude{sun.GetGeometricLatitude()};
         Degree aberration_longitude{sun.GetAberrationLongitude()};
         Degree aberration_latitude{sun.GetAberrationLatitude()};
         Degree apparent_longitude{sun.GetApparentLongitude()};
         Degree apparent_latitude{sun.GetApparentLatitude()};
+        Degree obliquity{earth_obliquity.GetObliquity()};
+        Degree apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+            apparent_longitude, apparent_latitude, obliquity)};
+        Degree apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+            apparent_longitude, apparent_latitude, obliquity)};
+
         double radius_vector_au{sun.GetRadiusVectorAU()};
         std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
                   << " (" << geometric_longitude.DegStr() << ")" << std::endl;
         std::cout << "  Geometric Lat.: " << geometric_latitude.ArcSecStr()
                   << std::endl;
+        std::cout << std::fixed << std::setprecision(9);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;
         std::cout << " Aberration Lon.: " << aberration_longitude.ArcSecStr(9)
@@ -66,6 +76,12 @@ void ephemeris(Date date)
                   << apparent_longitude.DegStr() << ")" << std::endl;
         std::cout << "   Apparent Lat.: " << apparent_latitude.DMSStr() << " ("
                   << apparent_latitude.DegStr() << ")" << std::endl;
+        std::cout << "   Apparent R.A.: " << apparent_ra.HMSStr(3) << " ("
+                  << apparent_ra.HourStr() << " = " << apparent_ra.DegStr()
+                  << ")" << std::endl;
+        std::cout << "  Apparent Decl.: " << apparent_decl.DMSStr() << " ("
+                  << apparent_decl.DegStr() << " = " << apparent_decl.DegStr()
+                  << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
     }
 
@@ -98,7 +114,7 @@ int main(void)
         std::time_t now;
         now = std::chrono::system_clock::to_time_t(
             std::chrono::system_clock::now());
-        struct tm *ptm;
+        struct tm* ptm;
         ptm = std::gmtime(&now);
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);

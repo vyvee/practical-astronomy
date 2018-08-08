@@ -21,6 +21,15 @@ class Coordinate
     constexpr Degree GetEquatorialRightAscension() noexcept;
     constexpr Degree GetEquatorialDeclination() noexcept;
 
+    static constexpr Radian EclipticalToEquatorialRightAscension(
+        const Radian& lon,
+        const Radian& lat,
+        const Radian& obliquity) noexcept;
+    static constexpr Radian EclipticalToEquatorialDeclination(
+        const Radian& lon,
+        const Radian& lat,
+        const Radian& obliquity) noexcept;
+
    private:
     double julian_date_{0.0};
 
@@ -33,6 +42,28 @@ class Coordinate
     Degree equatorial_right_ascension_{0.0};
     Degree equatorial_declination_{0.0};
 };
+
+constexpr Radian Coordinate::EclipticalToEquatorialRightAscension(
+    const Radian& lon,
+    const Radian& lat,
+    const Radian& obliquity) noexcept
+{
+    return Radian(
+               std::atan2(std::sin(lon.Rad()) * std::cos(obliquity.Rad()) -
+                              std::tan(lat.Rad()) * std::sin(obliquity.Rad()),
+                          std::cos(lon.Rad())))
+        .GetUnwind();
+}
+
+constexpr Radian Coordinate::EclipticalToEquatorialDeclination(
+    const Radian& lon,
+    const Radian& lat,
+    const Radian& obliquity) noexcept
+{
+    return Radian(std::asin(std::sin(lat.Rad()) * std::cos(obliquity.Rad()) +
+                            std::cos(lat.Rad()) * std::sin(obliquity.Rad()) *
+                                std::sin(lon.Rad())));
+}
 
 constexpr void Coordinate::SetEcliptic(const Degree& lon,
                                        const Degree& lat,
