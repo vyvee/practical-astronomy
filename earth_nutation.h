@@ -1,6 +1,14 @@
 #ifndef EARTH_NUTATION_H_
 #define EARTH_NUTATION_H_
 
+// - IAU 2000B Nutation Model
+//   - Accuracy: <= 0.001" difference with respect to IAU2000A model
+//     during 1995-2050
+//
+// Comparison:
+// - IAU 2000A Nutation Model
+//   - Accuracy: 0.0002"
+
 #include "angle.h"
 #include "date.h"
 
@@ -43,7 +51,7 @@ constexpr Degree EarthNutation::GetNutationObliquity() noexcept
 
 constexpr void EarthNutation::ComputeNutation() noexcept
 {
-    // Implements IAU 2000B Nutation Model
+    // IAU 2000B Nutation Model
     // Accuracy: 0.001" during 1995-2050
     // References:
     // - http://www.neoprogrammics.com/nutations/
@@ -144,33 +152,31 @@ constexpr void EarthNutation::ComputeNutation() noexcept
     };
 
     double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
-    Degree l{horner_polynomial({+485868.249036, +1717915923.2178, +31.8792,
-                                +0.051635, -0.00024470},
-                               t) /
-             3600.0};
-    Degree lp{horner_polynomial({+1287104.79305, +129596581.0481, -0.5532,
-                                 +0.000136, -0.00001149},
-                                t) /
-              3600.0};
-    Degree f{horner_polynomial({+335779.526232, +1739527262.8478, -12.7512,
-                                -0.001037, +0.00000417},
-                               t) /
-             3600.0};
-    Degree d{horner_polynomial({+1072260.70369, +1602961601.2090, -6.3706,
-                                +0.006593, -0.00003169},
-                               t) /
-             3600.0};
-    Degree om{horner_polynomial({450160.398036, -6962890.5431, +7.4722,
-                                 +0.007702, -0.00005939},
-                                t) /
-              3600.0};
+    double l{horner_polynomial(
+        {+485868.249036, +1717915923.2178, +31.8792, +0.051635, -0.00024470},
+        t)};
+    double lp{horner_polynomial(
+        {+1287104.79305, +129596581.0481, -0.5532, +0.000136, -0.00001149}, t)};
+    double f{horner_polynomial(
+        {+335779.526232, +1739527262.8478, -12.7512, -0.001037, +0.00000417},
+        t)};
+    double d{horner_polynomial(
+        {+1072260.70369, +1602961601.2090, -6.3706, +0.006593, -0.00003169},
+        t)};
+    double om{horner_polynomial(
+        {450160.398036, -6962890.5431, +7.4722, +0.007702, -0.00005939}, t)};
 
     double sum_dpsi{0.0};
     double sum_deps{0.0};
     for(auto& pt : periodic_terms) {
-        Degree arg{l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 + om * pt.m5};
-        double dpsi{(pt.aa + pt.bb * t) * sin(arg) + pt.cc * cos(arg)};
-        double deps{(pt.dd + pt.ee * t) * cos(arg) + pt.ff * sin(arg)};
+        double arg{Degree((l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 +
+                           om * pt.m5) /
+                          3600.0)
+                       .Rad()};
+        double dpsi{(pt.aa + pt.bb * t) * std::sin(arg) +
+                    pt.cc * std::cos(arg)};
+        double deps{(pt.dd + pt.ee * t) * std::cos(arg) +
+                    pt.ff * std::sin(arg)};
         sum_dpsi += dpsi;
         sum_deps += deps;
     }
