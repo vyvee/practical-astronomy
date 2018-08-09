@@ -104,12 +104,12 @@ constexpr Radian Sun::GetApparentLatitude() noexcept
 
 constexpr void Sun::ComputeGeometricPosition() noexcept
 {
-    VSOP87 vsop87{julian_date_};
+    VSOP vsop{julian_date_};
     geometric_longitude_ =
-        (vsop87.GetPlanetLongitude(VSOP87::Planet::kEarth) + Radian(M_PI))
+        (vsop.GetPlanetLongitude(VSOP::Planet::kEarth) + Radian(M_PI))
             .GetUnwind();
-    geometric_latitude_ = -vsop87.GetPlanetLatitude(VSOP87::Planet::kEarth);
-    radius_vector_au_ = vsop87.GetPlanetRadiusVectorAU(VSOP87::Planet::kEarth);
+    geometric_latitude_ = -vsop.GetPlanetLatitude(VSOP::Planet::kEarth);
+    radius_vector_au_ = vsop.GetPlanetRadiusVectorAU(VSOP::Planet::kEarth);
 }
 
 #include "misc.h"

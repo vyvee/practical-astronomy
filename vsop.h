@@ -1,5 +1,5 @@
-#ifndef VSOP87_H_
-#define VSOP87_H_
+#ifndef VSOP_H_
+#define VSOP_H_
 
 #include <cmath>
 
@@ -9,7 +9,7 @@
 
 namespace PA
 {
-class VSOP87
+class VSOP
 {
    public:
     enum class Planet {
@@ -23,7 +23,7 @@ class VSOP87
         kNeptune,
     };
 
-    constexpr VSOP87(double julian_date) noexcept : julian_date_(julian_date)
+    constexpr VSOP(double julian_date) noexcept : julian_date_(julian_date)
     {
     }
 
@@ -83,7 +83,7 @@ class VSOP87
     static inline void ProcessDataFiles();
 };
 
-constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
+constexpr void VSOP::ComputePlanetPosition(Planet planet) noexcept
 {
     // References:
     // - [Jean99] Chapter 32 (Positions of Planets)
@@ -125,7 +125,7 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
     planet_position_valid_[static_cast<int>(planet)] = true;
 }
 
-constexpr Radian VSOP87::GetPlanetLongitude(Planet planet) noexcept
+constexpr Radian VSOP::GetPlanetLongitude(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);
@@ -133,7 +133,7 @@ constexpr Radian VSOP87::GetPlanetLongitude(Planet planet) noexcept
     return planet_longitude_[static_cast<int>(planet)];
 }
 
-constexpr Radian VSOP87::GetPlanetLatitude(Planet planet) noexcept
+constexpr Radian VSOP::GetPlanetLatitude(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);
@@ -141,7 +141,7 @@ constexpr Radian VSOP87::GetPlanetLatitude(Planet planet) noexcept
     return planet_latitude_[static_cast<int>(planet)];
 }
 
-constexpr double VSOP87::GetPlanetRadiusVectorAU(Planet planet) noexcept
+constexpr double VSOP::GetPlanetRadiusVectorAU(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);
@@ -151,4 +151,4 @@ constexpr double VSOP87::GetPlanetRadiusVectorAU(Planet planet) noexcept
 
 }  // namespace PA
 
-#endif  // VSOP87_H_
+#endif  // VSOP_H_
