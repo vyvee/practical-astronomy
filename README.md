@@ -33,8 +33,8 @@ The project is still in EARLY stage.
 * [Jean99] - Jean Meeus, *Astronomical Algorithms*, 2nd Edition, 1999.
 * [VSOP87] - Planetory Solutions
 * [VSOP2013] - Planetory Solutions
-* [LEA-406]- Theory of Lunar Motion
-* [ELP/MPP02]- Theory of Lunar Motion
+* [LEA-406] - Theory of Lunar Motion
+* [ELP/MPP02] - Theory of Lunar Motion
 * [NASA07] - Polynomial Expressions for Delta T (ΔT)
 * [XEphem] - The Cross-Platform Astronomy Software
 * [Peter11] - Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.
