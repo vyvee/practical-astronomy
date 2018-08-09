@@ -107,8 +107,6 @@ int main(void)
         // return 0;
     }
 
-    // VSOP87ProcessDataFiles();
-
     PA::Date date;
     {
 #if 1

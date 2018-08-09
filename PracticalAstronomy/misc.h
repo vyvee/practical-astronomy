@@ -7,8 +7,6 @@
 #include "date.h"
 #include "utils.h"
 
-void VSOP87ProcessDataFiles();
-
 using namespace PA;
 
 constexpr Radian AberrationLongitude(Radian lon,
