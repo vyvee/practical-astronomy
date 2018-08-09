@@ -3,7 +3,7 @@
 
 #include "angle.h"
 #include "date.h"
-#include "vsop87.h"
+#include "vsop.h"
 
 // Required for: Nutation
 #include "earth.h"

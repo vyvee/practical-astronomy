@@ -8,10 +8,11 @@
 #include "coordinate.h"
 #include "date.h"
 
+#include "elp.h"
+
 #include "earth.h"
 #include "sun.h"
 #include "test.h"
-#include "vsop87.h"
 
 using namespace PA;
 
