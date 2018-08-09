@@ -1,5 +1,8 @@
-Debug/
-Release/
-*.mk
-*.txt
-*.project
+*/Debug/
+*/Release/
+*/*.mk
+*/*.txt
+*/*.project
+.codelite/
+Makefile
+*.workspace
