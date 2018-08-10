@@ -14,39 +14,39 @@ class Sun
 {
    public:
     constexpr Sun(double julian_date) noexcept;
-    constexpr Radian GetGeometricLongitude() noexcept;
-    constexpr Radian GetGeometricLatitude() noexcept;
+    constexpr double GetGeometricLongitude() noexcept;
+    constexpr double GetGeometricLatitude() noexcept;
     constexpr double GetRadiusVectorAU() noexcept;
-    constexpr Radian GetAberrationLongitude() noexcept;
-    constexpr Radian GetAberrationLatitude() noexcept;
-    constexpr Radian GetApparentLongitude() noexcept;
-    constexpr Radian GetApparentLatitude() noexcept;
+    constexpr double GetAberrationLongitude() noexcept;
+    constexpr double GetAberrationLatitude() noexcept;
+    constexpr double GetApparentLongitude() noexcept;
+    constexpr double GetApparentLatitude() noexcept;
 
    private:
     double julian_date_;
 
     constexpr void ComputeGeometricPosition() noexcept;
     bool geometric_position_is_valid_{false};
-    Radian geometric_longitude_{0.0};
-    Radian geometric_latitude_{0.0};
+    double geometric_longitude_{0.0};
+    double geometric_latitude_{0.0};
     double radius_vector_au_{0.0};
 
     constexpr void ComputeAberration() noexcept;
     bool aberration_is_valid_{false};
-    Radian aberration_longitude_{0.0};
-    Radian aberration_latitude_{0.0};
+    double aberration_longitude_{0.0};
+    double aberration_latitude_{0.0};
 
     constexpr void ComputeApparentPosition() noexcept;
     bool apparent_position_is_valid_{false};
-    Radian apparent_longitude_{0.0};
-    Radian apparent_latitude_{0.0};
+    double apparent_longitude_{0.0};
+    double apparent_latitude_{0.0};
 };
 
 constexpr Sun::Sun(double julian_date) noexcept : julian_date_(julian_date)
 {
 }
 
-constexpr Radian Sun::GetGeometricLongitude() noexcept
+constexpr double Sun::GetGeometricLongitude() noexcept
 {
     if(!geometric_position_is_valid_) {
         ComputeGeometricPosition();
@@ -54,7 +54,7 @@ constexpr Radian Sun::GetGeometricLongitude() noexcept
     return geometric_longitude_;
 }
 
-constexpr Radian Sun::GetGeometricLatitude() noexcept
+constexpr double Sun::GetGeometricLatitude() noexcept
 {
     if(!geometric_position_is_valid_) {
         ComputeGeometricPosition();
@@ -70,7 +70,7 @@ constexpr double Sun::GetRadiusVectorAU() noexcept
     return radius_vector_au_;
 }
 
-constexpr Radian Sun::GetAberrationLongitude() noexcept
+constexpr double Sun::GetAberrationLongitude() noexcept
 {
     if(!aberration_is_valid_) {
         ComputeAberration();
@@ -78,7 +78,7 @@ constexpr Radian Sun::GetAberrationLongitude() noexcept
     return aberration_longitude_;
 }
 
-constexpr Radian Sun::GetAberrationLatitude() noexcept
+constexpr double Sun::GetAberrationLatitude() noexcept
 {
     if(!aberration_is_valid_) {
         ComputeAberration();
@@ -86,7 +86,7 @@ constexpr Radian Sun::GetAberrationLatitude() noexcept
     return aberration_latitude_;
 }
 
-constexpr Radian Sun::GetApparentLongitude() noexcept
+constexpr double Sun::GetApparentLongitude() noexcept
 {
     if(!apparent_position_is_valid_) {
         ComputeApparentPosition();
@@ -94,7 +94,7 @@ constexpr Radian Sun::GetApparentLongitude() noexcept
     return apparent_longitude_;
 }
 
-constexpr Radian Sun::GetApparentLatitude() noexcept
+constexpr double Sun::GetApparentLatitude() noexcept
 {
     if(!apparent_position_is_valid_) {
         ComputeApparentPosition();
@@ -106,8 +106,7 @@ constexpr void Sun::ComputeGeometricPosition() noexcept
 {
     VSOP87 vsop87{julian_date_};
     geometric_longitude_ =
-        (vsop87.GetPlanetLongitude(VSOP87::Planet::kEarth) + Radian(M_PI))
-            .GetUnwind();
+        RadUnwind(vsop87.GetPlanetLongitude(VSOP87::Planet::kEarth) + M_PI);
     geometric_latitude_ = -vsop87.GetPlanetLatitude(VSOP87::Planet::kEarth);
     radius_vector_au_ = vsop87.GetPlanetRadiusVectorAU(VSOP87::Planet::kEarth);
 }
@@ -119,53 +118,53 @@ constexpr void Sun::ComputeAberration() noexcept
     // [Jean99] pp.167-168
     constexpr struct PeriodicTerm variation_d0[]{
         // Eccentricity of Earth's orbit
-        {(118.568_arcsec).Rad(), 87.5287_deg, 359993.7286_deg},
+        {118.568_arcsec, 87.5287_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(2.476_arcsec).Rad(), 85.0561_deg, 719987.4571_deg},
+        {2.476_arcsec, 85.0561_deg, 719987.4571_deg},
         // Due to Moon
-        {(1.376_arcsec).Rad(), 27.8502_deg, 4452671.1152_deg},
+        {1.376_arcsec, 27.8502_deg, 4452671.1152_deg},
         // Due to Venus
-        {(0.119_arcsec).Rad(), 73.1375_deg, 450368.8564_deg},
+        {0.119_arcsec, 73.1375_deg, 450368.8564_deg},
         // Due to Jupiter
-        {(0.114_arcsec).Rad(), 337.2264_deg, 329644.6718_deg},
+        {0.114_arcsec, 337.2264_deg, 329644.6718_deg},
         // Due to Jupiter
-        {(0.086_arcsec).Rad(), 222.5400_deg, 659289.3436_deg},
+        {0.086_arcsec, 222.5400_deg, 659289.3436_deg},
         // Due to Moon
-        {(0.078_arcsec).Rad(), 162.8136_deg, 9224659.7915_deg},
+        {0.078_arcsec, 162.8136_deg, 9224659.7915_deg},
         // Eccentricity of Earth's orbit
-        {(0.054_arcsec).Rad(), 82.5823_deg, 1079981.1857_deg},
+        {0.054_arcsec, 82.5823_deg, 1079981.1857_deg},
         // Due to Venus
-        {(0.052_arcsec).Rad(), 171.5189_deg, 225184.4282_deg},
+        {0.052_arcsec, 171.5189_deg, 225184.4282_deg},
         // Due to Moon
-        {(0.034_arcsec).Rad(), 30.3214_deg, 4092677.3866_deg},
+        {0.034_arcsec, 30.3214_deg, 4092677.3866_deg},
         // Due to Mars
-        {(0.033_arcsec).Rad(), 119.8105_deg, 337181.4711_deg},
+        {0.033_arcsec, 119.8105_deg, 337181.4711_deg},
         // Due to Jupiter
-        {(0.023_arcsec).Rad(), 247.5418_deg, 299295.6151_deg},
+        {0.023_arcsec, 247.5418_deg, 299295.6151_deg},
         // Due to Venus
-        {(0.023_arcsec).Rad(), 325.1526_deg, 315559.5560_deg},
+        {0.023_arcsec, 325.1526_deg, 315559.5560_deg},
         // Due to Venus
-        {(0.021_arcsec).Rad(), 155.1241_deg, 675553.2846_deg},
+        {0.021_arcsec, 155.1241_deg, 675553.2846_deg},
     };
     constexpr struct PeriodicTerm variation_d1[]{
         // Eccentricity of Earth's orbit
-        {(7.311_arcsec).Rad(), 333.4515_deg, 359993.7286_deg},
+        {7.311_arcsec, 333.4515_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(0.305_arcsec).Rad(), 330.9814_deg, 719987.4571_deg},
+        {0.305_arcsec, 330.9814_deg, 719987.4571_deg},
         // Eccentricity of Earth's orbit
-        {(0.010_arcsec).Rad(), 328.5170_deg, 1079981.1857_deg},
+        {0.010_arcsec, 328.5170_deg, 1079981.1857_deg},
     };
     constexpr struct PeriodicTerm variation_d2[]{
         // Eccentricity of Earth's orbit
-        {(0.309_arcsec).Rad(), 241.4518_deg, 359993.7286_deg},
+        {0.309_arcsec, 241.4518_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(0.021_arcsec).Rad(), 205.0482_deg, 719987.4571_deg},
+        {0.021_arcsec, 205.0482_deg, 719987.4571_deg},
         // Due to Moon
-        {(0.004_arcsec).Rad(), 297.8610_deg, 4452671.1152_deg},
+        {0.004_arcsec, 297.8610_deg, 4452671.1152_deg},
     };
     constexpr struct PeriodicTerm variation_d3[]{
         // Eccentricity of Earth's orbit
-        {(0.010_arcsec).Rad(), 154.7066_deg, 359993.7286_deg},
+        {0.010_arcsec, 154.7066_deg, 359993.7286_deg},
     };
     const struct PeriodicTermTableDegree variation_d_table_degrees[]{
         {variation_d0, sizeof(variation_d0) / sizeof(variation_d0[0])},
@@ -181,10 +180,9 @@ constexpr void Sun::ComputeAberration() noexcept
     };
 
     double tau{(julian_date_ - EpochJ2000) / 365250.0};
-    double daily_variation{(3548.193_arcsec).Rad() +
+    double daily_variation{3548.193_arcsec +
                            PeriodicTermCompute(variation_d_table, tau)};
-    aberration_longitude_ =
-        Radian(-0.005775518 * radius_vector_au_ * daily_variation);
+    aberration_longitude_ = -0.005775518 * radius_vector_au_ * daily_variation;
     // Should be less than 0.00001 arsec
     aberration_latitude_ =
         AberrationLatitude(geometric_longitude_, geometric_latitude_,

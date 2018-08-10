@@ -17,10 +17,10 @@ class Earth
     {
     }
 
-    constexpr Degree GetNutationLongitude() noexcept;
-    constexpr Degree GetNutationObliquity() noexcept;
-    constexpr Degree GetObliquityMean() noexcept;
-    constexpr Degree GetObliquity() noexcept;
+    constexpr double GetNutationLongitude() noexcept;
+    constexpr double GetNutationObliquity() noexcept;
+    constexpr double GetObliquityMean() noexcept;
+    constexpr double GetObliquity() noexcept;
 
    private:
     double julian_date_;
@@ -28,22 +28,22 @@ class Earth
     EarthObliquity earth_obliquity_;
 };
 
-constexpr Degree Earth::GetNutationLongitude() noexcept
+constexpr double Earth::GetNutationLongitude() noexcept
 {
     return earth_nutation_.GetNutationLongitude();
 }
 
-constexpr Degree Earth::GetNutationObliquity() noexcept
+constexpr double Earth::GetNutationObliquity() noexcept
 {
     return earth_nutation_.GetNutationObliquity();
 }
 
-constexpr Degree Earth::GetObliquityMean() noexcept
+constexpr double Earth::GetObliquityMean() noexcept
 {
     return earth_obliquity_.GetObliquityMean();
 }
 
-constexpr Degree Earth::GetObliquity() noexcept
+constexpr double Earth::GetObliquity() noexcept
 {
     return earth_obliquity_.GetObliquityMean() +
            earth_nutation_.GetNutationObliquity();

@@ -8,7 +8,7 @@ namespace PA
 class Solver
 {
    public:
-    static Radian solve_kepler(double ecc, const Radian& m);
+    static double solve_kepler(double ecc, double m);
 
    private:
     Solver(){};

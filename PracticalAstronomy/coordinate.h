@@ -31,11 +31,9 @@ constexpr double Coordinate::EclipticalToEquatorialRightAscension(
     const double lat,
     const double obliquity) noexcept
 {
-    return Radian(std::atan2(std::sin(lon) * std::cos(obliquity) -
-                                 std::tan(lat) * std::sin(obliquity),
-                             std::cos(lon)))
-        .GetUnwind()
-        .Rad();
+    return RadUnwind(std::atan2(std::sin(lon) * std::cos(obliquity) -
+                                    std::tan(lat) * std::sin(obliquity),
+                                std::cos(lon)));
 }
 
 constexpr double Coordinate::EclipticalToEquatorialDeclination(

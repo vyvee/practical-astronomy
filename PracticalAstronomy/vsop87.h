@@ -27,8 +27,8 @@ class VSOP87
     {
     }
 
-    constexpr Radian GetPlanetLongitude(Planet planet) noexcept;
-    constexpr Radian GetPlanetLatitude(Planet planet) noexcept;
+    constexpr double GetPlanetLongitude(Planet planet) noexcept;
+    constexpr double GetPlanetLatitude(Planet planet) noexcept;
     constexpr double GetPlanetRadiusVectorAU(Planet planet) noexcept;
 
    private:
@@ -72,12 +72,8 @@ class VSOP87
     constexpr void ComputePlanetPosition(Planet planet) noexcept;
 
     bool planet_position_valid_[8]{false};
-    Radian planet_longitude_[8]{Radian(0.0), Radian(0.0), Radian(0.0),
-                                Radian(0.0), Radian(0.0), Radian(0.0),
-                                Radian(0.0), Radian(0.0)};
-    Radian planet_latitude_[8]{Radian(0.0), Radian(0.0), Radian(0.0),
-                               Radian(0.0), Radian(0.0), Radian(0.0),
-                               Radian(0.0), Radian(0.0)};
+    double planet_longitude_[8]{0.0};
+    double planet_latitude_[8]{0.0};
     double planet_radius_vector_au_[8]{0.0};
 
     static inline void ProcessDataFiles();
@@ -107,25 +103,23 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
 
     // Conversion of reference frame to FK5
     // [Jean99] p.219
-    double lp{longitude +
-              (-Radian(1.397_deg).Rad() - Radian(0.00031_deg).Rad() * t) * t};
-    double diff_l{Radian(-0.09033_arcsec).Rad() +
-                  Radian(0.03916_arcsec).Rad() * (std::cos(lp) + std::sin(lp)) *
-                      std::tan(latitude)};
-    double diff_b{Radian(0.03916_arcsec).Rad() * (std::cos(lp) - std::sin(lp))};
+    double lp{longitude + (-1.397_deg - 0.00031_deg * t) * t};
+    double diff_l{-0.09033_arcsec + 0.03916_arcsec *
+                                        (std::cos(lp) + std::sin(lp)) *
+                                        std::tan(latitude)};
+    double diff_b{0.03916_arcsec * (std::cos(lp) - std::sin(lp))};
 
     longitude += diff_l;
     latitude += diff_b;
 
-    planet_longitude_[static_cast<int>(planet)] = Radian(longitude).GetUnwind();
-    planet_latitude_[static_cast<int>(planet)] =
-        Radian(latitude).GetNormalize();
+    planet_longitude_[static_cast<int>(planet)] = RadUnwind(longitude);
+    planet_latitude_[static_cast<int>(planet)] = RadNormalize(latitude);
     planet_radius_vector_au_[static_cast<int>(planet)] = radius_vector_au;
 
     planet_position_valid_[static_cast<int>(planet)] = true;
 }
 
-constexpr Radian VSOP87::GetPlanetLongitude(Planet planet) noexcept
+constexpr double VSOP87::GetPlanetLongitude(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);
@@ -133,7 +127,7 @@ constexpr Radian VSOP87::GetPlanetLongitude(Planet planet) noexcept
     return planet_longitude_[static_cast<int>(planet)];
 }
 
-constexpr Radian VSOP87::GetPlanetLatitude(Planet planet) noexcept
+constexpr double VSOP87::GetPlanetLatitude(Planet planet) noexcept
 {
     if(!planet_position_valid_[static_cast<int>(planet)]) {
         ComputePlanetPosition(planet);

@@ -178,20 +178,18 @@ bool test_earth()
         // [Jean99] p.148
         // https://www.erdrotation.de/sofa_001.html
         Earth earth{date.GetJulianDate()};
-        Degree nutation_longitude{earth.GetNutationLongitude()};
-        Degree nutation_obliquity{earth.GetNutationObliquity()};
+        double nutation_longitude{earth.GetNutationLongitude()};
+        double nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
         std::cout << nutation_longitude.ArcSecStr(3) << std::endl;
         std::cout << nutation_obliquity.ArcSecStr(3) << std::endl;
 #endif
-        if(!is_close(nutation_longitude.Deg(),
-                     (-0.0000183306021758759992_rad).Deg(), 0.0,
-                     (0.003_arcsec).Deg())) {
+        if(!is_close(nutation_longitude, -0.0000183306021758759992, 0.0,
+                     0.003_arcsec)) {
             return false;
         }
-        if(!is_close(nutation_obliquity.Deg(),
-                     (0.0000457927984038134921_rad).Deg(), 0.0,
-                     (0.003_arcsec).Deg())) {
+        if(!is_close(nutation_obliquity, 0.0000457927984038134921, 0.0,
+                     0.003_arcsec)) {
             return false;
         }
     }
@@ -199,18 +197,16 @@ bool test_earth()
         Date date{1988, 9, 1};
         // [Peter11] p.77
         Earth earth{date.GetJulianDate()};
-        Degree nutation_longitude{earth.GetNutationLongitude()};
-        Degree nutation_obliquity{earth.GetNutationObliquity()};
+        double nutation_longitude{earth.GetNutationLongitude()};
+        double nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
         std::cout << nutation_longitude.ArcSecStr() << std::endl;
         std::cout << nutation_obliquity.ArcSecStr() << std::endl;
 #endif
-        if(!is_close(nutation_longitude.Deg(), (5.1_arcsec).Deg(), 0.0,
-                     (0.1_arcsec).Deg())) {
+        if(!is_close(nutation_longitude, 5.1_arcsec, 0.0, 0.1_arcsec)) {
             return false;
         }
-        if(!is_close(nutation_obliquity.Deg(), (9.2_arcsec).Deg(), 0.0,
-                     (0.1_arcsec).Deg())) {
+        if(!is_close(nutation_obliquity, 9.2_arcsec, 0.0, 0.1_arcsec)) {
             return false;
         }
     }
@@ -218,14 +214,13 @@ bool test_earth()
         Date date{2018, 8, 1};
         // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
         Earth earth{date.GetJulianDate()};
-        Degree nutation_longitude{earth.GetNutationLongitude()};
-        Degree nutation_obliquity{earth.GetNutationObliquity()};
+        double nutation_longitude{earth.GetNutationLongitude()};
+        // double nutation_obliquity{earth.GetNutationObliquity()};
 #if 0
         std::cout << nutation_longitude.ArcSecStr() << std::endl;
         std::cout << nutation_obliquity.ArcSecStr() << std::endl;
 #endif
-        if(!is_close(nutation_longitude.Deg(), (-13.0_arcsec).Deg(), 0.0,
-                     (0.5_arcsec).Deg())) {
+        if(!is_close(nutation_longitude, -13.0_arcsec, 0.0, 0.5_arcsec)) {
             return false;
         }
     }
@@ -236,13 +231,12 @@ bool test_earth()
         Date date{1987, 4, 10.0};
         // [Jean99] p.148
         Earth earth{date.GetJulianDate()};
-        Degree obliquity_mean{earth.GetObliquityMean()};
+        double obliquity_mean{earth.GetObliquityMean()};
 #if 0
         std::cout << obliquity_mean.DMSStr() << std::endl;
 #endif
-        if(!is_close(obliquity_mean.Deg(),
-                     (Degree(23.0) + 26.0_arcmin + 27.41_arcsec).Deg(), 0.0,
-                     (0.01_arcsec).Deg())) {
+        if(!is_close(obliquity_mean, 23_deg + 26_arcmin + 27.41_arcsec, 0.0,
+                     0.01_arcsec)) {
             return false;
         }
     }
@@ -253,13 +247,12 @@ bool test_earth()
         Date date{1987, 4, 10.0};
         // [Jean99] p.148
         Earth earth{date.GetJulianDate()};
-        Degree obliquity{earth.GetObliquity()};
+        double obliquity{earth.GetObliquity()};
 #if 0
         std::cout << obliquity.DMSStr() << std::endl;
 #endif
-        if(!is_close(obliquity.Deg(),
-                     (Degree(23.0) + 26.0_arcmin + 36.85_arcsec).Deg(), 0.0,
-                     (0.01_arcsec).Deg())) {
+        if(!is_close(obliquity, 23_deg + 26_arcmin + 36.85_arcsec, 0.0,
+                     0.01_arcsec)) {
             return false;
         }
     }
@@ -268,13 +261,11 @@ bool test_earth()
         // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
         // [Peter11] p.54
         Earth earth{date.GetJulianDate()};
-        Degree obliquity{earth.GetObliquity()};
+        double obliquity{earth.GetObliquity()};
 #if 0
         std::cout << obliquity.DMSStr() << std::endl;
 #endif
-        if(!is_close(obliquity.Deg(),
-                     (Degree(23.0) + 26.0_arcmin + 7.0_arcsec).Deg(), 0.0,
-                     (1.0_arcsec).Deg())) {
+        if(!is_close(obliquity, 23_deg + 26_arcmin + 7_arcsec, 0.0, 1_arcsec)) {
             return false;
         }
     }
@@ -368,29 +359,23 @@ bool test_solver()
     {
         struct {
             double ecc;
-            Radian m;
+            double m;
         } kepler_test_data[] = {
-            {0.0167076, Radian(-40.4695)}, {0.0167139, Radian(-134.702)},
-            {0.0167121, Radian(-108.228)}, {0.9673, Radian(5.31)},
-            {0.9673, Radian(6.108598)},    {0.98, Radian(6.28)},
-            {0.99, Radian(6.29)},
+            {0.0167076, -40.4695}, {0.0167139, -134.702}, {0.0167121, -108.228},
+            {0.9673, 5.31},        {0.9673, 6.108598},    {0.98, 6.28},
+            {0.99, 6.29},
         };
         for(auto& td : kepler_test_data) {
-            Radian e{Solver::solve_kepler(td.ecc, td.m)};
-            if(!is_close(td.m.Rad(),
-                         (e - Radian(td.ecc * std::sin(e.Rad()))).Rad(), 1.0e-9,
-                         0.0)) {
+            double e{Solver::solve_kepler(td.ecc, td.m)};
+            if(!is_close(td.m, e - td.ecc * std::sin(e), 1.0e-9, 0.0)) {
                 return false;
             }
         }
         for(double ecc_100 = 0.0; ecc_100 < 100.0; ecc_100 += 1.0) {
             for(double m_100 = 0.0; m_100 < 700.0; m_100 += 1.0) {
-                Radian e{Solver::solve_kepler(ecc_100 / 100.0,
-                                              Radian(m_100 / 100.0))};
-                if(!is_close(
-                       m_100 / 100.0,
-                       (e - Radian(ecc_100 / 100.0 * std::sin(e.Rad()))).Rad(),
-                       1.0e-9, 0.0)) {
+                double e{Solver::solve_kepler(ecc_100 / 100.0, m_100 / 100.0)};
+                if(!is_close(m_100 / 100.0, e - ecc_100 / 100.0 * std::sin(e),
+                             1.0e-9, 0.0)) {
                     return false;
                 }
             }

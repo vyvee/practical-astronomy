@@ -19,8 +19,8 @@ class ELP82JM
     void GetPosition() noexcept
     {
         ComputePosition();
-        std::cout << " lon.: " << longitude_.DegStr(8) << std::endl;
-        std::cout << " lat.: " << latitude_.DegStr(8) << std::endl;
+        std::cout << " lon.: " << RadToDegStr(longitude_, 8) << std::endl;
+        std::cout << " lat.: " << RadToDegStr(latitude_, 8) << std::endl;
         std::cout << "dist.: " << distance_km_ << std::endl;
     };
 
@@ -29,8 +29,8 @@ class ELP82JM
 
     constexpr void ComputePosition() noexcept;
     bool position_is_valid_{false};
-    Degree longitude_{0.0};
-    Degree latitude_{0.0};
+    double longitude_{0.0};
+    double latitude_{0.0};
     double distance_km_{0.0};
 };
 
@@ -175,8 +175,8 @@ constexpr void ELP82JM::ComputePosition() noexcept
         double arg{DegToRad(pt.d * d + pt.m * m + pt.mp * mp + pt.f * f)};
         sum_b += es[pt.m] * pt.b * std::sin(arg);
     }
-    longitude_ = Degree(lp + sum_l / 1000000.0).GetUnwind();
-    latitude_ = Degree(sum_b / 1000000.0).GetNormalize();
+    longitude_ = RadUnwind(DegToRad(lp + sum_l / 1000000.0));
+    latitude_ = RadNormalize(DegToRad(sum_b / 1000000.0));
     distance_km_ = sum_r / 1000.0;
 #if 0
     std::cout << std::fixed << std::setprecision(8);

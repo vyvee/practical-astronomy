@@ -17,18 +17,18 @@ class EarthObliquity
    public:
     constexpr EarthObliquity(double jd) noexcept;
 
-    constexpr Degree GetObliquity() noexcept;
-    constexpr Degree GetObliquityMean() noexcept;
+    constexpr double GetObliquity() noexcept;
+    constexpr double GetObliquityMean() noexcept;
 
    private:
     double julian_date_;
-    Degree obliquity_mean_;
+    double obliquity_mean_;
     EarthNutation earth_nutation_;
 };
 
 constexpr EarthObliquity::EarthObliquity(double jd) noexcept
     : julian_date_(jd)
-    , obliquity_mean_(Degree(
+    , obliquity_mean_(DegToRad(
           horner_polynomial({+84381.448, -4680.93, -1.55, +1999.25, -51.38,
                              -249.67, -39.05, +7.12, +27.87, +5.79, +2.45},
                             (julian_date_ - PA::EpochJ2000) / 3652500.0) /
@@ -40,12 +40,12 @@ constexpr EarthObliquity::EarthObliquity(double jd) noexcept
     // - [Jean99] Chapter 22, p.147
 }
 
-constexpr Degree EarthObliquity::GetObliquity() noexcept
+constexpr double EarthObliquity::GetObliquity() noexcept
 {
     return obliquity_mean_ + earth_nutation_.GetNutationObliquity();
 }
 
-constexpr Degree EarthObliquity::GetObliquityMean() noexcept
+constexpr double EarthObliquity::GetObliquityMean() noexcept
 {
     return obliquity_mean_;
 }

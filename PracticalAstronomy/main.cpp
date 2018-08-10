@@ -31,62 +31,61 @@ void ephemeris(Date date)
     {
         std::cout << "Earth:" << std::endl;
         Earth earth{date.GetJulianDate()};
-        Degree nutation_longitude{earth.GetNutationLongitude()};
-        Degree nutation_obliquity{earth.GetNutationObliquity()};
-        Degree obliquity_mean{earth.GetObliquityMean()};
-        Degree obliquity{earth.GetObliquity()};
-        std::cout << "   Nutation Lon.: " << nutation_longitude.ArcSecStr(3)
-                  << std::endl;
-        std::cout << " Nutation Obliq.: " << nutation_obliquity.ArcSecStr(3)
-                  << std::endl;
-        std::cout << "     Mean Obliq.: " << obliquity_mean.DMSStr(2) << " ("
-                  << obliquity_mean.DegStr(9) << ")" << std::endl;
-        std::cout << "      Obliquity.: " << obliquity.DMSStr(2) << " ("
-                  << obliquity.DegStr(9) << ")" << std::endl;
+        double nutation_longitude{earth.GetNutationLongitude()};
+        double nutation_obliquity{earth.GetNutationObliquity()};
+        double obliquity_mean{earth.GetObliquityMean()};
+        double obliquity{earth.GetObliquity()};
+        std::cout << "   Nutation Lon.: "
+                  << RadToArcSecStr(nutation_longitude, 3) << std::endl;
+        std::cout << " Nutation Obliq.: "
+                  << RadToArcSecStr(nutation_obliquity, 3) << std::endl;
+        std::cout << "     Mean Obliq.: " << RadToDMSStr(obliquity_mean, 2)
+                  << " (" << RadToDegStr(obliquity_mean, 9) << ")" << std::endl;
+        std::cout << "      Obliquity.: " << RadToDMSStr(obliquity, 2) << " ("
+                  << RadToDegStr(obliquity, 9) << ")" << std::endl;
     }
 
     {
         std::cout << "Sun:" << std::endl;
         Sun sun{date.GetJulianDate()};
         EarthObliquity earth_obliquity{date.GetJulianDate()};
-        Degree geometric_longitude{sun.GetGeometricLongitude()};
-        Degree geometric_latitude{sun.GetGeometricLatitude()};
-        Degree aberration_longitude{sun.GetAberrationLongitude()};
-        Degree aberration_latitude{sun.GetAberrationLatitude()};
-        Degree apparent_longitude{sun.GetApparentLongitude()};
-        Degree apparent_latitude{sun.GetApparentLatitude()};
-        Degree obliquity{earth_obliquity.GetObliquity()};
+        double geometric_longitude{sun.GetGeometricLongitude()};
+        double geometric_latitude{sun.GetGeometricLatitude()};
+        double aberration_longitude{sun.GetAberrationLongitude()};
+        double aberration_latitude{sun.GetAberrationLatitude()};
+        double apparent_longitude{sun.GetApparentLongitude()};
+        double apparent_latitude{sun.GetApparentLatitude()};
+        double obliquity{earth_obliquity.GetObliquity()};
         double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-            apparent_longitude.Rad(), apparent_latitude.Rad(),
-            obliquity.Rad())};
+            apparent_longitude, apparent_latitude, obliquity)};
         double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-            apparent_longitude.Rad(), apparent_latitude.Rad(),
-            obliquity.Rad())};
+            apparent_longitude, apparent_latitude, obliquity)};
 
         double radius_vector_au{sun.GetRadiusVectorAU()};
-        std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
-                  << " (" << geometric_longitude.DegStr() << ")" << std::endl;
-        std::cout << "  Geometric Lat.: " << geometric_latitude.ArcSecStr()
+        std::cout << "  Geometric Lon.: " << RadToDMSStr(geometric_longitude)
+                  << " (" << RadToDegStr(geometric_longitude) << ")"
+                  << std::endl;
+        std::cout << "  Geometric Lat.: " << RadToArcSecStr(geometric_latitude)
                   << std::endl;
         std::cout << std::fixed << std::setprecision(9);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;
-        std::cout << " Aberration Lon.: " << aberration_longitude.ArcSecStr(9)
-                  << " (" << aberration_longitude.DegStr(9) << ")" << std::endl;
-        std::cout << " Aberration Lat.: " << aberration_latitude.ArcSecStr(9)
-                  << " (" << aberration_latitude.DegStr(9) << ")" << std::endl;
-        std::cout << "   Apparent Lon.: " << apparent_longitude.DMSStr() << " ("
-                  << apparent_longitude.DegStr() << ")" << std::endl;
-        std::cout << "   Apparent Lat.: " << apparent_latitude.DMSStr() << " ("
-                  << apparent_latitude.DegStr() << ")" << std::endl;
-        std::cout << "   Apparent R.A.: "
-                  << Degree(Radian(apparent_ra)).HMSStr(3) << " ("
-                  << Degree(Radian(apparent_ra)).HourStr() << " = "
-                  << Degree(Radian(apparent_ra)).DegStr() << ")" << std::endl;
-        std::cout << "  Apparent Decl.: "
-                  << Degree(Radian(apparent_decl)).DMSStr() << " ("
-                  << Degree(Radian(apparent_decl)).DegStr() << " = "
-                  << Degree(Radian(apparent_decl)).DegStr() << ")" << std::endl;
+        std::cout << " Aberration Lon.: "
+                  << RadToArcSecStr(aberration_longitude, 9) << " ("
+                  << RadToDegStr(aberration_longitude, 9) << ")" << std::endl;
+        std::cout << " Aberration Lat.: "
+                  << RadToArcSecStr(aberration_latitude, 9) << " ("
+                  << RadToDegStr(aberration_latitude, 9) << ")" << std::endl;
+        std::cout << "   Apparent Lon.: " << RadToDMSStr(apparent_longitude)
+                  << " (" << RadToDegStr(apparent_longitude) << ")"
+                  << std::endl;
+        std::cout << "   Apparent Lat.: " << RadToDMSStr(apparent_latitude)
+                  << " (" << RadToDegStr(apparent_latitude) << ")" << std::endl;
+        std::cout << "   Apparent R.A.: " << RadToHMSStr(apparent_ra, 3) << " ("
+                  << RadToHourStr(apparent_ra) << " = "
+                  << RadToDegStr(apparent_ra) << ")" << std::endl;
+        std::cout << "  Apparent Decl.: " << RadToDMSStr(apparent_decl) << " ("
+                  << RadToDegStr(apparent_decl) << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
     }
 

@@ -12,13 +12,13 @@ using namespace PA;
 #include <iostream>
 #endif
 
-Radian PA::Solver::solve_kepler(double ecc, const Radian& m)
+double PA::Solver::solve_kepler(double ecc, double m)
 {
     double e;
     if(ecc < 0.8) {
-        e = m.Rad();
+        e = m;
     } else {
-        e = 2 * M_PI * floor(m.Rad() / (2 * M_PI)) + M_PI;
+        e = 2 * M_PI * floor(m / (2 * M_PI)) + M_PI;
     };
     double delta, delta_prev{std::numeric_limits<double>::infinity()};
 #ifdef DEBUG
@@ -29,7 +29,7 @@ Radian PA::Solver::solve_kepler(double ecc, const Radian& m)
 #endif
     int iteration{0};
     while(++iteration <= 35) {
-        delta = e - m.Rad() - ecc * std::sin(e);
+        delta = e - m - ecc * std::sin(e);
         delta /= ecc * std::cos(e) - 1.0;
         e += delta;
 #ifdef DEBUG
@@ -46,5 +46,5 @@ Radian PA::Solver::solve_kepler(double ecc, const Radian& m)
         //        }
         delta_prev = delta;
     }
-    return Radian(e);
+    return e;
 }

@@ -22,19 +22,19 @@ class EarthNutation
     {
     }
 
-    constexpr Degree GetNutationLongitude() noexcept;
-    constexpr Degree GetNutationObliquity() noexcept;
+    constexpr double GetNutationLongitude() noexcept;
+    constexpr double GetNutationObliquity() noexcept;
 
    private:
     double julian_date_;
 
     constexpr void ComputeNutation() noexcept;
     bool nutation_is_valid_{false};
-    Degree nutation_longitude_{0.0};
-    Degree nutation_obliquity_{0.0};
+    double nutation_longitude_{0.0};
+    double nutation_obliquity_{0.0};
 };
 
-constexpr Degree EarthNutation::GetNutationLongitude() noexcept
+constexpr double EarthNutation::GetNutationLongitude() noexcept
 {
     if(!nutation_is_valid_) {
         ComputeNutation();
@@ -42,7 +42,7 @@ constexpr Degree EarthNutation::GetNutationLongitude() noexcept
     return nutation_longitude_;
 }
 
-constexpr Degree EarthNutation::GetNutationObliquity() noexcept
+constexpr double EarthNutation::GetNutationObliquity() noexcept
 {
     if(!nutation_is_valid_) {
         ComputeNutation();
@@ -170,10 +170,9 @@ constexpr void EarthNutation::ComputeNutation() noexcept
     double sum_dpsi{0.0};
     double sum_deps{0.0};
     for(auto& pt : periodic_terms) {
-        double arg{Degree((l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 +
-                           om * pt.m5) /
-                          3600.0)
-                       .Rad()};
+        double arg{DegToRad(
+            (l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 + om * pt.m5) /
+            3600.0)};
         double dpsi{(pt.aa + pt.bb * t) * std::sin(arg) +
                     pt.cc * std::cos(arg)};
         double deps{(pt.dd + pt.ee * t) * std::cos(arg) +
@@ -181,8 +180,8 @@ constexpr void EarthNutation::ComputeNutation() noexcept
         sum_dpsi += dpsi;
         sum_deps += deps;
     }
-    nutation_longitude_ = Degree(sum_dpsi / 36000000000.0);
-    nutation_obliquity_ = Degree(sum_deps / 36000000000.0);
+    nutation_longitude_ = DegToRad(sum_dpsi / 36000000000.0);
+    nutation_obliquity_ = DegToRad(sum_deps / 36000000000.0);
     nutation_is_valid_ = true;
 }
 
