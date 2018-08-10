@@ -8,7 +8,7 @@
 #include "coordinate.h"
 #include "date.h"
 
-#include "elp.h"
+#include "elp82jm.h"
 
 #include "earth.h"
 #include "sun.h"
@@ -123,6 +123,25 @@ int main(void)
 #endif
         ephemeris(date);
     }
+
+#if 0
+    {
+        date.SetCalendarTT(1992, 4, 12);
+        ELP82JM elp{date.GetJulianDate()};
+        elp.GetPosition();
+    }
+
+    {
+        // [Peter11] p.166
+        // 214.8675028
+        // 1.716074358
+        // RA: 14h 12m 10s
+        // Decl: -11d 34' 52"
+        date.SetCalendarTT(2003, 9, 1);
+        ELP82JM elp{date.GetJulianDate()};
+        elp.GetPosition();
+    }
+#endif
 
     return 0;
 }

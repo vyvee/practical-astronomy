@@ -141,6 +141,16 @@ class Degree
         return Degree(deg_ - 360.0 * floor(deg_ / 360.0));
     }
 
+    constexpr void Normalize() noexcept
+    {
+        deg_ -= 360.0 * floor((deg_ + 180.0) / 360.0);
+    }
+
+    constexpr Degree GetNormalize() const noexcept
+    {
+        return Degree(deg_ - 360.0 * floor((deg_ + 180.0) / 360.0));
+    }
+
     constexpr Degree operator-() const noexcept
     {
         return Degree(-deg_);
@@ -295,6 +305,16 @@ constexpr double cos(const Degree &x)
 constexpr double tan(const Degree &x)
 {
     return std::tan(x.Rad());
+}
+
+constexpr double RadToDeg(double rad) noexcept
+{
+    return rad * 180.0 / M_PI;
+}
+
+constexpr double DegToRad(double deg) noexcept
+{
+    return deg * M_PI / 180.0;
 }
 
 }  // namespace PA
