@@ -28,11 +28,11 @@ class EarthObliquity
 
 constexpr EarthObliquity::EarthObliquity(double jd) noexcept
     : julian_date_(jd)
-    , obliquity_mean_(DegToRad(
-          horner_polynomial({+84381.448, -4680.93, -1.55, +1999.25, -51.38,
-                             -249.67, -39.05, +7.12, +27.87, +5.79, +2.45},
-                            (julian_date_ - PA::EpochJ2000) / 3652500.0) /
-          3600.0))
+    , obliquity_mean_(horner_polynomial(
+          {+84381.448_arcsec, -4680.93_arcsec, -1.55_arcsec, +1999.25_arcsec,
+           -51.38_arcsec, -249.67_arcsec, -39.05_arcsec, +7.12_arcsec,
+           +27.87_arcsec, +5.79_arcsec, +2.45_arcsec},
+          (julian_date_ - PA::EpochJ2000) / 3652500.0))
     , earth_nutation_(jd)
 {
     // References:
