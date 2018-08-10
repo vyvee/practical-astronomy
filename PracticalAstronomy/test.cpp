@@ -140,6 +140,7 @@ bool test_julian_date()
     return true;
 }
 
+#if 0
 bool test_coordinate()
 {
     std::cout << "Coordinate: EC -> EQ... ";
@@ -167,6 +168,7 @@ bool test_coordinate()
 
     return true;
 }
+#endif
 
 bool test_earth()
 {
@@ -239,7 +241,7 @@ bool test_earth()
         std::cout << obliquity_mean.DMSStr() << std::endl;
 #endif
         if(!is_close(obliquity_mean.Deg(),
-                     (23.0_deg + 26.0_arcmin + 27.41_arcsec).Deg(), 0.0,
+                     (Degree(23.0) + 26.0_arcmin + 27.41_arcsec).Deg(), 0.0,
                      (0.01_arcsec).Deg())) {
             return false;
         }
@@ -256,7 +258,7 @@ bool test_earth()
         std::cout << obliquity.DMSStr() << std::endl;
 #endif
         if(!is_close(obliquity.Deg(),
-                     (23.0_deg + 26.0_arcmin + 36.85_arcsec).Deg(), 0.0,
+                     (Degree(23.0) + 26.0_arcmin + 36.85_arcsec).Deg(), 0.0,
                      (0.01_arcsec).Deg())) {
             return false;
         }
@@ -271,7 +273,7 @@ bool test_earth()
         std::cout << obliquity.DMSStr() << std::endl;
 #endif
         if(!is_close(obliquity.Deg(),
-                     (23.0_deg + 26.0_arcmin + 7.0_arcsec).Deg(), 0.0,
+                     (Degree(23.0) + 26.0_arcmin + 7.0_arcsec).Deg(), 0.0,
                      (1.0_arcsec).Deg())) {
             return false;
         }
@@ -407,9 +409,11 @@ bool test_internal()
     if(!test_earth()) {
         return false;
     }
+    /*
     if(!test_coordinate()) {
         return false;
     }
+     */
     /*
     if(!test_sun()) {
         return false;

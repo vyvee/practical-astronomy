@@ -257,9 +257,16 @@ constexpr Degree::Degree(const Radian &rad) : deg_(rad.Rad() * 180.0 / M_PI)
 {
 }
 
+#if 0
 constexpr Degree operator"" _deg(long double d)
 {
     return Degree(d);
+}
+#endif
+
+constexpr double operator"" _deg(long double d)
+{
+    return d * M_PI / 180.0;
 }
 
 constexpr Degree operator"" _arcmin(long double m)

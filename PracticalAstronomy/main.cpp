@@ -56,10 +56,12 @@ void ephemeris(Date date)
         Degree apparent_longitude{sun.GetApparentLongitude()};
         Degree apparent_latitude{sun.GetApparentLatitude()};
         Degree obliquity{earth_obliquity.GetObliquity()};
-        Degree apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-            apparent_longitude, apparent_latitude, obliquity)};
-        Degree apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-            apparent_longitude, apparent_latitude, obliquity)};
+        double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+            apparent_longitude.Rad(), apparent_latitude.Rad(),
+            obliquity.Rad())};
+        double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+            apparent_longitude.Rad(), apparent_latitude.Rad(),
+            obliquity.Rad())};
 
         double radius_vector_au{sun.GetRadiusVectorAU()};
         std::cout << "  Geometric Lon.: " << geometric_longitude.DMSStr()
@@ -77,12 +79,14 @@ void ephemeris(Date date)
                   << apparent_longitude.DegStr() << ")" << std::endl;
         std::cout << "   Apparent Lat.: " << apparent_latitude.DMSStr() << " ("
                   << apparent_latitude.DegStr() << ")" << std::endl;
-        std::cout << "   Apparent R.A.: " << apparent_ra.HMSStr(3) << " ("
-                  << apparent_ra.HourStr() << " = " << apparent_ra.DegStr()
-                  << ")" << std::endl;
-        std::cout << "  Apparent Decl.: " << apparent_decl.DMSStr() << " ("
-                  << apparent_decl.DegStr() << " = " << apparent_decl.DegStr()
-                  << ")" << std::endl;
+        std::cout << "   Apparent R.A.: "
+                  << Degree(Radian(apparent_ra)).HMSStr(3) << " ("
+                  << Degree(Radian(apparent_ra)).HourStr() << " = "
+                  << Degree(Radian(apparent_ra)).DegStr() << ")" << std::endl;
+        std::cout << "  Apparent Decl.: "
+                  << Degree(Radian(apparent_decl)).DMSStr() << " ("
+                  << Degree(Radian(apparent_decl)).DegStr() << " = "
+                  << Degree(Radian(apparent_decl)).DegStr() << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
     }
 

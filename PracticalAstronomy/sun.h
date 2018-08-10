@@ -119,53 +119,53 @@ constexpr void Sun::ComputeAberration() noexcept
     // [Jean99] pp.167-168
     constexpr struct PeriodicTerm variation_d0[]{
         // Eccentricity of Earth's orbit
-        {(118.568_arcsec).Rad(), (87.5287_deg).Rad(), (359993.7286_deg).Rad()},
+        {(118.568_arcsec).Rad(), 87.5287_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(2.476_arcsec).Rad(), (85.0561_deg).Rad(), (719987.4571_deg).Rad()},
+        {(2.476_arcsec).Rad(), 85.0561_deg, 719987.4571_deg},
         // Due to Moon
-        {(1.376_arcsec).Rad(), (27.8502_deg).Rad(), (4452671.1152_deg).Rad()},
+        {(1.376_arcsec).Rad(), 27.8502_deg, 4452671.1152_deg},
         // Due to Venus
-        {(0.119_arcsec).Rad(), (73.1375_deg).Rad(), (450368.8564_deg).Rad()},
+        {(0.119_arcsec).Rad(), 73.1375_deg, 450368.8564_deg},
         // Due to Jupiter
-        {(0.114_arcsec).Rad(), (337.2264_deg).Rad(), (329644.6718_deg).Rad()},
+        {(0.114_arcsec).Rad(), 337.2264_deg, 329644.6718_deg},
         // Due to Jupiter
-        {(0.086_arcsec).Rad(), (222.5400_deg).Rad(), (659289.3436_deg).Rad()},
+        {(0.086_arcsec).Rad(), 222.5400_deg, 659289.3436_deg},
         // Due to Moon
-        {(0.078_arcsec).Rad(), (162.8136_deg).Rad(), (9224659.7915_deg).Rad()},
+        {(0.078_arcsec).Rad(), 162.8136_deg, 9224659.7915_deg},
         // Eccentricity of Earth's orbit
-        {(0.054_arcsec).Rad(), (82.5823_deg).Rad(), (1079981.1857_deg).Rad()},
+        {(0.054_arcsec).Rad(), 82.5823_deg, 1079981.1857_deg},
         // Due to Venus
-        {(0.052_arcsec).Rad(), (171.5189_deg).Rad(), (225184.4282_deg).Rad()},
+        {(0.052_arcsec).Rad(), 171.5189_deg, 225184.4282_deg},
         // Due to Moon
-        {(0.034_arcsec).Rad(), (30.3214_deg).Rad(), (4092677.3866_deg).Rad()},
+        {(0.034_arcsec).Rad(), 30.3214_deg, 4092677.3866_deg},
         // Due to Mars
-        {(0.033_arcsec).Rad(), (119.8105_deg).Rad(), (337181.4711_deg).Rad()},
+        {(0.033_arcsec).Rad(), 119.8105_deg, 337181.4711_deg},
         // Due to Jupiter
-        {(0.023_arcsec).Rad(), (247.5418_deg).Rad(), (299295.6151_deg).Rad()},
+        {(0.023_arcsec).Rad(), 247.5418_deg, 299295.6151_deg},
         // Due to Venus
-        {(0.023_arcsec).Rad(), (325.1526_deg).Rad(), (315559.5560_deg).Rad()},
+        {(0.023_arcsec).Rad(), 325.1526_deg, 315559.5560_deg},
         // Due to Venus
-        {(0.021_arcsec).Rad(), (155.1241_deg).Rad(), (675553.2846_deg).Rad()},
+        {(0.021_arcsec).Rad(), 155.1241_deg, 675553.2846_deg},
     };
     constexpr struct PeriodicTerm variation_d1[]{
         // Eccentricity of Earth's orbit
-        {(7.311_arcsec).Rad(), (333.4515_deg).Rad(), (359993.7286_deg).Rad()},
+        {(7.311_arcsec).Rad(), 333.4515_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(0.305_arcsec).Rad(), (330.9814_deg).Rad(), (719987.4571_deg).Rad()},
+        {(0.305_arcsec).Rad(), 330.9814_deg, 719987.4571_deg},
         // Eccentricity of Earth's orbit
-        {(0.010_arcsec).Rad(), (328.5170_deg).Rad(), (1079981.1857_deg).Rad()},
+        {(0.010_arcsec).Rad(), 328.5170_deg, 1079981.1857_deg},
     };
     constexpr struct PeriodicTerm variation_d2[]{
         // Eccentricity of Earth's orbit
-        {(0.309_arcsec).Rad(), (241.4518_deg).Rad(), (359993.7286_deg).Rad()},
+        {(0.309_arcsec).Rad(), 241.4518_deg, 359993.7286_deg},
         // Eccentricity of Earth's orbit
-        {(0.021_arcsec).Rad(), (205.0482_deg).Rad(), (719987.4571_deg).Rad()},
+        {(0.021_arcsec).Rad(), 205.0482_deg, 719987.4571_deg},
         // Due to Moon
-        {(0.004_arcsec).Rad(), (297.8610_deg).Rad(), (4452671.1152_deg).Rad()},
+        {(0.004_arcsec).Rad(), 297.8610_deg, 4452671.1152_deg},
     };
     constexpr struct PeriodicTerm variation_d3[]{
         // Eccentricity of Earth's orbit
-        {(0.010_arcsec).Rad(), (154.7066_deg).Rad(), (359993.7286_deg).Rad()},
+        {(0.010_arcsec).Rad(), 154.7066_deg, 359993.7286_deg},
     };
     const struct PeriodicTermTableDegree variation_d_table_degrees[]{
         {variation_d0, sizeof(variation_d0) / sizeof(variation_d0[0])},
