@@ -8,10 +8,10 @@ The project is still in EARLY stage.
 
 ## Features
 
-- Angle: Degree, Radian, DMS, HMS
 - Date: Julian Date, Calendar (TT), Delta-T
 - Sun: Position
 - Earth: Obliquity, Nutation
+- Moon: Position (ELP82-Abridged)
 - Planets: VSOP87 (Full)
 - Solver: Kepler's equation
 - Develops with GCC
