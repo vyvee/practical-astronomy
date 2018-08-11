@@ -4,8 +4,8 @@
 // J. Lasker's Formula
 // Accuracy: 0.01" between 1000 and 3000, and a few arcseconds between -9000 and
 
-#include "angle.h"
 #include "date.h"
+#include "radian.h"
 #include "utils.h"
 
 #include "earth_nutation.h"

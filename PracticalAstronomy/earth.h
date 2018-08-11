@@ -1,8 +1,8 @@
 #ifndef EARTH_H_
 #define EARTH_H_
 
-#include "angle.h"
 #include "date.h"
+#include "radian.h"
 
 #include "earth_nutation.h"
 #include "earth_obliquity.h"

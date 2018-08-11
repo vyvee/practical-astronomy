@@ -1,7 +1,7 @@
 #ifndef SOLVER_H_
 #define SOLVER_H_
 
-#include "angle.h"
+#include "radian.h"
 
 namespace PA
 {

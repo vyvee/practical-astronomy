@@ -9,8 +9,8 @@
 // - IAU 2000A Nutation Model
 //   - Accuracy: 0.0002"
 
-#include "angle.h"
 #include "date.h"
+#include "radian.h"
 #include "utils.h"
 
 namespace PA

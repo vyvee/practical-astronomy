@@ -1,12 +1,9 @@
 #ifndef SUN_H_
 #define SUN_H_
 
-#include "angle.h"
 #include "date.h"
+#include "radian.h"
 #include "vsop87.h"
-
-// Required for: Nutation
-#include "earth.h"
 
 namespace PA
 {

@@ -1,8 +1,8 @@
 #ifndef COORDINATE_H_
 #define COORDINATE_H_
 
-#include "angle.h"
 #include "earth.h"
+#include "radian.h"
 
 namespace PA
 {

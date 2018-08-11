@@ -4,8 +4,8 @@
 // - Algorithms from [Jean99], based on ELP-2000/82 lunar theory
 //   - Accuracy: Approx. 10" in longitude, 4" in latitude
 
-#include "angle.h"
 #include "date.h"
+#include "radian.h"
 #include "utils.h"
 
 using namespace PA;

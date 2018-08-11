@@ -1,9 +1,9 @@
 #include "test.h"
 
-#include "angle.h"
 #include "coordinate.h"
 #include "date.h"
 #include "earth.h"
+#include "radian.h"
 #include "solver.h"
 #include "sun.h"
 
