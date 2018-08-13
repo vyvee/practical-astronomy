@@ -63,11 +63,11 @@ void ephemeris(Date date)
             apparent_longitude, apparent_latitude, obliquity)};
         double radius_vector_au{sun.GetRadiusVectorAU()};
 
-        std::cout << "  Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
+        std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
                   << " (" << RadToDegStr(geocentric_longitude) << ")"
                   << std::endl;
-        std::cout << "  Geocentric Lat.: "
-                  << RadToArcSecStr(geocentric_latitude) << std::endl;
+        std::cout << " Geocentric Lat.: " << RadToArcSecStr(geocentric_latitude)
+                  << std::endl;
         std::cout << std::fixed << std::setprecision(9);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;
@@ -96,12 +96,16 @@ void ephemeris(Date date)
         // EarthObliquity earth_obliquity{date.GetJulianDate()};
         double geocentric_longitude{moon.GetGeocentricLongitude()};
         double geocentric_latitude{moon.GetGeocentricLatitude()};
+        double distance_km{moon.GetDistanceKm()};
 
         std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
                   << " (" << RadToDegStr(geocentric_longitude) << ")"
                   << std::endl;
-        std::cout << " Geocentric Lat.: " << RadToArcSecStr(geocentric_latitude)
+        std::cout << " Geocentric Lat.: " << RadToDMSStr(geocentric_latitude)
+                  << " (" << RadToDegStr(geocentric_latitude) << ")"
                   << std::endl;
+        std::cout << std::noshowpos << std::fixed << std::setprecision(3);
+        std::cout << "   Radius Vector: " << distance_km << " km" << std::endl;
     }
 
 #if 0
@@ -136,19 +140,12 @@ int main(void)
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 #else
-        date.SetCalendarTT(1992, 10, 13);
-        // date.SetCalendarTT(1992, 12, 20);
+        date.SetCalendarTT(1992, 4, 12);
 #endif
         ephemeris(date);
     }
 
 #if 0
-    {
-        date.SetCalendarTT(1992, 4, 12);
-        ELP82JM elp{date.GetJulianDate()};
-        elp.GetPosition();
-    }
-
     {
         // [Peter11] p.166
         // 214.8675028

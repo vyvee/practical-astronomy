@@ -106,6 +106,7 @@ constexpr void Sun::ComputeGeocentricPosition() noexcept
         RadUnwind(vsop87.GetPlanetLongitude(VSOP87::Planet::kEarth) + M_PI);
     geocentric_latitude_ = -vsop87.GetPlanetLatitude(VSOP87::Planet::kEarth);
     radius_vector_au_ = vsop87.GetPlanetRadiusVectorAU(VSOP87::Planet::kEarth);
+    geocentric_position_is_valid_ = true;
 }
 
 #include "misc.h"

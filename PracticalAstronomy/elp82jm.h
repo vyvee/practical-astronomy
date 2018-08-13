@@ -16,13 +16,10 @@ class ELP82JM
 {
    public:
     constexpr ELP82JM(double jd) noexcept : julian_date_(jd){};
-    void GetPosition() noexcept
-    {
-        ComputePosition();
-        std::cout << " lon.: " << RadToDegStr(longitude_, 8) << std::endl;
-        std::cout << " lat.: " << RadToDegStr(latitude_, 8) << std::endl;
-        std::cout << "dist.: " << distance_km_ << std::endl;
-    };
+
+    constexpr double GetLongitude() noexcept;
+    constexpr double GetLatitude() noexcept;
+    constexpr double GetDistanceKm() noexcept;
 
    private:
     double julian_date_;
@@ -33,6 +30,30 @@ class ELP82JM
     double latitude_{0.0};
     double distance_km_{0.0};
 };
+
+constexpr double ELP82JM::GetLongitude() noexcept
+{
+    if(!position_is_valid_) {
+        ComputePosition();
+    }
+    return longitude_;
+}
+
+constexpr double ELP82JM::GetLatitude() noexcept
+{
+    if(!position_is_valid_) {
+        ComputePosition();
+    }
+    return latitude_;
+}
+
+constexpr double ELP82JM::GetDistanceKm() noexcept
+{
+    if(!position_is_valid_) {
+        ComputePosition();
+    }
+    return distance_km_;
+}
 
 constexpr void ELP82JM::ComputePosition() noexcept
 {
