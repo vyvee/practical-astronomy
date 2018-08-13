@@ -18,9 +18,9 @@ The project is still in EARLY stage.
 
 ## TODOs
 
-- Apparent position of the Sun
+- Moon: Apparent position, Equatorial coordinate
+- Correction for Parallax
 - Coordinate Transformation
-- Positions of Moon and other planets
 - Make use of [VSOP2013],  [ELP/MPP02], [LEA-406], etc.
 - Time: UT
 - Calculation of Eclipses
