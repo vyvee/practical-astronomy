@@ -19,6 +19,8 @@ class ELP82JM
 
     constexpr double GetLongitude() noexcept;
     constexpr double GetLatitude() noexcept;
+    // referred to the mean equinox of the date
+
     constexpr double GetDistanceKm() noexcept;
 
    private:
@@ -60,21 +62,28 @@ constexpr void ELP82JM::ComputePosition() noexcept
     // References:
     // - [Jean99] Chapter 47, pp.337-344
     double t{(julian_date_ - EpochJ2000) / 36525.0};
+    // Moon's mean longitude, referred to the mean equinox of the date, and
+    // including the constant term of the effect of the light-time (-0.70")
     double lp{
         horner_polynomial({218.3164477_deg, 481267.88123421_deg, -0.0015786_deg,
                            1.0_deg / 538841.0, -1.0_deg / 65194000},
                           t)};
+    // Mean elongation of the Moon
     double d{
         horner_polynomial({297.8501921_deg, 445267.1114034_deg, -0.0018819_deg,
                            1.0_deg / 545868.0, -1.0_deg / 113065000.0},
                           t)};
+    // Sun's mean anomaly
     double m{horner_polynomial({357.5291092_deg, 35999.0502909_deg,
                                 -0.0001536_deg, 1.0_deg / 24490000.0},
                                t)};
+    // Moon's mean anomaly
     double mp{
         horner_polynomial({134.9633964_deg, 477198.8675055_deg, 0.0087414_deg,
                            1.0_deg / 69699.0, -1.0_deg / 14712000.0},
                           t)};
+    // Moon's argument of latitude (mean distance of the Moon from its ascending
+    // node)
     double f{
         horner_polynomial({93.2720950_deg, 483202.0175233_deg, -0.0036539_deg,
                            -1.0_deg / 3526000.0, 1.0_deg / 863310000.0},

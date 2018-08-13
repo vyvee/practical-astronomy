@@ -97,6 +97,8 @@ void ephemeris(Date date)
         double geocentric_longitude{moon.GetGeocentricLongitude()};
         double geocentric_latitude{moon.GetGeocentricLatitude()};
         double distance_km{moon.GetDistanceKm()};
+        double apparent_longitude{moon.GetApparentLongitude()};
+        double apparent_latitude{moon.GetApparentLatitude()};
 
         std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
                   << " (" << RadToDegStr(geocentric_longitude) << ")"
@@ -105,7 +107,12 @@ void ephemeris(Date date)
                   << " (" << RadToDegStr(geocentric_latitude) << ")"
                   << std::endl;
         std::cout << std::noshowpos << std::fixed << std::setprecision(3);
-        std::cout << "   Radius Vector: " << distance_km << " km" << std::endl;
+        std::cout << "        Distance: " << distance_km << " km" << std::endl;
+        std::cout << "   Apparent Lon.: " << RadToDMSStr(apparent_longitude)
+                  << " (" << RadToDegStr(apparent_longitude) << ")"
+                  << std::endl;
+        std::cout << "   Apparent Lat.: " << RadToDMSStr(apparent_latitude)
+                  << " (" << RadToDegStr(apparent_latitude) << ")" << std::endl;
     }
 
 #if 0
@@ -140,7 +147,10 @@ int main(void)
         date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 #else
-        date.SetCalendarTT(1992, 4, 12);
+        // date.SetCalendarTT(
+        //     1993, 5, 21 + 14.0 / 24.0 + 20.0 / (24.0 * 60.0) + 14.0 /
+        //     86400.0);
+        date.SetCalendarTT(1992, 4, 12.0);
 #endif
         ephemeris(date);
     }
