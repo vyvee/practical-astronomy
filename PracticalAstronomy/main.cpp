@@ -11,6 +11,7 @@
 #include "elp82jm.h"
 
 #include "earth.h"
+#include "moon.h"
 #include "sun.h"
 #include "test.h"
 
@@ -49,8 +50,8 @@ void ephemeris(Date date)
         std::cout << "Sun:" << std::endl;
         Sun sun{date.GetJulianDate()};
         EarthObliquity earth_obliquity{date.GetJulianDate()};
-        double geometric_longitude{sun.GetGeometricLongitude()};
-        double geometric_latitude{sun.GetGeometricLatitude()};
+        double geocentric_longitude{sun.GetGeocentricLongitude()};
+        double geocentric_latitude{sun.GetGeocentricLatitude()};
         double aberration_longitude{sun.GetAberrationLongitude()};
         double aberration_latitude{sun.GetAberrationLatitude()};
         double apparent_longitude{sun.GetApparentLongitude()};
@@ -60,13 +61,13 @@ void ephemeris(Date date)
             apparent_longitude, apparent_latitude, obliquity)};
         double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
             apparent_longitude, apparent_latitude, obliquity)};
-
         double radius_vector_au{sun.GetRadiusVectorAU()};
-        std::cout << "  Geometric Lon.: " << RadToDMSStr(geometric_longitude)
-                  << " (" << RadToDegStr(geometric_longitude) << ")"
+
+        std::cout << "  Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
+                  << " (" << RadToDegStr(geocentric_longitude) << ")"
                   << std::endl;
-        std::cout << "  Geometric Lat.: " << RadToArcSecStr(geometric_latitude)
-                  << std::endl;
+        std::cout << "  Geocentric Lat.: "
+                  << RadToArcSecStr(geocentric_latitude) << std::endl;
         std::cout << std::fixed << std::setprecision(9);
         std::cout << "   Radius Vector: " << radius_vector_au << " AU"
                   << std::endl;
@@ -87,6 +88,20 @@ void ephemeris(Date date)
         std::cout << "  Apparent Decl.: " << RadToDMSStr(apparent_decl) << " ("
                   << RadToDegStr(apparent_decl) << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
+    }
+
+    {
+        std::cout << "Moon:" << std::endl;
+        Moon moon{date.GetJulianDate()};
+        // EarthObliquity earth_obliquity{date.GetJulianDate()};
+        double geocentric_longitude{moon.GetGeocentricLongitude()};
+        double geocentric_latitude{moon.GetGeocentricLatitude()};
+
+        std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
+                  << " (" << RadToDegStr(geocentric_longitude) << ")"
+                  << std::endl;
+        std::cout << " Geocentric Lat.: " << RadToArcSecStr(geocentric_latitude)
+                  << std::endl;
     }
 
 #if 0
