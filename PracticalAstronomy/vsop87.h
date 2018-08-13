@@ -27,8 +27,8 @@ class VSOP87
     {
     }
 
-    constexpr double GetPlanetLongitude(Planet planet) noexcept;
-    constexpr double GetPlanetLatitude(Planet planet) noexcept;
+    constexpr double GetPlanetLongitude(Planet planet) noexcept;  // in FK5
+    constexpr double GetPlanetLatitude(Planet planet) noexcept;   // in FK5
     constexpr double GetPlanetRadiusVectorAU(Planet planet) noexcept;
 
    private:
@@ -101,8 +101,8 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept
     radius_vector_au = PeriodicTermCompute(
         periodic_term_r_tables[static_cast<int>(planet)], tau);
 
-    // Conversion of reference frame to FK5
-    // [Jean99] p.219
+    // Conversion: Mean *dynamical* equinox and ecliptic of the date to FK5
+    // - Reference [Jean99] p.219
     double lp{longitude + (-1.397_deg - 0.00031_deg * t) * t};
     double diff_l{-0.09033_arcsec + 0.03916_arcsec *
                                         (std::cos(lp) + std::sin(lp)) *
