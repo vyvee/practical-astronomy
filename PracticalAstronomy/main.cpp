@@ -69,7 +69,7 @@ void ephemeris(Date date)
                   << RadToDMSStr(geocentric_longitude) << " ("
                   << RadToDegStr(geocentric_longitude) << ")" << std::endl;
         std::cout << " Geocentric Lat.: " << std::setw(13)
-                  << RadToArcSecStr(geocentric_latitude)
+                  << RadToArcSecStr(geocentric_latitude) << " ("
                   << RadToDegStr(geocentric_latitude) << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
         std::cout << "   Radius Vector: " << std::setw(13) << radius_vector_au
