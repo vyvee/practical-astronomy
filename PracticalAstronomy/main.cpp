@@ -36,13 +36,15 @@ void ephemeris(Date date)
         double nutation_obliquity{earth.GetNutationObliquity()};
         double obliquity_mean{earth.GetObliquityMean()};
         double obliquity{earth.GetObliquity()};
-        std::cout << "   Nutation Lon.: "
+        std::cout << "   Nutation Lon.: " << std::setw(13)
                   << RadToArcSecStr(nutation_longitude, 3) << std::endl;
-        std::cout << " Nutation Obliq.: "
+        std::cout << " Nutation Obliq.: " << std::setw(13)
                   << RadToArcSecStr(nutation_obliquity, 3) << std::endl;
-        std::cout << "     Mean Obliq.: " << RadToDMSStr(obliquity_mean, 2)
-                  << " (" << RadToDegStr(obliquity_mean, 9) << ")" << std::endl;
-        std::cout << "      Obliquity.: " << RadToDMSStr(obliquity, 2) << " ("
+        std::cout << "     Mean Obliq.: " << std::setw(13)
+                  << RadToDMSStr(obliquity_mean, 2) << " ("
+                  << RadToDegStr(obliquity_mean, 9) << ")" << std::endl;
+        std::cout << "      Obliquity.: " << std::setw(13)
+                  << RadToDMSStr(obliquity, 2) << " ("
                   << RadToDegStr(obliquity, 9) << ")" << std::endl;
     }
 
@@ -63,29 +65,33 @@ void ephemeris(Date date)
             apparent_longitude, apparent_latitude, obliquity)};
         double radius_vector_au{sun.GetRadiusVectorAU()};
 
-        std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
-                  << " (" << RadToDegStr(geocentric_longitude) << ")"
-                  << std::endl;
-        std::cout << " Geocentric Lat.: " << RadToArcSecStr(geocentric_latitude)
-                  << std::endl;
-        std::cout << std::fixed << std::setprecision(9);
-        std::cout << "   Radius Vector: " << radius_vector_au << " AU"
-                  << std::endl;
-        std::cout << " Aberration Lon.: "
-                  << RadToArcSecStr(aberration_longitude, 9) << " ("
-                  << RadToDegStr(aberration_longitude, 9) << ")" << std::endl;
-        std::cout << " Aberration Lat.: "
-                  << RadToArcSecStr(aberration_latitude, 9) << " ("
-                  << RadToDegStr(aberration_latitude, 9) << ")" << std::endl;
-        std::cout << "   Apparent Lon.: " << RadToDMSStr(apparent_longitude)
-                  << " (" << RadToDegStr(apparent_longitude) << ")"
-                  << std::endl;
-        std::cout << "   Apparent Lat.: " << RadToDMSStr(apparent_latitude)
-                  << " (" << RadToDegStr(apparent_latitude) << ")" << std::endl;
-        std::cout << "   Apparent R.A.: " << RadToHMSStr(apparent_ra, 3) << " ("
+        std::cout << " Geocentric Lon.: " << std::setw(13)
+                  << RadToDMSStr(geocentric_longitude) << " ("
+                  << RadToDegStr(geocentric_longitude) << ")" << std::endl;
+        std::cout << " Geocentric Lat.: " << std::setw(13)
+                  << RadToArcSecStr(geocentric_latitude)
+                  << RadToDegStr(geocentric_latitude) << ")" << std::endl;
+        std::cout << std::fixed << std::setprecision(8);
+        std::cout << "   Radius Vector: " << std::setw(13) << radius_vector_au
+                  << " AU" << std::endl;
+        std::cout << " Aberration Lon.: " << std::setw(13)
+                  << RadToArcSecStr(aberration_longitude, 8) << " ("
+                  << RadToDegStr(aberration_longitude, 8) << ")" << std::endl;
+        std::cout << " Aberration Lat.: " << std::setw(13)
+                  << RadToArcSecStr(aberration_latitude, 8) << " ("
+                  << RadToDegStr(aberration_latitude, 8) << ")" << std::endl;
+        std::cout << "   Apparent Lon.: " << std::setw(13)
+                  << RadToDMSStr(apparent_longitude) << " ("
+                  << RadToDegStr(apparent_longitude) << ")" << std::endl;
+        std::cout << "   Apparent Lat.: " << std::setw(13)
+                  << RadToArcSecStr(apparent_latitude) << " ("
+                  << RadToDegStr(apparent_latitude) << ")" << std::endl;
+        std::cout << "   Apparent R.A.: " << std::setw(13)
+                  << RadToHMSStr(apparent_ra, 3) << " ("
                   << RadToHourStr(apparent_ra) << " = "
                   << RadToDegStr(apparent_ra) << ")" << std::endl;
-        std::cout << "  Apparent Decl.: " << RadToDMSStr(apparent_decl) << " ("
+        std::cout << "  Apparent Decl.: " << std::setw(13)
+                  << RadToDMSStr(apparent_decl) << " ("
                   << RadToDegStr(apparent_decl) << ")" << std::endl;
         std::cout << std::fixed << std::setprecision(8);
     }
@@ -100,19 +106,21 @@ void ephemeris(Date date)
         double apparent_longitude{moon.GetApparentLongitude()};
         double apparent_latitude{moon.GetApparentLatitude()};
 
-        std::cout << " Geocentric Lon.: " << RadToDMSStr(geocentric_longitude)
-                  << " (" << RadToDegStr(geocentric_longitude) << ")"
-                  << std::endl;
-        std::cout << " Geocentric Lat.: " << RadToDMSStr(geocentric_latitude)
-                  << " (" << RadToDegStr(geocentric_latitude) << ")"
-                  << std::endl;
+        std::cout << " Geocentric Lon.: " << std::setw(13)
+                  << RadToDMSStr(geocentric_longitude) << " ("
+                  << RadToDegStr(geocentric_longitude) << ")" << std::endl;
+        std::cout << " Geocentric Lat.: " << std::setw(13)
+                  << RadToDMSStr(geocentric_latitude) << " ("
+                  << RadToDegStr(geocentric_latitude) << ")" << std::endl;
         std::cout << std::noshowpos << std::fixed << std::setprecision(3);
-        std::cout << "        Distance: " << distance_km << " km" << std::endl;
-        std::cout << "   Apparent Lon.: " << RadToDMSStr(apparent_longitude)
-                  << " (" << RadToDegStr(apparent_longitude) << ")"
-                  << std::endl;
-        std::cout << "   Apparent Lat.: " << RadToDMSStr(apparent_latitude)
-                  << " (" << RadToDegStr(apparent_latitude) << ")" << std::endl;
+        std::cout << "        Distance: " << std::setw(13) << distance_km
+                  << " km" << std::endl;
+        std::cout << "   Apparent Lon.: " << std::setw(13)
+                  << RadToDMSStr(apparent_longitude) << " ("
+                  << RadToDegStr(apparent_longitude) << ")" << std::endl;
+        std::cout << "   Apparent Lat.: " << std::setw(13)
+                  << RadToDMSStr(apparent_latitude) << " ("
+                  << RadToDegStr(apparent_latitude) << ")" << std::endl;
     }
 
 #if 0
