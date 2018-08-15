@@ -99,12 +99,17 @@ void ephemeris(Date date)
     {
         std::cout << "Moon:" << std::endl;
         Moon moon{date.GetJulianDate()};
-        // EarthObliquity earth_obliquity{date.GetJulianDate()};
+        EarthObliquity earth_obliquity{date.GetJulianDate()};
         double geocentric_longitude{moon.GetGeocentricLongitude()};
         double geocentric_latitude{moon.GetGeocentricLatitude()};
         double distance_km{moon.GetDistanceKm()};
         double apparent_longitude{moon.GetApparentLongitude()};
         double apparent_latitude{moon.GetApparentLatitude()};
+        double obliquity{earth_obliquity.GetObliquity()};
+        double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+            apparent_longitude, apparent_latitude, obliquity)};
+        double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+            apparent_longitude, apparent_latitude, obliquity)};
 
         std::cout << " Geocentric Lon.: " << std::setw(13)
                   << RadToDMSStr(geocentric_longitude) << " ("
@@ -121,6 +126,13 @@ void ephemeris(Date date)
         std::cout << "   Apparent Lat.: " << std::setw(13)
                   << RadToDMSStr(apparent_latitude) << " ("
                   << RadToDegStr(apparent_latitude) << ")" << std::endl;
+        std::cout << "   Apparent R.A.: " << std::setw(13)
+                  << RadToHMSStr(apparent_ra, 3) << " ("
+                  << RadToHourStr(apparent_ra) << " = "
+                  << RadToDegStr(apparent_ra) << ")" << std::endl;
+        std::cout << "  Apparent Decl.: " << std::setw(13)
+                  << RadToDMSStr(apparent_decl) << " ("
+                  << RadToDegStr(apparent_decl) << ")" << std::endl;
     }
 
 #if 0
