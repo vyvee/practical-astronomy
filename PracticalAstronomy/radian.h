@@ -110,6 +110,7 @@ inline std::string RadToDMSStr(double rad, int s_prec = 2) noexcept
     double d, m, s;
     s = 60.0 * modf(60.0 * modf(RadToDeg(rad), &d), &m);
     ss << std::setw(3) << d << '\xb0';
+    ss << std::setfill('0');
     ss << std::setw(2) << fabs(m) << '\'';
     ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
        << fabs(s) << '"';
@@ -129,6 +130,7 @@ inline std::string RadToHMSStr(double rad, int s_prec = 2) noexcept
     double h, m, s;
     s = 60.0 * modf(60.0 * modf(RadToHour(rad), &h), &m);
     ss << std::setw(2) << h << 'h';
+    ss << std::setfill('0');
     ss << std::setw(2) << m << 'm';
     ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec) << s
        << 's';
