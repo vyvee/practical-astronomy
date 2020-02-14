@@ -3,6 +3,7 @@
 
 #include "date.h"
 #include "radian.h"
+#include "utils.h"
 #include "vsop87.h"
 
 namespace PA {
@@ -16,6 +17,7 @@ class Sun {
   constexpr double GetAberrationLatitude() noexcept;
   constexpr double GetApparentLongitude() noexcept;
   constexpr double GetApparentLatitude() noexcept;
+  constexpr double GetMeanLongitude() noexcept;
 
  private:
   double julian_date_;
@@ -35,6 +37,10 @@ class Sun {
   bool apparent_position_is_valid_{false};
   double apparent_longitude_{0.0};
   double apparent_latitude_{0.0};
+
+  constexpr void ComputeMeanLongitude() noexcept;
+  bool mean_longitude_is_valid_{false};
+  double mean_longitude_{0.0};
 };
 
 constexpr Sun::Sun(double julian_date) noexcept : julian_date_(julian_date) {}
@@ -96,6 +102,28 @@ constexpr void Sun::ComputeGeocentricPosition() noexcept {
   radius_vector_au_ = vsop87.GetPlanetRadiusVectorAU(VSOP87::Planet::kEarth);
   geocentric_position_is_valid_ = true;
 }
+
+constexpr double Sun::GetMeanLongitude() noexcept {
+  if (!mean_longitude_is_valid_) {
+    ComputeMeanLongitude();
+  }
+  return mean_longitude_;
+}
+
+constexpr void Sun::ComputeMeanLongitude() noexcept {
+  double tau{(julian_date_ - PA::EpochJ2000) / 365250.0};
+  mean_longitude_ = RadUnwind(horner_polynomial(
+      {
+          280.4664567_deg,
+          360007.6982779_deg,
+          0.03032028_deg,
+          1.0_deg / 49931,
+          -1.0_deg / 15300,
+          -1.0_deg / 2000000,
+      },
+      tau));
+  mean_longitude_is_valid_ = true;
+}  // namespace PA
 
 #include "misc.h"
 
