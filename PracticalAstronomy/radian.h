@@ -106,9 +106,9 @@ inline std::string RadToHMSStr(double rad, int s_prec = 2) noexcept {
   s = 60.0 * modf(60.0 * modf(RadToHour(rad), &h), &m);
   ss << std::setw(2) << h << 'h';
   ss << std::setfill('0');
-  ss << std::setw(2) << m << 'm';
-  ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec) << s
-     << 's';
+  ss << std::setw(2) << fabs(m) << 'm';
+  ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
+     << fabs(s) << 's';
   return ss.str();
 }
 

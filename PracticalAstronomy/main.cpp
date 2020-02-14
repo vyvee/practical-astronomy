@@ -151,17 +151,8 @@ void ephemeris(Date date) {
     double eot{mean_longitude - 0.0057183_deg - apparent_ra +
                nutation_longitude * cos(obliquity)};
 
-    std::ostringstream ss;
-    constexpr double s_prec{2};
-    double m, s;
-    s = 60.0 * modf(RadToDeg(eot * 4.0), &m);
-    ss << std::setfill('0');
-    ss << std::setw(2) << fabs(m) << '\'';
-    ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
-       << fabs(s) << '"';
-
-    std::cout << "Equation of Time: " << std::setw(13) << ss.str() << " ("
-              << RadToDegStr(eot) << ")" << std::endl;
+    std::cout << "Equation of Time: " << std::setw(13) << RadToHMSStr(eot)
+              << " (" << RadToDegStr(eot) << ")" << std::endl;
   }
 
 #if 0
