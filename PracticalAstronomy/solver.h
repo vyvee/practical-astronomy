@@ -3,15 +3,13 @@
 
 #include "radian.h"
 
-namespace PA
-{
-class Solver
-{
-   public:
-    static double solve_kepler(double ecc, double m);
+namespace PA {
+class Solver {
+ public:
+  static double solve_kepler(double ecc, double m);
 
-   private:
-    Solver(){};
+ private:
+  Solver(){};
 };
 
 }  // namespace PA
