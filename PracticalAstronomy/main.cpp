@@ -137,6 +137,7 @@ void ephemeris(Date date) {
 
   {
     /* Equation of Time */
+    // For comparison: http://mb-soft.com/public3/equatime.html
     Sun sun{date.GetJulianDate()};
     EarthObliquity earth_obliquity{date.GetJulianDate()};
     Earth earth{date.GetJulianDate()};
@@ -148,8 +149,8 @@ void ephemeris(Date date) {
     double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
         apparent_longitude, apparent_latitude, obliquity)};
     double nutation_longitude{earth.GetNutationLongitude()};
-    double eot{mean_longitude - 0.0057183_deg - apparent_ra +
-               nutation_longitude * cos(obliquity)};
+    double eot{RadNormalize(mean_longitude - 20.49552_arcsec - 0.09033_arcsec -
+                            apparent_ra + nutation_longitude * cos(obliquity))};
 
     std::cout << "Equation of Time: " << std::setw(13) << RadToHMSStr(eot)
               << " (" << RadToDegStr(eot) << ")" << std::endl;
@@ -186,9 +187,9 @@ int main(void) {
     date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                        ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 #else
-    // date.SetCalendarTT(
-    //     1993, 5, 21 + 14.0 / 24.0 + 20.0 / (24.0 * 60.0) + 14.0 /
-    //     86400.0);
+    // date.SetCalendarTT(2020, 3,
+    //                    20 + 3.0 / 24.0 + 52.0 / (24.0 * 60.0) + 13.0 /
+    //                    86400.0);
     date.SetCalendarTT(2020, 2, 14);
 #endif
     ephemeris(date);

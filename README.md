@@ -1,10 +1,8 @@
 # Practical Astronomy
 
-Implementations of astronomical algorithms with C++17.
+Implementations of astronomical algorithms.
 
 Aims to implement algorithms to calculate positions of solar system objects with high accuracy.
-
-The project is still in EARLY stage.
 
 ## Features
 
@@ -14,7 +12,16 @@ The project is still in EARLY stage.
 - Moon: Position (ELP82-Abridged)
 - Planets: VSOP87 (Full)
 - Solver: Kepler's equation
-- Develops with GCC
+- Equation of Time
+
+## Compilation
+
+```
+$ make
+```
+
+The code is written in C++17 and currently depends on some G++ extensions.
+
 
 ## TODOs
 
