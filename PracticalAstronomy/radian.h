@@ -72,7 +72,7 @@ constexpr double RadToHour(double rad) noexcept {
 
 inline std::string RadToDegStr(double rad, int s_prec = 6) noexcept {
   std::ostringstream ss;
-  ss << std::fixed << std::setprecision(s_prec) << RadToDeg(rad) << '\xb0';
+  ss << std::fixed << std::setprecision(s_prec) << RadToDeg(rad) << "°";
   return ss.str();
 }
 
@@ -86,7 +86,7 @@ inline std::string RadToDMSStr(double rad, int s_prec = 2) noexcept {
   std::ostringstream ss;
   double d, m, s;
   s = 60.0 * modf(60.0 * modf(RadToDeg(rad), &d), &m);
-  ss << std::setw(3) << d << '\xb0';
+  ss << std::setw(3) << d << "°";
   ss << std::setfill('0');
   ss << std::setw(2) << fabs(m) << '\'';
   ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
