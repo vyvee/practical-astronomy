@@ -50,6 +50,7 @@ void ephemeris(Date date) {
     EarthObliquity earth_obliquity{date.GetJulianDate()};
     double geocentric_longitude{sun.GetGeocentricLongitude()};
     double geocentric_latitude{sun.GetGeocentricLatitude()};
+    double radius_vector_au{sun.GetRadiusVectorAU()};
     double aberration_longitude{sun.GetAberrationLongitude()};
     double aberration_latitude{sun.GetAberrationLatitude()};
     double apparent_longitude{sun.GetApparentLongitude()};
@@ -59,7 +60,7 @@ void ephemeris(Date date) {
         apparent_longitude, apparent_latitude, obliquity)};
     double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
         apparent_longitude, apparent_latitude, obliquity)};
-    double radius_vector_au{sun.GetRadiusVectorAU()};
+    double mean_longitude{sun.GetMeanLongitude()};
 
     std::cout << " Geocentric Lon.: " << std::setw(13)
               << RadToDMSStr(geocentric_longitude) << " ("
@@ -89,6 +90,9 @@ void ephemeris(Date date) {
     std::cout << "  Apparent Decl.: " << std::setw(13)
               << RadToDMSStr(apparent_decl) << " ("
               << RadToDegStr(apparent_decl) << ")" << std::endl;
+    std::cout << " Mean Longitude.: " << std::setw(13)
+              << RadToDMSStr(mean_longitude) << " ("
+              << RadToDegStr(mean_longitude) << ")" << std::endl;
     std::cout << std::fixed << std::setprecision(8);
   }
 
@@ -131,6 +135,35 @@ void ephemeris(Date date) {
               << RadToDegStr(apparent_decl) << ")" << std::endl;
   }
 
+  {
+    /* Equation of Time */
+    Sun sun{date.GetJulianDate()};
+    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    Earth earth{date.GetJulianDate()};
+
+    double apparent_longitude{sun.GetApparentLongitude()};
+    double apparent_latitude{sun.GetApparentLatitude()};
+    double obliquity{earth_obliquity.GetObliquity()};
+    double mean_longitude{sun.GetMeanLongitude()};
+    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+        apparent_longitude, apparent_latitude, obliquity)};
+    double nutation_longitude{earth.GetNutationLongitude()};
+    double eot{mean_longitude - 0.0057183_deg - apparent_ra +
+               nutation_longitude * cos(obliquity)};
+
+    std::ostringstream ss;
+    constexpr double s_prec{2};
+    double m, s;
+    s = 60.0 * modf(RadToDeg(eot * 4.0), &m);
+    ss << std::setfill('0');
+    ss << std::setw(2) << fabs(m) << '\'';
+    ss << std::fixed << std::setw(s_prec + 3) << std::setprecision(s_prec)
+       << fabs(s) << '"';
+
+    std::cout << "Equation of Time: " << std::setw(13) << ss.str() << " ("
+              << RadToDegStr(eot) << ")" << std::endl;
+  }
+
 #if 0
     {
         Degree ra{coord.GetEquatorialRightAscension()};
@@ -165,7 +198,7 @@ int main(void) {
     // date.SetCalendarTT(
     //     1993, 5, 21 + 14.0 / 24.0 + 20.0 / (24.0 * 60.0) + 14.0 /
     //     86400.0);
-    date.SetCalendarTT(1992, 4, 12.0);
+    date.SetCalendarTT(2020, 2, 14);
 #endif
     ephemeris(date);
   }
