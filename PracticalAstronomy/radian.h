@@ -29,22 +29,15 @@ constexpr double operator"" _arcsec(unsigned long long int arcsec) {
   return arcsec * M_PI / (180.0 * 3600.0);
 }
 
-/*
-constexpr Degree operator"" _hour(long double h)
-{
-    return Degree(h * 15.0);
+constexpr double operator"" _h(long double h) { return h * M_PI / 12.0; }
+
+constexpr double operator"" _m(long double m) {
+  return m * M_PI / (12.0 * 60.0);
 }
 
-constexpr Degree operator"" _minute(long double m)
-{
-    return Degree(m * 15.0 / 60.0);
+constexpr double operator"" _s(long double s) {
+  return s * M_PI / (12.0 * 3600.0);
 }
-
-constexpr Degree operator"" _second(long double s)
-{
-    return Degree(s * 15.0 / 3600.0);
-}
-*/
 
 constexpr double RadUnwind(double rad) noexcept {
   return rad - 2 * M_PI * floor(rad / (2 * M_PI));

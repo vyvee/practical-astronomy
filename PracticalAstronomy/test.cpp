@@ -17,12 +17,38 @@
 
 using namespace PA;
 
-static bool is_close(double x1, double x2, double rel_tol,
-                     double abs_tol = 0.0) {
-  return fabs(x1 - x2) <= fmax(rel_tol * fmax(fabs(x1), fabs(x2)), abs_tol);
+static void _expect_abort() {
+  std::cout << "Abort." << std::endl;
+  std::exit(1);
 }
 
-bool test_julian_date() {
+static void _expect_double_helper(double v1, double v2, double rel_tol,
+                                  double abs_tol, const char* function_name,
+                                  const char* filename, int line_no) {
+  if (!(fabs(v1 - v2) <= fmax(rel_tol * fmax(fabs(v1), fabs(v2)), abs_tol))) {
+    std::cout << "Error: (" << filename << ":" << line_no << ":"
+              << function_name << ") " << v1 << " != " << v2 << std::endl;
+    _expect_abort();
+  }
+}
+
+#define expect_double(v1, v2, rel_tol, abs_tol)                           \
+  _expect_double_helper(v1, v2, rel_tol, abs_tol, __FUNCTION__, __FILE__, \
+                        __LINE__)
+
+static void _expect_bool_helper(bool v1, bool v2, const char* function_name,
+                                const char* filename, int line_no) {
+  if (v1 != v2) {
+    std::cout << "Error: (" << filename << ":" << line_no << ":"
+              << function_name << ")" << (v2 ? true : false) << std::endl;
+    _expect_abort();
+  }
+}
+
+#define expect_bool(v1, v2) \
+  _expect_bool_helper(v1, v2, __FUNCTION__, __FILE__, __LINE__)
+
+static void test_julian_date() {
   std::cout << "Date: TT <-> Julian Date... ";
   {
     Date date;
@@ -31,15 +57,11 @@ bool test_julian_date() {
       double julian_date_1;
       double julian_date_2;
     } const_date_test_data[] = {
-        {EpochJ1900, 2415020.0}, {EpochJ2000, 2451545.0},
-        /*
-        {Date::J2010, 2455196.5},
-         */
+        {EpochJ1900, 2415020.0},
+        {EpochJ2000, 2451545.0},
     };
     for (auto& td : const_date_test_data) {
-      if (!is_close(td.julian_date_1, td.julian_date_2, 1.0e-9, 0.0)) {
-        return false;
-      }
+      expect_double(td.julian_date_1, td.julian_date_2, 1.0e-9, 0.0);
     }
 
     struct {
@@ -56,22 +78,15 @@ bool test_julian_date() {
     for (auto& td : date_test_data) {
       double julian_date;
       date.SetCalendarTT(td.year, td.month, td.day);
-      if (!date.GetJulianDate(&julian_date)) {
-        return false;
-      }
-      if (!is_close(julian_date, td.julian_date, 1.0e-9, 0.0)) {
-        return false;
-      }
+      expect_bool(date.GetJulianDate(&julian_date), true);
+      expect_double(julian_date, td.julian_date, 1.0e-9, 0.0);
       int year, month;
       double day;
       date.SetJulianDate(td.julian_date);
-      if (!date.GetCalendarTT(&year, &month, &day)) {
-        return false;
-      }
-      if (!(year == td.year && month == td.month &&
-            is_close(day, td.day, 1.0e-9, 0.0))) {
-        return false;
-      }
+      expect_bool(date.GetCalendarTT(&year, &month, &day), true);
+      expect_bool(year == td.year, true);
+      expect_bool(month == td.month, true);
+      expect_double(day, td.day, 1.0e-9, 0.0);
     }
   }
   std::cout << "OK!" << std::endl;
@@ -101,16 +116,10 @@ bool test_julian_date() {
     };
     for (auto& td : delta_t_test_data) {
       Date date{td.year, 1, 1};
-      if (std::fabs(date.GetDeltaT() - td.delta_t) > 5.0) {
-        std::cout << td.year << '\t' << date.GetDeltaT() << '\t'
-                  << date.GetDeltaT() - td.delta_t << std::endl;
-        return false;
-      }
+      expect_double(date.GetDeltaT(), td.delta_t, 0.0, 5.0);
     }
   }
   std::cout << "OK!" << std::endl;
-
-  return true;
 }
 
 #if 0
@@ -143,8 +152,9 @@ bool test_coordinate()
 }
 #endif
 
-bool test_earth() {
+static void test_earth() {
   std::cout << "Earth: Nutation... ";
+
   {
     Date date{1987, 4, 10};
     // [Jean99] p.148
@@ -152,65 +162,31 @@ bool test_earth() {
     Earth earth{date.GetJulianDate()};
     double nutation_longitude{earth.GetNutationLongitude()};
     double nutation_obliquity{earth.GetNutationObliquity()};
-#if 0
-        std::cout << nutation_longitude.ArcSecStr(3) << std::endl;
-        std::cout << nutation_obliquity.ArcSecStr(3) << std::endl;
-#endif
-    if (!is_close(nutation_longitude, -0.0000183306021758759992, 0.0,
-                  0.003_arcsec)) {
-      return false;
-    }
-    if (!is_close(nutation_obliquity, 0.0000457927984038134921, 0.0,
-                  0.003_arcsec)) {
-      return false;
-    }
+    expect_double(nutation_longitude, -0.0000183306021758759992, 0.0,
+                  0.003_arcsec);
+    expect_double(nutation_obliquity, 0.0000457927984038134921, 0.0,
+                  0.003_arcsec);
+    // https://www.astro.com/swisseph/ae/1900/ae_1987d.pdf
+    expect_double(nutation_longitude, -4.0_arcsec, 0.0, 0.5_arcsec);
+    // expect_double(nutation_obliquity, 9.443_arcsec, 0.0, 0.003_arcsec);
   }
+
   {
     Date date{1988, 9, 1};
     // [Peter11] p.77
     Earth earth{date.GetJulianDate()};
     double nutation_longitude{earth.GetNutationLongitude()};
     double nutation_obliquity{earth.GetNutationObliquity()};
-#if 0
-        std::cout << nutation_longitude.ArcSecStr() << std::endl;
-        std::cout << nutation_obliquity.ArcSecStr() << std::endl;
-#endif
-    if (!is_close(nutation_longitude, 5.1_arcsec, 0.0, 0.1_arcsec)) {
-      return false;
-    }
-    if (!is_close(nutation_obliquity, 9.2_arcsec, 0.0, 0.1_arcsec)) {
-      return false;
-    }
+    expect_double(nutation_longitude, 5.1_arcsec, 0.0, 0.1_arcsec);
+    expect_double(nutation_obliquity, 9.2_arcsec, 0.0, 0.1_arcsec);
   }
+
   {
     Date date{2018, 8, 1};
     // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
     Earth earth{date.GetJulianDate()};
     double nutation_longitude{earth.GetNutationLongitude()};
-    // double nutation_obliquity{earth.GetNutationObliquity()};
-#if 0
-        std::cout << nutation_longitude.ArcSecStr() << std::endl;
-        std::cout << nutation_obliquity.ArcSecStr() << std::endl;
-#endif
-    if (!is_close(nutation_longitude, -13.0_arcsec, 0.0, 0.5_arcsec)) {
-      return false;
-    }
-  }
-  std::cout << "OK!" << std::endl;
-
-  std::cout << "Earth: Mean Obliquity... ";
-  {
-    Date date{1987, 4, 10.0};
-    // [Jean99] p.148
-    Earth earth{date.GetJulianDate()};
-    double obliquity_mean{earth.GetObliquityMean()};
-#if 0
-        std::cout << obliquity_mean.DMSStr() << std::endl;
-#endif
-    if (!is_close(obliquity_mean, 23_deg + 26_arcmin + 27.41_arcsec, 0.0,
-                  0.01_arcsec)) {
-      return false;
-    }
+    expect_double(nutation_longitude, -13.0_arcsec, 0.0, 0.5_arcsec);
   }
   std::cout << "OK!" << std::endl;
 
@@ -219,113 +195,96 @@ bool test_earth() {
     Date date{1987, 4, 10.0};
     // [Jean99] p.148
     Earth earth{date.GetJulianDate()};
+    double obliquity_mean{earth.GetObliquityMean()};
+    expect_double(obliquity_mean, 23_deg + 26_arcmin + 27.41_arcsec, 0.0,
+                  0.01_arcsec);
     double obliquity{earth.GetObliquity()};
-#if 0
-        std::cout << obliquity.DMSStr() << std::endl;
-#endif
-    if (!is_close(obliquity, 23_deg + 26_arcmin + 36.85_arcsec, 0.0,
-                  0.01_arcsec)) {
-      return false;
-    }
+    expect_double(obliquity, 23_deg + 26_arcmin + 36.85_arcsec, 0.0,
+                  0.01_arcsec);
   }
+
   {
     Date date{2018, 8, 1};
     // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
     // [Peter11] p.54
     Earth earth{date.GetJulianDate()};
     double obliquity{earth.GetObliquity()};
-#if 0
-        std::cout << obliquity.DMSStr() << std::endl;
-#endif
-    if (!is_close(obliquity, 23_deg + 26_arcmin + 7_arcsec, 0.0, 1_arcsec)) {
-      return false;
-    }
+    expect_double(obliquity, 23_deg + 26_arcmin + 7_arcsec, 0.0, 1_arcsec);
   }
+
   std::cout << "OK!" << std::endl;
-
-  return true;
 }
 
-#if 0
-bool test_sun()
-{
-    std::cout << "Sun: Position... ";
-    {
-        // [Peter11] p.105
-        Sun sun{Date{2003, 7, 27}};
-        Coordinate coord;
-        coord = sun.GetPosition();
-        Degree ra{coord.GetEquatorialRightAscension()};
-        Degree decl{coord.GetEquatorialDeclination()};
-#ifdef DEBUG
-        std::cout << ra.hms_str() << std::endl;
-        std::cout << is_close << std::endl;
-#endif
-        if(!is_close(ra.Deg(), (8.0_hour + 23.0_minute + 33.0_second).Deg(),
-                     0.0, (15.0_second).Deg())) {
-            return false;
-        }
-        if(!is_close(decl.Deg(), (19.0_deg + 21.0_arcmin + 16.0_arcsec).Deg(),
-                     0.0, (1.0_arcmin).Deg())) {
-            return false;
-        }
-    }
+static void test_sun() {
+  std::cout << "Sun: Position... ";
 
-    {
-        // [Peter11] p.109
-        Sun sun{Date(1988, 7, 27)};
-        Coordinate coord;
-        coord = sun.GetPosition();
-        Degree ra{coord.GetEquatorialRightAscension()};
-        Degree decl{coord.GetEquatorialDeclination()};
-#ifdef DEBUG
-        std::cout << ra.hms_str() << std::endl;
-        std::cout << decl.dms_str(is_close
-#endif
-        if(!is_close(ra.Deg(),
-                            (8.0_hour + 26.0_minute + 3.0_second).Deg(), 0.0,
-                            (15.0_second).Deg())) {
-            return false;
-            }
-        if(!is_close(decl.Deg(),
-                                    (19.0_deg + 12.0_arcmin + 43.0_arcsec)
-                                        .Deg(),
-                                    0.0, (1.0_arcmin).Deg()))
-            {
-            return false;
-            }
-    }
+  {
+    // [Peter11] p.105
+    Date date{2003, 7, 27.0};
+    Sun sun{date.GetJulianDate()};
+    double apparent_longitude{sun.GetApparentLongitude()};
+    double apparent_latitude{sun.GetApparentLatitude()};
+    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    double obliquity{earth_obliquity.GetObliquity()};
+    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+        apparent_longitude, apparent_latitude, obliquity)};
+    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+        apparent_longitude, apparent_latitude, obliquity)};
 
-    {
-        // [Jean99] p.165
-        // http://www.astro.com/swisseph/ae/1900/ae_1992d.pdf
-        Sun sun{Date(1992, 10, 13)};
-        Coordinate coord;
-        coord = sun.GetPosition();
-        Degree ra{coord.GetEquatorialRightAscension()};
-        Degree decl{coord.GetEquatorialDeclination()};
-#ifdef DEBUG
-        std::cout << coord.GetEclipticLongitude().dms_str() << std::endl;
-        std::cout << ra.hms_str() << std::endl;
-        std::cout << decl.dms_str() << std::endl;
-#endif
-        if(!is_close(coord.GetEclipticLongitude().Deg(),
-                     (199.0_deg + 54.0_arcmin + 24.0_arcsec).Deg(), 0.0,
-                     (15.0_arcsec).Deg())) {
-            return false;
-        }
-        if(!is_close(decl.Deg(), (-(7.0_deg + 47.0_arcmin)).Deg(), 0.0,
-                     (1.0_arcmin).Deg())) {
-            return false;
-        }
-    }
-    std::cout << "OK!" << std::endl;
+    expect_double(apparent_ra, 8.0_h + 23.0_m + 33.0_s, 0.0, 1.0_s);
+    expect_double(apparent_decl, 19.0_deg + 21.0_arcmin + 16.0_arcsec, 0.0,
+                  1.0_arcsec);
+  }
 
-    return true;
+  {
+    // [Peter11] p.109
+    Date date{1988, 7, 27.0};
+    Sun sun{date.GetJulianDate()};
+    double apparent_longitude{sun.GetApparentLongitude()};
+    double apparent_latitude{sun.GetApparentLatitude()};
+    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    double obliquity{earth_obliquity.GetObliquity()};
+    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+        apparent_longitude, apparent_latitude, obliquity)};
+    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+        apparent_longitude, apparent_latitude, obliquity)};
+
+    expect_double(apparent_ra, 8.0_h + 26.0_m + 3.0_s, 0.0, 1.0_s);
+    expect_double(apparent_decl, 19.0_deg + 12.0_arcmin + 52.0_arcsec, 0.0,
+                  1.0_arcsec);
+  }
+
+  {
+    // [Jean99] p.165
+    // http://www.astro.com/swisseph/ae/1900/ae_1992d.pdf
+    Date date{1992, 10, 13.0};
+    Sun sun{date.GetJulianDate()};
+    double geocentric_longitude{sun.GetGeocentricLongitude()};
+    double apparent_longitude{sun.GetApparentLongitude()};
+    double apparent_latitude{sun.GetApparentLatitude()};
+    double radius_vector{sun.GetRadiusVectorAU()};
+    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    double obliquity{earth_obliquity.GetObliquity()};
+    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
+        apparent_longitude, apparent_latitude, obliquity)};
+    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
+        apparent_longitude, apparent_latitude, obliquity)};
+
+    expect_double(geocentric_longitude, 199.0_deg + 54.0_arcmin + 26.18_arcsec,
+                  0.0, 0.01_arcsec);
+    expect_double(apparent_longitude, 199.0_deg + 54.0_arcmin + 21.56_arcsec,
+                  0.0, 0.01_arcsec);
+    expect_double(apparent_latitude, 0.72_arcsec, 0.0, 0.01_arcsec);
+    expect_double(radius_vector, 0.99760853, 0.0, 0.00000001);
+    expect_double(apparent_ra, 13.0_h + 13.0_m + 30.749_s, 0.0, 0.001_s);
+    expect_double(apparent_decl, -(7.0_deg + 47.0_arcmin + 01.74_arcsec), 0.0,
+                  0.01_arcsec);
+  }
+
+  std::cout << "OK!" << std::endl;
 }
-#endif
 
-bool test_solver() {
+static void test_solver() {
   std::cout << "Solver: Kepler... ";
   {
     struct {
@@ -338,45 +297,22 @@ bool test_solver() {
     };
     for (auto& td : kepler_test_data) {
       double e{Solver::solve_kepler(td.ecc, td.m)};
-      if (!is_close(td.m, e - td.ecc * std::sin(e), 1.0e-9, 0.0)) {
-        return false;
-      }
+      expect_double(td.m, e - td.ecc * std::sin(e), 1.0e-9, 0.0);
     }
     for (double ecc_100 = 0.0; ecc_100 < 100.0; ecc_100 += 1.0) {
       for (double m_100 = 0.0; m_100 < 700.0; m_100 += 1.0) {
         double e{Solver::solve_kepler(ecc_100 / 100.0, m_100 / 100.0)};
-        if (!is_close(m_100 / 100.0, e - ecc_100 / 100.0 * std::sin(e), 1.0e-9,
-                      0.0)) {
-          return false;
-        }
+        expect_double(m_100 / 100.0, e - ecc_100 / 100.0 * std::sin(e), 1.0e-9,
+                      0.0);
       }
     }
   }
   std::cout << "OK!" << std::endl;
-
-  return true;
 }
 
-bool test_internal() {
-  if (!test_julian_date()) {
-    return false;
-  }
-  if (!test_earth()) {
-    return false;
-  }
-  /*
-  if(!test_coordinate()) {
-      return false;
-  }
-   */
-  /*
-  if(!test_sun()) {
-      return false;
-  }
-   */
-  if (!test_solver()) {
-    return false;
-  }
-
-  return true;
+void test_internal() {
+  test_julian_date();
+  test_earth();
+  test_sun();
+  test_solver();
 }

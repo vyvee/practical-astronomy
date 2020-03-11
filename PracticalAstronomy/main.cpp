@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <regex>
 #include <vector>
 
 #include "coordinate.h"
@@ -169,16 +170,14 @@ void ephemeris(Date date) {
 }
 
 int main(void) {
-  if (test_internal()) {
-    std::cout << "Internal Test OK!" << std::endl;
-  } else {
-    std::cout << "Error: Internal Test Failed!" << std::endl;
-    // return 0;
-  }
+  test_internal();
 
-  PA::Date date;
-  {
-#if 1
+  std::string line;
+  std::cout << "Date (y-m-d-hh:mm:ss or y-m-d), or (n)ow? ";
+  std::cin >> line;
+  std::cout << "[" << line << "]" << line.length() << std::endl;
+  if (line == "n") {
+    PA::Date date;
     std::time_t now;
     now =
         std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -186,13 +185,27 @@ int main(void) {
     ptm = std::gmtime(&now);
     date.SetCalendarTT(1900 + ptm->tm_year, ptm->tm_mon + 1, ptm->tm_mday,
                        ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
-#else
-    // date.SetCalendarTT(2020, 3,
-    //                    20 + 3.0 / 24.0 + 52.0 / (24.0 * 60.0) + 13.0 /
-    //                    86400.0);
-    date.SetCalendarTT(2020, 2, 14);
-#endif
     ephemeris(date);
+  } else {
+    std::smatch match;
+    if (std::regex_match(line, match,
+                         std::regex("(\\d+)\\-(\\d+)\\-(\\d+)-"
+                                    "(\\d+):(\\d+):(\\d+(?:\\.\\d+)?)",
+                                    std::regex::ECMAScript))) {
+      PA::Date date;
+      date.SetCalendarTT(std::stoi(match.str(1)), std::stoi(match.str(2)),
+                         std::stoi(match.str(3)), std::stoi(match.str(4)),
+                         std::stoi(match.str(5)), std::stof(match.str(6)));
+      ephemeris(date);
+    } else if (std::regex_match(
+                   line, match,
+                   std::regex("^(\\d+)\\-(\\d+)\\-(\\d+(?:\\.\\d+)?)$",
+                              std::regex::ECMAScript))) {
+      PA::Date date;
+      date.SetCalendarTT(std::stoi(match.str(1)), std::stoi(match.str(2)),
+                         std::stof(match.str(3)));
+      ephemeris(date);
+    }
   }
 
 #if 0
