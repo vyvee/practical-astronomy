@@ -28,6 +28,8 @@ class Sun {
   double geocentric_latitude_{0.0};
   double radius_vector_au_{0.0};
 
+  constexpr void ComputeAberrationLowAccuracy() noexcept;
+  constexpr void ComputeAberrationHighAccuracy() noexcept;
   constexpr void ComputeAberration() noexcept;
   bool aberration_is_valid_{false};
   double aberration_longitude_{0.0};
@@ -127,8 +129,17 @@ constexpr void Sun::ComputeMeanLongitude() noexcept {
 
 #include "misc.h"
 
-constexpr void Sun::ComputeAberration() noexcept {
+constexpr void Sun::ComputeAberrationLowAccuracy() noexcept {
+  // [Jean99] pp.167
+  // Accuracy: 0".01
+  aberration_longitude_ = -20.4898_arcsec / radius_vector_au_;
+  aberration_latitude_ = 0.0;
+  aberration_is_valid_ = true;
+}
+
+constexpr void Sun::ComputeAberrationHighAccuracy() noexcept {
   // [Jean99] pp.167-168
+  // Accuracy: 0".001
   constexpr struct PeriodicTerm variation_d0[]{
       // Eccentricity of Earth's orbit
       {118.568_arcsec, 87.5287_deg, 359993.7286_deg},
@@ -193,6 +204,9 @@ constexpr void Sun::ComputeAberration() noexcept {
   };
 
   double tau{(julian_date_ - EpochJ2000) / 365250.0};
+  // For value:
+  // - w.r.t. fixed reference frame: Use 3548.193_arcsec
+  // - w.r.t. the mean equinox of the date: Use 3548.330_arcsec
   double daily_variation{3548.193_arcsec +
                          PeriodicTermCompute(variation_d_table, tau)};
   aberration_longitude_ = -0.005775518 * radius_vector_au_ * daily_variation;
@@ -201,9 +215,11 @@ constexpr void Sun::ComputeAberration() noexcept {
       AberrationLatitude(geocentric_longitude_, geocentric_latitude_,
                          julian_date_, GetGeocentricLongitude());
   aberration_is_valid_ = true;
+}
 
-  // Low Accuracy:
-  // apparent_longitude_ += -20.4898_arcsec / radius_vector_au_;
+constexpr void Sun::ComputeAberration() noexcept {
+  // ComputeAberrationLowAccuracy();
+  ComputeAberrationHighAccuracy();
 }
 
 constexpr void Sun::ComputeApparentPosition() noexcept {

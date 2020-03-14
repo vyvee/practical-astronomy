@@ -2,7 +2,8 @@
 #define EARTH_OBLIQUITY_H_
 
 // J. Lasker's Formula
-// Accuracy: 0.01" between 1000 and 3000, and a few arcseconds between -9000 and
+// Accuracy: 0".01 after 1000 years (i.e., A.D. 1000 and 3000),
+//           a few seconds of arc after 10000 years
 
 #include "date.h"
 #include "earth_nutation.h"

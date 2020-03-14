@@ -1,8 +1,8 @@
 # Practical Astronomy
 
-Implementations of astronomical algorithms.
+Implementation of astronomical algorithms.
 
-Aims to implement algorithms to calculate positions of solar system objects with high accuracy.
+Aims to implementation methods that achieve accuracy for `practical' use. Main source material is the amazing book [Astronomical Algorithms][Jean99] by Jean Meeus. However, some useful methods (such as the full version of VSOP87) are also included.
 
 ## Features
 
@@ -20,31 +20,33 @@ Aims to implement algorithms to calculate positions of solar system objects with
 $ make
 ```
 
-The code is written in C++17 and currently depends on some G++ extensions.
-
+The code is written in C++17 and currently depends on G++ extension to support designated initializers from C99.
 
 ## TODOs
 
+- Sunrise, Sunset, Twilight time
+- Moonrise, Moonset time
+- Moon Phase
+- Illuminated Fraction of the Moon's Disk
 - Moon: Apparent position, Equatorial coordinate
 - Correction for Parallax
 - Coordinate Transformation
-- Make use of [VSOP2013],  [ELP/MPP02], [LEA-406], etc.
 - Time: UT
 - Calculation of Eclipses
-- Better error handling: Invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.
+- Better error handling (E.g., invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.)
 - C++: Better and more use move semantics, noexcept, etc.
 - Many others...
 
 ## Main References
 
 * [Jean99] - Jean Meeus, *Astronomical Algorithms*, 2nd Edition, 1999.
+* [Peter11] - Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.
 * [VSOP87] - Planetory Solutions
+* [NASA07] - Polynomial Expressions for Delta T (ΔT)
 * [VSOP2013] - Planetory Solutions
 * [LEA-406] - Theory of Lunar Motion
 * [ELP/MPP02] - Theory of Lunar Motion
-* [NASA07] - Polynomial Expressions for Delta T (ΔT)
 * [XEphem] - The Cross-Platform Astronomy Software
-* [Peter11] - Peter Duffett-Smith and Jonathan Zwart, *Practical Astronomy with your Calculator or Spreadsheet*, 4th Edition, 2011.
 
 [Jean99]: https://www.willbell.com/MATH/MC1.HTM
 [VSOP87]: http://cdsarc.u-strasbg.fr/viz-bin/Cat?cat=VI/81

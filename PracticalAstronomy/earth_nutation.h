@@ -24,6 +24,9 @@ class EarthNutation {
  private:
   double julian_date_;
 
+  constexpr void ComputeNutationLowAccuracy() noexcept;
+  constexpr void ComputeNutationIAU1980() noexcept;
+  constexpr void ComputeNutationIAU2000B() noexcept;
   constexpr void ComputeNutation() noexcept;
   bool nutation_is_valid_{false};
   double nutation_longitude_{0.0};
@@ -44,7 +47,195 @@ constexpr double EarthNutation::GetNutationObliquity() noexcept {
   return nutation_obliquity_;
 }
 
-constexpr void EarthNutation::ComputeNutation() noexcept {
+constexpr void EarthNutation::ComputeNutationLowAccuracy() noexcept {
+  // Low Accuracy
+  // Accuracy: 0".5 in longitude, 0."1 in obliquity
+  // - [Jean99] Chapter, p.143
+  double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
+  double om{125.04452_deg - 1934.136261_deg * t};
+  double l{280.4665_deg + 36000.7698_deg * t};
+  double lm{218.3165_deg + 481267.8813_deg * t};
+
+  nutation_longitude_ =
+      -17.20_arcsec * std::sin(om) - 1.32_arcsec * std::sin(2 * l) -
+      0.23_arcsec * std::sin(2 * lm) + 0.21_arcsec * std::sin(2 * om);
+  nutation_obliquity_ =
+      9.20_arcsec * std::cos(om) + 0.57_arcsec * std::cos(2 * l) +
+      0.10_arcsec * std::cos(2 * lm) - 0.09_arcsec * cos(2 * om);
+  nutation_is_valid_ = true;
+}
+
+constexpr void EarthNutation::ComputeNutationIAU1980() noexcept {
+  // IAU 1980 Nutation Model
+  // Accuracy: 0.002"
+  // References:
+  // - [Jean99] Chapter, p.143
+  // - http://adsabs.harvard.edu/full/1982CeMec..27...79S
+  // - http://hpiers.obspm.fr/eop-pc/models/nutations/nut.html
+  // - http://www.neoprogrammics.com/nutations/
+  // -
+  // https://www.researchgate.net/publication/303154594_On_the_Accuracy_of_the_1980_IAU_Nutation_Series
+  struct {
+    int lm;  // Mean anomaly of the Moon
+    int ls;  // Mean anomaly of the Sun
+    int f;   // Moon's argument of latitude
+    int d;   // Mean elongation of the Moon from the Sun
+    int om;  // Longitude of the ascending node
+    double psi_sin;
+    double psi_t_sin;
+    double eps_cos;
+    double eps_t_cos;
+  } periodic_terms[]{
+      {0, 0, 0, 0, 1, -171996.0_arcsec, -174.2_arcsec, 92025.0_arcsec,
+       8.9_arcsec},
+      {0, 0, 2, -2, 2, -13187.0_arcsec, -1.6_arcsec, 5736.0_arcsec,
+       -3.1_arcsec},
+      {0, 0, 2, 0, 2, -2274.0_arcsec, -0.2_arcsec, 977.0_arcsec, -0.5_arcsec},
+      {0, 0, 0, 0, 2, 2062.0_arcsec, 0.2_arcsec, -895.0_arcsec, 0.5_arcsec},
+      {0, -1, 0, 0, 0, -1426.0_arcsec, 3.4_arcsec, 54.0_arcsec, -0.1_arcsec},
+      {1, 0, 0, 0, 0, 712.0_arcsec, 0.1_arcsec, -7.0_arcsec, 0.0_arcsec},
+      {0, 1, 2, -2, 2, -517.0_arcsec, 1.2_arcsec, 224.0_arcsec, -0.6_arcsec},
+      {0, 0, 2, 0, 1, -386.0_arcsec, -0.4_arcsec, 200.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, 0, 2, -301.0_arcsec, 0.0_arcsec, 129.0_arcsec, -0.1_arcsec},
+      {0, -1, 2, -2, 2, 217.0_arcsec, -0.5_arcsec, -95.0_arcsec, 0.3_arcsec},
+      {-1, 0, 0, 2, 0, 158.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, -2, 1, 129.0_arcsec, 0.1_arcsec, -70.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, 0, 2, 123.0_arcsec, 0.0_arcsec, -53.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, 0, 1, 63.0_arcsec, 0.1_arcsec, -33.0_arcsec, 0.0_arcsec},
+      {0, 0, 0, 2, 0, 63.0_arcsec, 0.0_arcsec, -2.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, 2, 2, -59.0_arcsec, 0.0_arcsec, 26.0_arcsec, 0.0_arcsec},
+      {-1, 0, 0, 0, 1, -58.0_arcsec, -0.1_arcsec, 32.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, 0, 1, -51.0_arcsec, 0.0_arcsec, 27.0_arcsec, 0.0_arcsec},
+      {-2, 0, 0, 2, 0, -48.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {-2, 0, 2, 0, 1, 46.0_arcsec, 0.0_arcsec, -24.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, 2, 2, -38.0_arcsec, 0.0_arcsec, 16.0_arcsec, 0.0_arcsec},
+      {2, 0, 2, 0, 2, -31.0_arcsec, 0.0_arcsec, 13.0_arcsec, 0.0_arcsec},
+      {2, 0, 0, 0, 0, 29.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, -2, 2, 29.0_arcsec, 0.0_arcsec, -12.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, 0, 0, 26.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, -2, 0, -22.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, 0, 1, 21.0_arcsec, 0.0_arcsec, -10.0_arcsec, 0.0_arcsec},
+      {0, 2, 0, 0, 0, 17.0_arcsec, -0.1_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 2, 2, -2, 2, -16.0_arcsec, 0.1_arcsec, 7.0_arcsec, 0.0_arcsec},
+      {-1, 0, 0, 2, 1, 16.0_arcsec, 0.0_arcsec, -8.0_arcsec, 0.0_arcsec},
+      {0, 1, 0, 0, 1, -15.0_arcsec, 0.0_arcsec, 9.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, -2, 1, -13.0_arcsec, 0.0_arcsec, 7.0_arcsec, 0.0_arcsec},
+      {0, -1, 0, 0, 1, -12.0_arcsec, 0.0_arcsec, 6.0_arcsec, 0.0_arcsec},
+      {2, 0, -2, 0, 0, 11.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, 2, 1, -10.0_arcsec, 0.0_arcsec, 5.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, 2, 2, -8.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {0, -1, 2, 0, 2, -7.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, 2, 1, -7.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {1, 1, 0, -2, 0, -7.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 2, 0, 2, 7.0_arcsec, 0.0_arcsec, -3.0_arcsec, 0.0_arcsec},
+      {-2, 0, 0, 2, 1, -6.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {0, 0, 0, 2, 1, -6.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {2, 0, 2, -2, 2, 6.0_arcsec, 0.0_arcsec, -3.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, 2, 0, 6.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, -2, 1, 6.0_arcsec, 0.0_arcsec, -3.0_arcsec, 0.0_arcsec},
+      {0, 0, 0, -2, 1, -5.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {0, -1, 2, -2, 1, -5.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {2, 0, 2, 0, 1, -5.0_arcsec, 0.0_arcsec, 3.0_arcsec, 0.0_arcsec},
+      {1, -1, 0, 0, 0, 5.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, -1, 0, -4.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 0, 0, 1, 0, -4.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 0, -2, 0, -4.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, -2, 0, 0, 4.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {2, 0, 0, -2, 1, 4.0_arcsec, 0.0_arcsec, -2.0_arcsec, 0.0_arcsec},
+      {0, 1, 2, -2, 1, 4.0_arcsec, 0.0_arcsec, -2.0_arcsec, 0.0_arcsec},
+      {1, 1, 0, 0, 0, -3.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, -1, 0, -1, 0, -3.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, -1, 2, 2, 2, -3.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {0, -1, 2, 2, 2, -3.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {1, -1, 2, 0, 2, -3.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {3, 0, 2, 0, 2, -3.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {-2, 0, 2, 0, 2, -3.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, 0, 0, 3.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, 4, 2, -2.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, 0, 2, -2.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {-1, 0, 2, -2, 1, -2.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {0, -2, 2, -2, 1, -2.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {-2, 0, 0, 0, 1, -2.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {2, 0, 0, 0, 1, 2.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {3, 0, 0, 0, 0, 2.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 1, 2, 0, 2, 2.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, 1, 2, 2.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, 2, 1, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, 2, 1, -1.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {1, 1, 0, -2, 1, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 0, 2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 2, -2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, -2, 2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, -2, 2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, -2, -2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, 2, -2, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 0, 0, -4, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {2, 0, 0, -4, 0, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, 4, 2, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 0, 2, -1, 2, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-2, 0, 2, 4, 2, -1.0_arcsec, 0.0_arcsec, 1.0_arcsec, 0.0_arcsec},
+      {2, 0, 2, 2, 2, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, -1, 2, 0, 1, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 0, -2, 0, 1, -1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 0, 4, -2, 2, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 0, 0, 2, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, 1, 2, -2, 2, 1.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {3, 0, 2, -2, 2, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-2, 0, 2, 2, 2, 1.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {-1, 0, 0, 0, 2, 1.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {0, 0, -2, 2, 1, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 2, 0, 1, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, 0, 4, 0, 2, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {2, 1, 0, -2, 0, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {2, 0, 0, 2, 0, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {2, 0, 2, -2, 1, 1.0_arcsec, 0.0_arcsec, -1.0_arcsec, 0.0_arcsec},
+      {2, 0, -2, 0, 1, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {1, -1, 0, -2, 0, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, 0, 0, 1, 1, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {-1, -1, 0, 2, 1, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+      {0, 1, 0, 1, 0, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
+  };
+
+  double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
+  double lm{
+      horner_polynomial({134_deg + 57_arcmin + 46.733_arcsec,
+                         1325 * 360_deg + 198_deg + 52_arcmin + 2.633_arcsec,
+                         31.310_arcsec, 0.064_arcsec},
+                        t)};
+  double ls{horner_polynomial({357_deg + 31_arcmin + 39.804_arcsec,
+                               99 * 360_deg + 359_deg + 3_arcmin + 1.224_arcsec,
+                               -0.577_arcsec, -0.012_arcsec},
+                              t)};
+  double f{horner_polynomial({93_deg + 16_arcmin + 18.877_arcsec,
+                              1342 * 360_deg + 82_deg + 1_arcmin + 3.137_arcsec,
+                              -13.257_arcsec, 0.011_arcsec},
+                             t)};
+  double d{
+      horner_polynomial({297_deg + 51_arcmin + 1.307_arcsec,
+                         1236 * 360_deg + 307_deg + 6_arcmin + 41.328_arcsec,
+                         -6.891_arcsec, 0.019_arcsec},
+                        t)};
+  double om{
+      horner_polynomial({125_deg + 2_arcmin + 40.280_arcsec,
+                         -(5 * 360_deg + 134_deg + 8_arcmin + 10.539_arcsec),
+                         7.455_arcsec, 0.008_arcsec},
+                        t)};
+
+  double sum_dpsi{0.0};
+  double sum_deps{0.0};
+  for (auto& pt : periodic_terms) {
+    double arg{lm * pt.lm + ls * pt.ls + f * pt.f + d * pt.d + om * pt.om};
+    double dpsi{(pt.psi_sin + pt.psi_t_sin * t) * std::sin(arg)};
+    double deps{(pt.eps_cos + pt.eps_t_cos * t) * std::cos(arg)};
+    sum_dpsi += dpsi;
+    sum_deps += deps;
+  }
+  nutation_longitude_ = sum_dpsi / 10000;
+  nutation_obliquity_ = sum_deps / 10000;
+  nutation_is_valid_ = true;
+}
+
+constexpr void EarthNutation::ComputeNutationIAU2000B() noexcept {
   // IAU 2000B Nutation Model
   // Accuracy: 0.001" during 1995-2050
   // References:
@@ -52,6 +243,8 @@ constexpr void EarthNutation::ComputeNutation() noexcept {
   // - http://www.iausofa.org/2018_0130_F/sofa/nut00b.for
   // -
   // https://www.iers.org/SharedDocs/Publikationen/EN/IERS/Publications/tn/TechnNote32/tn32_033.pdf
+  // -
+  // https://www.iers.org/SharedDocs/Publikationen/EN/IERS/Publications/tn/TechnNote29/tn29_111.pdf
   // - [Jean99] Chapter, p.143
   struct {
     int m1;
@@ -68,7 +261,7 @@ constexpr void EarthNutation::ComputeNutation() noexcept {
   } periodic_terms[]{
       {0, 0, 0, 0, 1, -172064161_arcsec, -174666_arcsec, 33386_arcsec,
        92052331_arcsec, 9086_arcsec, 15377_arcsec},
-      {0, 0, 2, -2, 2, -13170906_arcsec, -1675_arcsec, 13696_arcsec,
+      {0, 0, 2, -2, 2, -13170906_arcsec, -1675_arcsec, -13696_arcsec,
        5730336_arcsec, -3015_arcsec, -4587_arcsec},
       {0, 0, 2, 0, 2, -2276413_arcsec, -234_arcsec, 2796_arcsec, 978459_arcsec,
        -485_arcsec, 1374_arcsec},
@@ -240,7 +433,7 @@ constexpr void EarthNutation::ComputeNutation() noexcept {
                          -6.3706_arcsec, +0.006593_arcsec, -0.00003169_arcsec},
                         t)};
   double om{
-      horner_polynomial({450160.398036_arcsec, -6962890.5431_arcsec,
+      horner_polynomial({+450160.398036_arcsec, -6962890.5431_arcsec,
                          +7.4722_arcsec, +0.007702_arcsec, -0.00005939_arcsec},
                         t)};
 
@@ -256,6 +449,12 @@ constexpr void EarthNutation::ComputeNutation() noexcept {
   nutation_longitude_ = sum_dpsi / 10000000.0;
   nutation_obliquity_ = sum_deps / 10000000.0;
   nutation_is_valid_ = true;
+}
+
+constexpr void EarthNutation::ComputeNutation() noexcept {
+  // ComputeNutationLowAccuracy();
+  // ComputeNutationIAU1980();
+  ComputeNutationIAU2000B();
 }
 
 }  // namespace PA

@@ -96,12 +96,12 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept {
   // Conversion: Mean *dynamical* equinox and ecliptic of the date to FK5
   // - Reference [Jean99] p.219
   double lp{longitude + (-1.397_deg - 0.00031_deg * t) * t};
-  double diff_l{-0.09033_arcsec +
-                0.03916_arcsec * (std::cos(lp) + std::sin(lp)) * std::tan(latitude)};
-  double diff_b{0.03916_arcsec * (std::cos(lp) - std::sin(lp))};
+  double delta_l{-0.09033_arcsec +
+                 0.03916_arcsec * (std::cos(lp) + std::sin(lp)) * std::tan(latitude)};
+  double delta_b{0.03916_arcsec * (std::cos(lp) - std::sin(lp))};
 
-  longitude += diff_l;
-  latitude += diff_b;
+  longitude += delta_l;
+  latitude += delta_b;
 
   planet_longitude_[static_cast<int>(planet)] = RadUnwind(longitude);
   planet_latitude_[static_cast<int>(planet)] = RadNormalize(latitude);
