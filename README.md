@@ -50,9 +50,9 @@ The code is written in C++17 and currently depends on G++ extension to support d
 
 [Jean99]: https://www.willbell.com/MATH/MC1.HTM
 [VSOP87]: http://cdsarc.u-strasbg.fr/viz-bin/Cat?cat=VI/81
+[Peter11]: https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator
 [VSOP2013]: https://www.aanda.org/articles/aa/abs/2013/09/aa21843-13/aa21843-13.html
 [LEA-406]: https://www.aanda.org/articles/aa/full/2007/33/aa7568-07/aa7568-07.html
 [NASA07]: https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
 [XEphem]: http://www.clearskyinstitute.com/xephem/
-[Peter11]: https://en.wikipedia.org/wiki/Practical_Astronomy_with_your_Calculator
 [ELP/MPP02]: https://sourceforge.net/p/gplan/wiki/ELP%20MPP02/

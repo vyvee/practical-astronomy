@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+#include "earth_nutation.h"
 #include "elp82jm.h"
 
 namespace PA {
@@ -24,6 +25,8 @@ class Moon {
   double geocentric_latitude_{0.0};
   double distance_km_{0.0};
 
+  constexpr void ComputeApparentPosition(
+      const EarthNutation& earth_nutation) noexcept;
   constexpr void ComputeApparentPosition() noexcept;
   bool apparent_position_is_valid_{false};
   double apparent_longitude_{0.0};
@@ -75,18 +78,23 @@ constexpr void Moon::ComputeGeocentricPosition() noexcept {
   geocentric_position_is_valid_ = true;
 }
 
-constexpr void Moon::ComputeApparentPosition() noexcept {
+constexpr void Moon::ComputeApparentPosition(
+    const EarthNutation& earth_nutation) noexcept {
   // [Jean99] p.343
-  Earth earth{julian_date_};
   // [Jean99] p.337: ?? The effect of aberration has been accounted for?
   // (-0.70")
   // + GetAberrationLongitude();
   // - Also: http://adsabs.harvard.edu/full/1952AJ.....57...46C
-  apparent_longitude_ = GetGeocentricLongitude() + earth.GetNutationLongitude();
+  apparent_longitude_ =
+      GetGeocentricLongitude() + earth_nutation.GetNutationLongitude();
   // [Jean99] p.337: ?? The effect of aberration has been accounted for?
   // (-0.70")
   apparent_latitude_ = GetGeocentricLatitude();
   apparent_position_is_valid_ = true;
+}
+
+constexpr void Moon::ComputeApparentPosition() noexcept {
+  ComputeApparentPosition(EarthNutation{julian_date_});
 }
 
 }  // namespace PA

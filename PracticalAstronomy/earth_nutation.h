@@ -9,7 +9,6 @@
 // - IAU 2000A Nutation Model
 //   - Accuracy: 0.0002"
 
-#include "date.h"
 #include "radian.h"
 #include "utils.h"
 
@@ -18,36 +17,36 @@ class EarthNutation {
  public:
   constexpr EarthNutation(double jd) noexcept : julian_date_(jd) {}
 
-  constexpr double GetNutationLongitude() noexcept;
-  constexpr double GetNutationObliquity() noexcept;
+  constexpr double GetNutationLongitude() const noexcept;
+  constexpr double GetNutationObliquity() const noexcept;
 
  private:
   double julian_date_;
 
-  constexpr void ComputeNutationLowAccuracy() noexcept;
-  constexpr void ComputeNutationIAU1980() noexcept;
-  constexpr void ComputeNutationIAU2000B() noexcept;
-  constexpr void ComputeNutation() noexcept;
-  bool nutation_is_valid_{false};
-  double nutation_longitude_{0.0};
-  double nutation_obliquity_{0.0};
+  constexpr void ComputeNutationLowAccuracy() const noexcept;
+  constexpr void ComputeNutationIAU1980() const noexcept;
+  constexpr void ComputeNutationIAU2000B() const noexcept;
+  constexpr void ComputeNutation() const noexcept;
+  mutable bool nutation_is_valid_{false};
+  mutable double nutation_longitude_{0.0};
+  mutable double nutation_obliquity_{0.0};
 };
 
-constexpr double EarthNutation::GetNutationLongitude() noexcept {
+constexpr double EarthNutation::GetNutationLongitude() const noexcept {
   if (!nutation_is_valid_) {
     ComputeNutation();
   }
   return nutation_longitude_;
 }
 
-constexpr double EarthNutation::GetNutationObliquity() noexcept {
+constexpr double EarthNutation::GetNutationObliquity() const noexcept {
   if (!nutation_is_valid_) {
     ComputeNutation();
   }
   return nutation_obliquity_;
 }
 
-constexpr void EarthNutation::ComputeNutationLowAccuracy() noexcept {
+constexpr void EarthNutation::ComputeNutationLowAccuracy() const noexcept {
   // Low Accuracy
   // Accuracy: 0".5 in longitude, 0."1 in obliquity
   // - [Jean99] Chapter, p.143
@@ -65,7 +64,7 @@ constexpr void EarthNutation::ComputeNutationLowAccuracy() noexcept {
   nutation_is_valid_ = true;
 }
 
-constexpr void EarthNutation::ComputeNutationIAU1980() noexcept {
+constexpr void EarthNutation::ComputeNutationIAU1980() const noexcept {
   // IAU 1980 Nutation Model
   // Accuracy: 0.002"
   // References:
@@ -235,7 +234,7 @@ constexpr void EarthNutation::ComputeNutationIAU1980() noexcept {
   nutation_is_valid_ = true;
 }
 
-constexpr void EarthNutation::ComputeNutationIAU2000B() noexcept {
+constexpr void EarthNutation::ComputeNutationIAU2000B() const noexcept {
   // IAU 2000B Nutation Model
   // Accuracy: 0.001" during 1995-2050
   // References:
@@ -451,7 +450,7 @@ constexpr void EarthNutation::ComputeNutationIAU2000B() noexcept {
   nutation_is_valid_ = true;
 }
 
-constexpr void EarthNutation::ComputeNutation() noexcept {
+constexpr void EarthNutation::ComputeNutation() const noexcept {
   // ComputeNutationLowAccuracy();
   // ComputeNutationIAU1980();
   ComputeNutationIAU2000B();

@@ -198,16 +198,15 @@ constexpr bool Date::DeltaTFromCalendar(double *p_delta_t, int year, int month,
   // Error can be up to 2.0s for recent years. Not ideal but usable.
   // References:
   // - https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
-  // - [Graph: Actual and Prediction]
-  //   http://asa.usno.navy.mil/SecK/DeltaT.html
   // - [Actual Data] ftp://maia.usno.navy.mil/ser7/deltat.data
-  // - http://stjarnhimlen.se/comp/time.html
-  // - http://astro.altspu.ru/~aw/DeltaT/
-  // - https://www.hindawi.com/journals/jas/2014/480964/
+  // - https://stjarnhimlen.se/comp/time.html
+  // - http://asa.hmnao.com/SecK/DeltaT.html
+  // - [Delta-T: Polynomial Approximation of Time Period 1620–2013]
+  //   https://www.hindawi.com/journals/jas/2014/480964/
+  // - USNO Website, to be up at April 2020?
   // TODO:
   // - Check possibility of doing it with Julian Date, with advantage to
-  // get a
-  //   more accurate decimal year.
+  // get a more accurate decimal year.
   double y{year + (month - 0.5) / 12.0};
   // double y{static_cast<double>(year_)};
   if (y >= +2150) {

@@ -1,4 +1,4 @@
-static constexpr struct PeriodicTerm mercury_l0[]{
+static constexpr struct PeriodicTerm mercury_l0[1380]{
     {      4.40250710144,  0.00000000000,        0.00000000000 },
     {      0.40989414976,  1.48302034194,    26087.90314157420 },
     {      0.05046294199,  4.47785489540,    52175.80628314840 },
@@ -1380,8 +1380,7 @@ static constexpr struct PeriodicTerm mercury_l0[]{
     {      0.00000000004,  2.66996288682,    25572.43927048119 },
     {      0.00000000005,  1.14175711692,   188898.39784101078 },
 };
-static constexpr int mercury_l0_size{1380};
-static constexpr struct PeriodicTerm mercury_l1[]{
+static constexpr struct PeriodicTerm mercury_l1[839]{
     {  26088.14706222746,  0.00000000000,        0.00000000000 },
     {      0.01126007832,  6.21703970996,    26087.90314157420 },
     {      0.00303471395,  3.05565472363,    52175.80628314840 },
@@ -2222,8 +2221,7 @@ static constexpr struct PeriodicTerm mercury_l1[]{
     {      0.00000000002,  5.10682926241,   159969.99379441059 },
     {      0.00000000002,  3.49751807681,   259819.64948555276 },
 };
-static constexpr int mercury_l1_size{839};
-static constexpr struct PeriodicTerm mercury_l2[]{
+static constexpr struct PeriodicTerm mercury_l2[395]{
     {      0.00053049845,  0.00000000000,        0.00000000000 },
     {      0.00016903658,  4.69072300649,    26087.90314157420 },
     {      0.00007396711,  1.34735624669,    52175.80628314840 },
@@ -2620,8 +2618,7 @@ static constexpr struct PeriodicTerm mercury_l2[]{
     {      0.00000000001,  3.26520760555,   240452.46032331996 },
     {      0.00000000001,  5.52286605071,    52125.80966124419 },
 };
-static constexpr int mercury_l2_size{395};
-static constexpr struct PeriodicTerm mercury_l3[]{
+static constexpr struct PeriodicTerm mercury_l3[153]{
     {      0.00000188077,  0.03466830117,    52175.80628314840 },
     {      0.00000142152,  3.12505452600,    26087.90314157420 },
     {      0.00000096877,  3.00378171915,    78263.70942472259 },
@@ -2776,8 +2773,7 @@ static constexpr struct PeriodicTerm mercury_l3[]{
     {      0.00000000001,  5.84438975852,   105307.21230790539 },
     {      0.00000000001,  2.82906439989,    24498.83024629040 },
 };
-static constexpr int mercury_l3_size{153};
-static constexpr struct PeriodicTerm mercury_l4[]{
+static constexpr struct PeriodicTerm mercury_l4[28]{
     {      0.00000114078,  3.14159265359,        0.00000000000 },
     {      0.00000003247,  2.02848007619,    26087.90314157420 },
     {      0.00000001914,  1.41731803758,    78263.70942472259 },
@@ -2807,8 +2803,7 @@ static constexpr struct PeriodicTerm mercury_l4[]{
     {      0.00000000000,  0.40939402954,    24498.83024629040 },
     {      0.00000000000,  3.30678220146,   365230.64398203876 },
 };
-static constexpr int mercury_l4_size{28};
-static constexpr struct PeriodicTerm mercury_l5[]{
+static constexpr struct PeriodicTerm mercury_l5[13]{
     {      0.00000000877,  3.14159265359,        0.00000000000 },
     {      0.00000000059,  3.37513289692,    52175.80628314840 },
     {      0.00000000042,  0.02433099382,    78263.70942472259 },
@@ -2823,8 +2818,7 @@ static constexpr struct PeriodicTerm mercury_l5[]{
     {      0.00000000001,  5.18718589133,   286966.93455731616 },
     {      0.00000000000,  2.11315496491,   313054.83769889036 },
 };
-static constexpr int mercury_l5_size{13};
-static constexpr struct PeriodicTerm mercury_b0[]{
+static constexpr struct PeriodicTerm mercury_b0[818]{
     {      0.11737528962,  1.98357498767,    26087.90314157420 },
     {      0.02388076996,  5.03738959685,    52175.80628314840 },
     {      0.01222839532,  3.14159265359,        0.00000000000 },
@@ -3644,8 +3638,7 @@ static constexpr struct PeriodicTerm mercury_b0[]{
     {      0.00000000004,  1.34781477964,   106684.80895916879 },
     {      0.00000000004,  2.34997151211,   177287.84588263658 },
 };
-static constexpr int mercury_b0_size{818};
-static constexpr struct PeriodicTerm mercury_b1[]{
+static constexpr struct PeriodicTerm mercury_b1[494]{
     {      0.00429151362,  3.50169780393,    26087.90314157420 },
     {      0.00146233668,  3.14159265359,        0.00000000000 },
     {      0.00022675295,  0.01515366880,    52175.80628314840 },
@@ -4141,8 +4134,7 @@ static constexpr struct PeriodicTerm mercury_b1[]{
     {      0.00000000003,  0.65556179120,     1692.16566950240 },
     {      0.00000000002,  1.65727778641,   163766.09444104518 },
 };
-static constexpr int mercury_b1_size{494};
-static constexpr struct PeriodicTerm mercury_b2[]{
+static constexpr struct PeriodicTerm mercury_b2[230]{
     {      0.00011830934,  4.79065585784,    26087.90314157420 },
     {      0.00001913516,  0.00000000000,        0.00000000000 },
     {      0.00001044801,  1.21216540536,    52175.80628314840 },
@@ -4374,8 +4366,7 @@ static constexpr struct PeriodicTerm mercury_b2[]{
     {      0.00000000001,  1.12941846578,    60055.89543648739 },
     {      0.00000000001,  1.16964771504,   134991.46920492979 },
 };
-static constexpr int mercury_b2_size{230};
-static constexpr struct PeriodicTerm mercury_b3[]{
+static constexpr struct PeriodicTerm mercury_b3[53]{
     {      0.00000235423,  0.35387524604,    26087.90314157420 },
     {      0.00000160537,  0.00000000000,        0.00000000000 },
     {      0.00000018904,  4.36275460261,    52175.80628314840 },
@@ -4430,8 +4421,7 @@ static constexpr struct PeriodicTerm mercury_b3[]{
     {      0.00000000001,  2.44816565966,    26084.02180621620 },
     {      0.00000000000,  3.45284067711,   105460.99111839019 },
 };
-static constexpr int mercury_b3_size{53};
-static constexpr struct PeriodicTerm mercury_b4[]{
+static constexpr struct PeriodicTerm mercury_b4[15]{
     {      0.00000004276,  1.74579932115,    26087.90314157420 },
     {      0.00000001023,  3.14159265359,        0.00000000000 },
     {      0.00000000425,  4.03419509143,    52175.80628314840 },
@@ -4448,8 +4438,7 @@ static constexpr struct PeriodicTerm mercury_b4[]{
     {      0.00000000000,  1.44918128781,    24978.52458948080 },
     {      0.00000000000,  4.18046278690,   313054.83769889036 },
 };
-static constexpr int mercury_b4_size{15};
-static constexpr struct PeriodicTerm mercury_b5[]{
+static constexpr struct PeriodicTerm mercury_b5[10]{
     {      0.00000000106,  3.94555784256,    26087.90314157420 },
     {      0.00000000075,  3.14159265359,        0.00000000000 },
     {      0.00000000022,  1.30514874546,    52175.80628314840 },
@@ -4461,8 +4450,7 @@ static constexpr struct PeriodicTerm mercury_b5[]{
     {      0.00000000000,  2.85941734701,   208703.22513259358 },
     {      0.00000000000,  5.96962108614,   234791.12827416777 },
 };
-static constexpr int mercury_b5_size{10};
-static constexpr struct PeriodicTerm mercury_r0[]{
+static constexpr struct PeriodicTerm mercury_r0[1215]{
     {      0.39528271652,  0.00000000000,        0.00000000000 },
     {      0.07834131817,  6.19233722599,    26087.90314157420 },
     {      0.00795525557,  2.95989690096,    52175.80628314840 },
@@ -5679,8 +5667,7 @@ static constexpr struct PeriodicTerm mercury_r0[]{
     {      0.00000000002,  3.05277164813,      225.82926841020 },
     {      0.00000000001,  4.33602746737,     4601.95011896300 },
 };
-static constexpr int mercury_r0_size{1215};
-static constexpr struct PeriodicTerm mercury_r1[]{
+static constexpr struct PeriodicTerm mercury_r1[711]{
     {      0.00217347739,  4.65617158663,    26087.90314157420 },
     {      0.00044141826,  1.42385543975,    52175.80628314840 },
     {      0.00010094479,  4.47466326316,    78263.70942472259 },
@@ -6393,8 +6380,7 @@ static constexpr struct PeriodicTerm mercury_r1[]{
     {      0.00000000001,  4.92352598929,    51596.11869614960 },
     {      0.00000000001,  6.10538330268,   181659.72224941078 },
 };
-static constexpr int mercury_r1_size{711};
-static constexpr struct PeriodicTerm mercury_r2[]{
+static constexpr struct PeriodicTerm mercury_r2[326]{
     {      0.00003117867,  3.08231840296,    26087.90314157420 },
     {      0.00001245396,  6.15183317423,    52175.80628314840 },
     {      0.00000424822,  2.92583352960,    78263.70942472259 },
@@ -6722,8 +6708,7 @@ static constexpr struct PeriodicTerm mercury_r2[]{
     {      0.00000000000,  3.99449121788,   131395.11544947959 },
     {      0.00000000000,  5.65446547429,    80596.90581759460 },
 };
-static constexpr int mercury_r2_size{326};
-static constexpr struct PeriodicTerm mercury_r3[]{
+static constexpr struct PeriodicTerm mercury_r3[119]{
     {      0.00000032676,  1.67971635359,    26087.90314157420 },
     {      0.00000024166,  4.63403168997,    52175.80628314840 },
     {      0.00000012133,  1.38983781545,    78263.70942472259 },
@@ -6844,8 +6829,7 @@ static constexpr struct PeriodicTerm mercury_r3[]{
     {      0.00000000000,  1.86829495425,    48733.23133818299 },
     {      0.00000000000,  5.77443179008,   105410.99449648599 },
 };
-static constexpr int mercury_r3_size{119};
-static constexpr struct PeriodicTerm mercury_r4[]{
+static constexpr struct PeriodicTerm mercury_r4[18]{
     {      0.00000000394,  0.36735403840,    26087.90314157420 },
     {      0.00000000387,  3.18568771507,    52175.80628314840 },
     {      0.00000000270,  6.16983616444,    78263.70942472259 },
@@ -6865,8 +6849,7 @@ static constexpr struct PeriodicTerm mercury_r4[]{
     {      0.00000000000,  2.93310416266,    27197.28169366760 },
     {      0.00000000000,  2.89897922039,   103242.23401420339 },
 };
-static constexpr int mercury_r4_size{18};
-static constexpr struct PeriodicTerm mercury_r5[]{
+static constexpr struct PeriodicTerm mercury_r5[10]{
     {      0.00000000006,  3.98900269603,    26087.90314157420 },
     {      0.00000000006,  1.55248278782,    52175.80628314840 },
     {      0.00000000005,  4.65461721116,    78263.70942472259 },
@@ -6878,35 +6861,34 @@ static constexpr struct PeriodicTerm mercury_r5[]{
     {      0.00000000000,  0.99831133595,   208703.22513259358 },
     {      0.00000000000,  4.00267064210,   234791.12827416777 },
 };
-static constexpr int mercury_r5_size{10};
 static constexpr struct PeriodicTermTableDegree mercury_l_table_degrees[]{
-    {mercury_l0, mercury_l0_size},
-    {mercury_l1, mercury_l1_size},
-    {mercury_l2, mercury_l2_size},
-    {mercury_l3, mercury_l3_size},
-    {mercury_l4, mercury_l4_size},
-    {mercury_l5, mercury_l5_size},
+    {mercury_l0, 1380},
+    {mercury_l1, 839},
+    {mercury_l2, 395},
+    {mercury_l3, 153},
+    {mercury_l4, 28},
+    {mercury_l5, 13},
 };
 static constexpr struct PeriodicTermTable mercury_l_table {.degrees = mercury_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mercury_b_table_degrees[]{
-    {mercury_b0, mercury_b0_size},
-    {mercury_b1, mercury_b1_size},
-    {mercury_b2, mercury_b2_size},
-    {mercury_b3, mercury_b3_size},
-    {mercury_b4, mercury_b4_size},
-    {mercury_b5, mercury_b5_size},
+    {mercury_b0, 818},
+    {mercury_b1, 494},
+    {mercury_b2, 230},
+    {mercury_b3, 53},
+    {mercury_b4, 15},
+    {mercury_b5, 10},
 };
 static constexpr struct PeriodicTermTable mercury_b_table {.degrees = mercury_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mercury_r_table_degrees[]{
-    {mercury_r0, mercury_r0_size},
-    {mercury_r1, mercury_r1_size},
-    {mercury_r2, mercury_r2_size},
-    {mercury_r3, mercury_r3_size},
-    {mercury_r4, mercury_r4_size},
-    {mercury_r5, mercury_r5_size},
+    {mercury_r0, 1215},
+    {mercury_r1, 711},
+    {mercury_r2, 326},
+    {mercury_r3, 119},
+    {mercury_r4, 18},
+    {mercury_r5, 10},
 };
 static constexpr struct PeriodicTermTable mercury_r_table {.degrees = mercury_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm venus_l0[]{
+static constexpr struct PeriodicTerm venus_l0[367]{
     {      3.17614666774,  0.00000000000,        0.00000000000 },
     {      0.01353968419,  5.59313319619,    10213.28554621100 },
     {      0.00089891645,  5.30650048468,    20426.57109242200 },
@@ -7275,8 +7257,7 @@ static constexpr struct PeriodicTerm venus_l0[]{
     {      0.00000000046,  4.41738494249,    34570.06633485260 },
     {      0.00000000037,  4.69675087759,    44007.82926973960 },
 };
-static constexpr int venus_l0_size{367};
-static constexpr struct PeriodicTerm venus_l1[]{
+static constexpr struct PeriodicTerm venus_l1[215]{
     {  10213.52943052898,  0.00000000000,        0.00000000000 },
     {      0.00095707712,  2.46424448979,    10213.28554621100 },
     {      0.00014444977,  0.51624564679,    20426.57109242200 },
@@ -7493,8 +7474,7 @@ static constexpr struct PeriodicTerm venus_l1[]{
     {      0.00000000025,  3.38876180652,     7058.59846131540 },
     {      0.00000000031,  6.16829805337,    10192.51015071860 },
 };
-static constexpr int venus_l1_size{215};
-static constexpr struct PeriodicTerm venus_l2[]{
+static constexpr struct PeriodicTerm venus_l2[70]{
     {      0.00054127076,  0.00000000000,        0.00000000000 },
     {      0.00003891460,  0.34514360047,    10213.28554621100 },
     {      0.00001337880,  2.02011286082,    20426.57109242200 },
@@ -7566,8 +7546,7 @@ static constexpr struct PeriodicTerm venus_l2[]{
     {      0.00000000013,  5.79700427846,    29580.47470844380 },
     {      0.00000000014,  3.69205225010,    27511.46787353720 },
 };
-static constexpr int venus_l2_size{70};
-static constexpr struct PeriodicTerm venus_l3[]{
+static constexpr struct PeriodicTerm venus_l3[9]{
     {      0.00000135742,  4.80389020993,    10213.28554621100 },
     {      0.00000077846,  3.66876371591,    20426.57109242200 },
     {      0.00000026023,  0.00000000000,        0.00000000000 },
@@ -7578,24 +7557,21 @@ static constexpr struct PeriodicTerm venus_l3[]{
     {      0.00000000006,  1.27791479726,    10404.73381232260 },
     {      0.00000000006,  5.76447068962,    10239.58386601080 },
 };
-static constexpr int venus_l3_size{9};
-static constexpr struct PeriodicTerm venus_l4[]{
+static constexpr struct PeriodicTerm venus_l4[5]{
     {      0.00000114016,  3.14159265359,        0.00000000000 },
     {      0.00000003209,  5.20514170164,    20426.57109242200 },
     {      0.00000001714,  2.51099591706,    10213.28554621100 },
     {      0.00000000050,  0.71356059861,    30639.85663863300 },
     {      0.00000000023,  5.68127607034,    40853.14218484400 },
 };
-static constexpr int venus_l4_size{5};
-static constexpr struct PeriodicTerm venus_l5[]{
+static constexpr struct PeriodicTerm venus_l5[5]{
     {      0.00000000874,  3.14159265359,        0.00000000000 },
     {      0.00000000117,  0.54643013000,    20426.57109242200 },
     {      0.00000000118,  1.90548541922,    10213.28554621100 },
     {      0.00000000002,  1.07734277826,    40853.14218484400 },
     {      0.00000000002,  1.89460223529,    30639.85663863300 },
 };
-static constexpr int venus_l5_size{5};
-static constexpr struct PeriodicTerm venus_b0[]{
+static constexpr struct PeriodicTerm venus_b0[210]{
     {      0.05923638472,  0.26702775813,    10213.28554621100 },
     {      0.00040107978,  1.14737178106,    20426.57109242200 },
     {      0.00032814918,  3.14159265359,        0.00000000000 },
@@ -7807,8 +7783,7 @@ static constexpr struct PeriodicTerm venus_b0[]{
     {      0.00000000040,  5.32101847424,    42430.48572729180 },
     {      0.00000000051,  5.29186795569,    29587.58825544460 },
 };
-static constexpr int venus_b0_size{210};
-static constexpr struct PeriodicTerm venus_b1[]{
+static constexpr struct PeriodicTerm venus_b1[133]{
     {      0.00513347602,  1.80364310797,    10213.28554621100 },
     {      0.00004380100,  3.38615711591,    20426.57109242200 },
     {      0.00000196586,  2.53001197486,    30639.85663863300 },
@@ -7943,8 +7918,7 @@ static constexpr struct PeriodicTerm venus_b1[]{
     {      0.00000000022,  1.92092469688,    17085.95866572220 },
     {      0.00000000019,  5.04938942644,     6681.22485339960 },
 };
-static constexpr int venus_b1_size{133};
-static constexpr struct PeriodicTerm venus_b2[]{
+static constexpr struct PeriodicTerm venus_b2[59]{
     {      0.00022377665,  3.38509143877,    10213.28554621100 },
     {      0.00000281739,  0.00000000000,        0.00000000000 },
     {      0.00000173164,  5.25563766915,    20426.57109242200 },
@@ -8005,8 +7979,7 @@ static constexpr struct PeriodicTerm venus_b2[]{
     {      0.00000000010,  0.26447399758,     3930.20969621960 },
     {      0.00000000011,  1.46728576671,    20419.45754542119 },
 };
-static constexpr int venus_b2_size{59};
-static constexpr struct PeriodicTerm venus_b3[]{
+static constexpr struct PeriodicTerm venus_b3[15]{
     {      0.00000646671,  4.99166565277,    10213.28554621100 },
     {      0.00000019952,  3.14159265359,        0.00000000000 },
     {      0.00000005540,  0.77376923951,    20426.57109242200 },
@@ -8023,23 +7996,20 @@ static constexpr struct PeriodicTerm venus_b3[]{
     {      0.00000000007,  4.69592781899,    18073.70493865020 },
     {      0.00000000006,  2.97926526705,    22003.91463486980 },
 };
-static constexpr int venus_b3_size{15};
-static constexpr struct PeriodicTerm venus_b4[]{
+static constexpr struct PeriodicTerm venus_b4[5]{
     {      0.00000014102,  0.31537190181,    10213.28554621100 },
     {      0.00000000190,  2.35466404492,    20426.57109242200 },
     {      0.00000000164,  0.74476215141,    30639.85663863300 },
     {      0.00000000214,  3.14159265359,        0.00000000000 },
     {      0.00000000004,  2.34190883009,    40853.14218484400 },
 };
-static constexpr int venus_b4_size{5};
-static constexpr struct PeriodicTerm venus_b5[]{
+static constexpr struct PeriodicTerm venus_b5[4]{
     {      0.00000000239,  2.05201727566,    10213.28554621100 },
     {      0.00000000039,  0.00000000000,        0.00000000000 },
     {      0.00000000011,  3.82500275251,    20426.57109242200 },
     {      0.00000000009,  2.32953116868,    30639.85663863300 },
 };
-static constexpr int venus_b5_size{4};
-static constexpr struct PeriodicTerm venus_r0[]{
+static constexpr struct PeriodicTerm venus_r0[330]{
     {      0.72334820905,  0.00000000000,        0.00000000000 },
     {      0.00489824185,  4.02151832268,    10213.28554621100 },
     {      0.00001658058,  4.90206728012,    20426.57109242200 },
@@ -8371,8 +8341,7 @@ static constexpr struct PeriodicTerm venus_r0[]{
     {      0.00000000030,  3.34585843979,    39793.76025465480 },
     {      0.00000000026,  5.36096904409,     1478.86657406440 },
 };
-static constexpr int venus_r0_size{330};
-static constexpr struct PeriodicTerm venus_r1[]{
+static constexpr struct PeriodicTerm venus_r1[180]{
     {      0.00034551039,  0.89198710598,    10213.28554621100 },
     {      0.00000234203,  1.77224942714,    20426.57109242200 },
     {      0.00000233998,  3.14159265359,        0.00000000000 },
@@ -8554,8 +8523,7 @@ static constexpr struct PeriodicTerm venus_r1[]{
     {      0.00000000015,  5.34517715140,    10198.03307502600 },
     {      0.00000000013,  0.45004137509,    20452.86941222180 },
 };
-static constexpr int venus_r1_size{180};
-static constexpr struct PeriodicTerm venus_r2[]{
+static constexpr struct PeriodicTerm venus_r2[63]{
     {      0.00001406587,  5.06366395190,    10213.28554621100 },
     {      0.00000015529,  5.47321687981,    20426.57109242200 },
     {      0.00000013059,  0.00000000000,        0.00000000000 },
@@ -8620,8 +8588,7 @@ static constexpr struct PeriodicTerm venus_r2[]{
     {      0.00000000008,  4.67523115598,    25934.12433108940 },
     {      0.00000000009,  5.97856553283,     9683.59458111640 },
 };
-static constexpr int venus_r2_size{63};
-static constexpr struct PeriodicTerm venus_r3[]{
+static constexpr struct PeriodicTerm venus_r3[7]{
     {      0.00000049582,  3.22263554520,    10213.28554621100 },
     {      0.00000000831,  3.21219077104,    20426.57109242200 },
     {      0.00000000112,  3.14159265359,        0.00000000000 },
@@ -8630,46 +8597,43 @@ static constexpr struct PeriodicTerm venus_r3[]{
     {      0.00000000006,  0.20714935358,    10186.98722641120 },
     {      0.00000000005,  0.68781956122,     8635.94200376320 },
 };
-static constexpr int venus_r3_size{7};
-static constexpr struct PeriodicTerm venus_r4[]{
+static constexpr struct PeriodicTerm venus_r4[3]{
     {      0.00000000573,  0.92229697820,    10213.28554621100 },
     {      0.00000000040,  0.95468912157,    20426.57109242200 },
     {      0.00000000006,  3.14159265359,        0.00000000000 },
 };
-static constexpr int venus_r4_size{3};
-static constexpr struct PeriodicTerm venus_r5[]{
+static constexpr struct PeriodicTerm venus_r5[2]{
     {      0.00000000045,  0.30032866722,    10213.28554621100 },
     {      0.00000000002,  5.29627718483,    20426.57109242200 },
 };
-static constexpr int venus_r5_size{2};
 static constexpr struct PeriodicTermTableDegree venus_l_table_degrees[]{
-    {venus_l0, venus_l0_size},
-    {venus_l1, venus_l1_size},
-    {venus_l2, venus_l2_size},
-    {venus_l3, venus_l3_size},
-    {venus_l4, venus_l4_size},
-    {venus_l5, venus_l5_size},
+    {venus_l0, 367},
+    {venus_l1, 215},
+    {venus_l2, 70},
+    {venus_l3, 9},
+    {venus_l4, 5},
+    {venus_l5, 5},
 };
 static constexpr struct PeriodicTermTable venus_l_table {.degrees = venus_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree venus_b_table_degrees[]{
-    {venus_b0, venus_b0_size},
-    {venus_b1, venus_b1_size},
-    {venus_b2, venus_b2_size},
-    {venus_b3, venus_b3_size},
-    {venus_b4, venus_b4_size},
-    {venus_b5, venus_b5_size},
+    {venus_b0, 210},
+    {venus_b1, 133},
+    {venus_b2, 59},
+    {venus_b3, 15},
+    {venus_b4, 5},
+    {venus_b5, 4},
 };
 static constexpr struct PeriodicTermTable venus_b_table {.degrees = venus_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree venus_r_table_degrees[]{
-    {venus_r0, venus_r0_size},
-    {venus_r1, venus_r1_size},
-    {venus_r2, venus_r2_size},
-    {venus_r3, venus_r3_size},
-    {venus_r4, venus_r4_size},
-    {venus_r5, venus_r5_size},
+    {venus_r0, 330},
+    {venus_r1, 180},
+    {venus_r2, 63},
+    {venus_r3, 7},
+    {venus_r4, 3},
+    {venus_r5, 2},
 };
 static constexpr struct PeriodicTermTable venus_r_table {.degrees = venus_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm earth_l0[]{
+static constexpr struct PeriodicTerm earth_l0[559]{
     {      1.75347045673,  0.00000000000,        0.00000000000 },
     {      0.03341656456,  4.66925680417,     6283.07584999140 },
     {      0.00034894275,  4.62610241759,    12566.15169998280 },
@@ -9230,8 +9194,7 @@ static constexpr struct PeriodicTerm earth_l0[]{
     {      0.00000000045,  3.18590558749,    45585.17281218740 },
     {      0.00000000049,  2.44790934886,    13613.80427733600 },
 };
-static constexpr int earth_l0_size{559};
-static constexpr struct PeriodicTerm earth_l1[]{
+static constexpr struct PeriodicTerm earth_l1[341]{
     {   6283.31966747491,  0.00000000000,        0.00000000000 },
     {      0.00206058863,  2.67823455584,     6283.07584999140 },
     {      0.00004303430,  2.63512650414,    12566.15169998280 },
@@ -9574,8 +9537,7 @@ static constexpr struct PeriodicTerm earth_l1[]{
     {      0.00000000024,  1.40237993205,    14712.31711645800 },
     {      0.00000000025,  5.71466092822,    25934.12433108940 },
 };
-static constexpr int earth_l1_size{341};
-static constexpr struct PeriodicTerm earth_l2[]{
+static constexpr struct PeriodicTerm earth_l2[142]{
     {      0.00052918870,  0.00000000000,        0.00000000000 },
     {      0.00008719837,  1.07209665242,     6283.07584999140 },
     {      0.00000309125,  0.86728818832,    12566.15169998280 },
@@ -9719,8 +9681,7 @@ static constexpr struct PeriodicTerm earth_l2[]{
     {      0.00000000011,  3.05005267431,    17260.15465469040 },
     {      0.00000000010,  4.93364992366,    12352.85260454480 },
 };
-static constexpr int earth_l2_size{142};
-static constexpr struct PeriodicTerm earth_l3[]{
+static constexpr struct PeriodicTerm earth_l3[22]{
     {      0.00000289226,  5.84384198723,     6283.07584999140 },
     {      0.00000034955,  0.00000000000,        0.00000000000 },
     {      0.00000016819,  5.48766912348,    12566.15169998280 },
@@ -9744,8 +9705,7 @@ static constexpr struct PeriodicTerm earth_l3[]{
     {      0.00000000005,  3.76879847273,    12036.46073488820 },
     {      0.00000000005,  4.28412873331,     6275.96230299060 },
 };
-static constexpr int earth_l3_size{22};
-static constexpr struct PeriodicTerm earth_l4[]{
+static constexpr struct PeriodicTerm earth_l4[11]{
     {      0.00000114084,  3.14159265359,        0.00000000000 },
     {      0.00000007717,  4.13446589358,     6283.07584999140 },
     {      0.00000000765,  3.83803776214,    12566.15169998280 },
@@ -9758,16 +9718,14 @@ static constexpr struct PeriodicTerm earth_l4[]{
     {      0.00000000008,  2.84160570605,   161000.68573767410 },
     {      0.00000000002,  0.54912904658,     6438.49624942560 },
 };
-static constexpr int earth_l4_size{11};
-static constexpr struct PeriodicTerm earth_l5[]{
+static constexpr struct PeriodicTerm earth_l5[5]{
     {      0.00000000878,  3.14159265359,        0.00000000000 },
     {      0.00000000172,  2.76579069510,     6283.07584999140 },
     {      0.00000000050,  2.01353298182,      155.42039943420 },
     {      0.00000000028,  2.21496423926,    12566.15169998280 },
     {      0.00000000005,  1.75600058765,    18849.22754997420 },
 };
-static constexpr int earth_l5_size{5};
-static constexpr struct PeriodicTerm earth_b0[]{
+static constexpr struct PeriodicTerm earth_b0[184]{
     {      0.00000279620,  3.19870156017,    84334.66158130829 },
     {      0.00000101643,  5.42248619256,     5507.55323866740 },
     {      0.00000080445,  3.88013204458,     5223.69391980220 },
@@ -9953,8 +9911,7 @@ static constexpr struct PeriodicTerm earth_b0[]{
     {      0.00000000039,  3.28500401343,    71768.50988132549 },
     {      0.00000000039,  3.11239910690,    96900.81328129109 },
 };
-static constexpr int earth_b0_size{184};
-static constexpr struct PeriodicTerm earth_b1[]{
+static constexpr struct PeriodicTerm earth_b1[99]{
     {      0.00000009030,  3.89729061890,     5507.55323866740 },
     {      0.00000006177,  1.73038850355,     5223.69391980220 },
     {      0.00000003800,  5.24404145734,     2352.86615377180 },
@@ -10055,8 +10012,7 @@ static constexpr struct PeriodicTerm earth_b1[]{
     {      0.00000000018,  1.58348238359,     2118.76386037840 },
     {      0.00000000019,  0.85407021371,    14712.31711645800 },
 };
-static constexpr int earth_b1_size{99};
-static constexpr struct PeriodicTerm earth_b2[]{
+static constexpr struct PeriodicTerm earth_b2[49]{
     {      0.00000001662,  1.62703209173,    84334.66158130829 },
     {      0.00000000492,  2.41382223971,     1047.74731175470 },
     {      0.00000000344,  2.24353004539,     5507.55323866740 },
@@ -10107,8 +10063,7 @@ static constexpr struct PeriodicTerm earth_b2[]{
     {      0.00000000013,  0.98720797401,     5729.50644714900 },
     {      0.00000000009,  5.94191743597,     7632.94325965020 },
 };
-static constexpr int earth_b2_size{49};
-static constexpr struct PeriodicTerm earth_b3[]{
+static constexpr struct PeriodicTerm earth_b3[11]{
     {      0.00000000011,  0.23877262399,     7860.41939243920 },
     {      0.00000000009,  1.16069982609,     5507.55323866740 },
     {      0.00000000008,  1.65357552925,     5884.92684658320 },
@@ -10121,19 +10076,14 @@ static constexpr struct PeriodicTerm earth_b3[]{
     {      0.00000000006,  5.40160929468,     1577.34354244780 },
     {      0.00000000007,  2.73399865247,     6309.37416979120 },
 };
-static constexpr int earth_b3_size{11};
-static constexpr struct PeriodicTerm earth_b4[]{
+static constexpr struct PeriodicTerm earth_b4[5]{
     {      0.00000000004,  0.79662198849,     6438.49624942560 },
     {      0.00000000005,  0.84308705203,     1047.74731175470 },
     {      0.00000000005,  0.05711572303,    84334.66158130829 },
     {      0.00000000003,  3.46779895686,     6279.55273164240 },
     {      0.00000000003,  2.89822201212,     6127.65545055720 },
 };
-static constexpr int earth_b4_size{5};
-static constexpr struct PeriodicTerm earth_b5[]{
-};
-static constexpr int earth_b5_size{0};
-static constexpr struct PeriodicTerm earth_r0[]{
+static constexpr struct PeriodicTerm earth_r0[526]{
     {      1.00013988799,  0.00000000000,        0.00000000000 },
     {      0.01670699626,  3.09846350771,     6283.07584999140 },
     {      0.00013956023,  3.05524609620,    12566.15169998280 },
@@ -10661,8 +10611,7 @@ static constexpr struct PeriodicTerm earth_r0[]{
     {      0.00000000040,  3.30603243754,    23536.11695768099 },
     {      0.00000000050,  6.15760345261,    78051.34191383338 },
 };
-static constexpr int earth_r0_size{526};
-static constexpr struct PeriodicTerm earth_r1[]{
+static constexpr struct PeriodicTerm earth_r1[292]{
     {      0.00103018608,  1.10748969588,     6283.07584999140 },
     {      0.00001721238,  1.06442301418,    12566.15169998280 },
     {      0.00000702215,  3.14159265359,        0.00000000000 },
@@ -10956,8 +10905,7 @@ static constexpr struct PeriodicTerm earth_r1[]{
     {      0.00000000019,  2.54227398241,    77736.78343050249 },
     {      0.00000000020,  5.91915117116,    48739.85989708300 },
 };
-static constexpr int earth_r1_size{292};
-static constexpr struct PeriodicTerm earth_r2[]{
+static constexpr struct PeriodicTerm earth_r2[139]{
     {      0.00004359385,  5.78455133738,     6283.07584999140 },
     {      0.00000123633,  5.57934722157,    12566.15169998280 },
     {      0.00000012341,  3.14159265359,        0.00000000000 },
@@ -11098,8 +11046,7 @@ static constexpr struct PeriodicTerm earth_r2[]{
     {      0.00000000009,  2.04999402381,    22003.91463486980 },
     {      0.00000000009,  4.91488110218,      213.29909543800 },
 };
-static constexpr int earth_r2_size{139};
-static constexpr struct PeriodicTerm earth_r3[]{
+static constexpr struct PeriodicTerm earth_r3[27]{
     {      0.00000144595,  4.27319435148,     6283.07584999140 },
     {      0.00000006729,  3.91697608662,    12566.15169998280 },
     {      0.00000000774,  0.00000000000,        0.00000000000 },
@@ -11128,8 +11075,7 @@ static constexpr struct PeriodicTerm earth_r3[]{
     {      0.00000000005,  2.30961231391,    12036.46073488820 },
     {      0.00000000005,  3.71102966917,     6290.18939699220 },
 };
-static constexpr int earth_r3_size{27};
-static constexpr struct PeriodicTerm earth_r4[]{
+static constexpr struct PeriodicTerm earth_r4[10]{
     {      0.00000003858,  2.56384387339,     6283.07584999140 },
     {      0.00000000306,  2.26769501230,    12566.15169998280 },
     {      0.00000000053,  3.44031471924,     5573.14280143310 },
@@ -11141,41 +11087,38 @@ static constexpr struct PeriodicTerm earth_r4[]{
     {      0.00000000006,  3.81514213664,   149854.40013480789 },
     {      0.00000000003,  1.28175749811,     6286.59896834040 },
 };
-static constexpr int earth_r4_size{10};
-static constexpr struct PeriodicTerm earth_r5[]{
+static constexpr struct PeriodicTerm earth_r5[3]{
     {      0.00000000086,  1.21579741687,     6283.07584999140 },
     {      0.00000000012,  0.65617264033,    12566.15169998280 },
     {      0.00000000001,  0.38068797142,    18849.22754997420 },
 };
-static constexpr int earth_r5_size{3};
 static constexpr struct PeriodicTermTableDegree earth_l_table_degrees[]{
-    {earth_l0, earth_l0_size},
-    {earth_l1, earth_l1_size},
-    {earth_l2, earth_l2_size},
-    {earth_l3, earth_l3_size},
-    {earth_l4, earth_l4_size},
-    {earth_l5, earth_l5_size},
+    {earth_l0, 559},
+    {earth_l1, 341},
+    {earth_l2, 142},
+    {earth_l3, 22},
+    {earth_l4, 11},
+    {earth_l5, 5},
 };
 static constexpr struct PeriodicTermTable earth_l_table {.degrees = earth_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree earth_b_table_degrees[]{
-    {earth_b0, earth_b0_size},
-    {earth_b1, earth_b1_size},
-    {earth_b2, earth_b2_size},
-    {earth_b3, earth_b3_size},
-    {earth_b4, earth_b4_size},
-    {earth_b5, earth_b5_size},
+    {earth_b0, 184},
+    {earth_b1, 99},
+    {earth_b2, 49},
+    {earth_b3, 11},
+    {earth_b4, 5},
 };
-static constexpr struct PeriodicTermTable earth_b_table {.degrees = earth_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
+static constexpr struct PeriodicTermTable earth_b_table {.degrees = earth_b_table_degrees, .size = 5, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree earth_r_table_degrees[]{
-    {earth_r0, earth_r0_size},
-    {earth_r1, earth_r1_size},
-    {earth_r2, earth_r2_size},
-    {earth_r3, earth_r3_size},
-    {earth_r4, earth_r4_size},
-    {earth_r5, earth_r5_size},
+    {earth_r0, 526},
+    {earth_r1, 292},
+    {earth_r2, 139},
+    {earth_r3, 27},
+    {earth_r4, 10},
+    {earth_r5, 3},
 };
 static constexpr struct PeriodicTermTable earth_r_table {.degrees = earth_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm mars_l0[]{
+static constexpr struct PeriodicTerm mars_l0[1217]{
     {      6.20347711583,  0.00000000000,        0.00000000000 },
     {      0.18656368100,  5.05037100303,     3340.61242669980 },
     {      0.01108216792,  5.40099836958,     6681.22485339960 },
@@ -12394,8 +12337,7 @@ static constexpr struct PeriodicTerm mars_l0[]{
     {      0.00000000045,  2.33470159894,     3123.79021291280 },
     {      0.00000000039,  4.91767933978,     8034.61538140740 },
 };
-static constexpr int mars_l0_size{1217};
-static constexpr struct PeriodicTerm mars_l1[]{
+static constexpr struct PeriodicTerm mars_l1[686]{
     {   3340.85627474342,  0.00000000000,        0.00000000000 },
     {      0.01458227051,  3.60426053609,     3340.61242669980 },
     {      0.00164901343,  3.92631250962,     6681.22485339960 },
@@ -13083,8 +13025,7 @@ static constexpr struct PeriodicTerm mars_l1[]{
     {      0.00000000024,  0.20355912395,     3229.42578441220 },
     {      0.00000000032,  3.37195631109,     2284.75361485960 },
 };
-static constexpr int mars_l1_size{686};
-static constexpr struct PeriodicTerm mars_l2[]{
+static constexpr struct PeriodicTerm mars_l2[310]{
     {      0.00058015791,  2.04979463279,     3340.61242669980 },
     {      0.00054187645,  0.00000000000,        0.00000000000 },
     {      0.00013908426,  2.45742359888,     6681.22485339960 },
@@ -13396,8 +13337,7 @@ static constexpr struct PeriodicTerm mars_l2[]{
     {      0.00000000017,  2.84467149903,     3344.49376205780 },
     {      0.00000000020,  5.41519706836,     3205.54734666440 },
 };
-static constexpr int mars_l2_size{310};
-static constexpr struct PeriodicTerm mars_l3[]{
+static constexpr struct PeriodicTerm mars_l3[129]{
     {      0.00001482423,  0.44434694876,     3340.61242669980 },
     {      0.00000662095,  0.88469178686,     6681.22485339960 },
     {      0.00000188268,  1.28799982497,    10021.83728009940 },
@@ -13528,8 +13468,7 @@ static constexpr struct PeriodicTerm mars_l3[]{
     {      0.00000000012,  3.28248484262,     8671.96987044060 },
     {      0.00000000014,  0.23027665815,     3767.21061757580 },
 };
-static constexpr int mars_l3_size{129};
-static constexpr struct PeriodicTerm mars_l4[]{
+static constexpr struct PeriodicTerm mars_l4[36]{
     {      0.00000113969,  3.14159265359,        0.00000000000 },
     {      0.00000028725,  5.63662412043,     6681.22485339960 },
     {      0.00000024447,  5.13868481454,     3340.61242669980 },
@@ -13567,8 +13506,7 @@ static constexpr struct PeriodicTerm mars_l4[]{
     {      0.00000000009,  6.15390464542,     6489.77658728800 },
     {      0.00000000007,  4.23894194106,     4535.05943692440 },
 };
-static constexpr int mars_l4_size{36};
-static constexpr struct PeriodicTerm mars_l5[]{
+static constexpr struct PeriodicTerm mars_l5[15]{
     {      0.00000000710,  4.04089996521,     6681.22485339960 },
     {      0.00000000868,  3.14159265359,        0.00000000000 },
     {      0.00000000510,  4.49214901625,    10021.83728009940 },
@@ -13585,8 +13523,7 @@ static constexpr struct PeriodicTerm mars_l5[]{
     {      0.00000000014,  5.95565787085,    23384.28698689860 },
     {      0.00000000012,  1.93859256739,     6525.80445396540 },
 };
-static constexpr int mars_l5_size{15};
-static constexpr struct PeriodicTerm mars_b0[]{
+static constexpr struct PeriodicTerm mars_b0[441]{
     {      0.03197134986,  3.76832042432,     3340.61242669980 },
     {      0.00298033234,  4.10616996243,     6681.22485339960 },
     {      0.00289104742,  0.00000000000,        0.00000000000 },
@@ -14029,8 +13966,7 @@ static constexpr struct PeriodicTerm mars_b0[]{
     {      0.00000000043,  0.51983815091,    16489.76303806100 },
     {      0.00000000036,  0.84102576439,    23937.85638974100 },
 };
-static constexpr int mars_b0_size{441};
-static constexpr struct PeriodicTerm mars_b1[]{
+static constexpr struct PeriodicTerm mars_b1[287]{
     {      0.00350068845,  5.36847836211,     3340.61242669980 },
     {      0.00014116030,  3.14159265359,        0.00000000000 },
     {      0.00009670755,  5.47877786506,     6681.22485339960 },
@@ -14319,8 +14255,7 @@ static constexpr struct PeriodicTerm mars_b1[]{
     {      0.00000000028,  1.30366587075,     8439.87793181640 },
     {      0.00000000032,  2.13597148493,     9468.26787725700 },
 };
-static constexpr int mars_b1_size{287};
-static constexpr struct PeriodicTerm mars_b2[]{
+static constexpr struct PeriodicTerm mars_b2[130]{
     {      0.00016726690,  0.60221392419,     3340.61242669980 },
     {      0.00004986799,  3.14159265359,        0.00000000000 },
     {      0.00000302141,  5.55871276021,     6681.22485339960 },
@@ -14452,8 +14387,7 @@ static constexpr struct PeriodicTerm mars_b2[]{
     {      0.00000000018,  6.22706341047,     9381.93999378540 },
     {      0.00000000015,  0.54135050421,      640.87760738220 },
 };
-static constexpr int mars_b2_size{130};
-static constexpr struct PeriodicTerm mars_b3[]{
+static constexpr struct PeriodicTerm mars_b3[41]{
     {      0.00000606506,  1.98050633529,     3340.61242669980 },
     {      0.00000042611,  0.00000000000,        0.00000000000 },
     {      0.00000013652,  1.79588228800,     6681.22485339960 },
@@ -14496,8 +14430,7 @@ static constexpr struct PeriodicTerm mars_b3[]{
     {      0.00000000011,  0.43817745316,     1059.38193018920 },
     {      0.00000000014,  1.06654064248,     6836.64525283380 },
 };
-static constexpr int mars_b3_size{41};
-static constexpr struct PeriodicTerm mars_b4[]{
+static constexpr struct PeriodicTerm mars_b4[11]{
     {      0.00000011334,  3.45724352586,     3340.61242669980 },
     {      0.00000013369,  0.00000000000,        0.00000000000 },
     {      0.00000000744,  0.50445805257,     6681.22485339960 },
@@ -14510,16 +14443,14 @@ static constexpr struct PeriodicTerm mars_b4[]{
     {      0.00000000013,  2.06957065662,    13362.44970679920 },
     {      0.00000000010,  0.95989595600,     3894.18182954220 },
 };
-static constexpr int mars_b4_size{11};
-static constexpr struct PeriodicTerm mars_b5[]{
+static constexpr struct PeriodicTerm mars_b5[5]{
     {      0.00000000457,  4.86794125358,     3340.61242669980 },
     {      0.00000000053,  5.30547050586,     6681.22485339960 },
     {      0.00000000012,  5.75114070583,    10021.83728009940 },
     {      0.00000000013,  4.17736925293,     3496.03282613400 },
     {      0.00000000007,  0.00000000000,        0.00000000000 },
 };
-static constexpr int mars_b5_size{5};
-static constexpr struct PeriodicTerm mars_r0[]{
+static constexpr struct PeriodicTerm mars_r0[1118]{
     {      1.53033488276,  0.00000000000,        0.00000000000 },
     {      0.14184953153,  3.47971283519,     3340.61242669980 },
     {      0.00660776357,  3.81783442097,     6681.22485339960 },
@@ -15639,8 +15570,7 @@ static constexpr struct PeriodicTerm mars_r0[]{
     {      0.00000000059,  4.71734799803,     6283.09310364360 },
     {      0.00000000068,  5.74655335863,      987.74627292800 },
 };
-static constexpr int mars_r0_size{1118};
-static constexpr struct PeriodicTerm mars_r1[]{
+static constexpr struct PeriodicTerm mars_r1[596]{
     {      0.01107433340,  2.03250524950,     3340.61242669980 },
     {      0.00103175886,  2.37071845682,     6681.22485339960 },
     {      0.00012877200,  0.00000000000,        0.00000000000 },
@@ -16238,8 +16168,7 @@ static constexpr struct PeriodicTerm mars_r1[]{
     {      0.00000000041,  4.26832466355,    21000.91589075680 },
     {      0.00000000038,  0.73199792046,    26084.02180621620 },
 };
-static constexpr int mars_r1_size{596};
-static constexpr struct PeriodicTerm mars_r2[]{
+static constexpr struct PeriodicTerm mars_r2[313]{
     {      0.00044242247,  0.47930603943,     3340.61242669980 },
     {      0.00008138042,  0.86998398093,     6681.22485339960 },
     {      0.00001274915,  1.22594050809,    10021.83728009940 },
@@ -16554,8 +16483,7 @@ static constexpr struct PeriodicTerm mars_r2[]{
     {      0.00000000025,  1.40880282063,     8186.51266249260 },
     {      0.00000000024,  4.96463811748,    26087.90314157420 },
 };
-static constexpr int mars_r2_size{313};
-static constexpr struct PeriodicTerm mars_r3[]{
+static constexpr struct PeriodicTerm mars_r3[111]{
     {      0.00001113107,  5.14987350142,     3340.61242669980 },
     {      0.00000424446,  5.61343766478,     6681.22485339960 },
     {      0.00000100044,  5.99726827028,    10021.83728009940 },
@@ -16668,8 +16596,7 @@ static constexpr struct PeriodicTerm mars_r3[]{
     {      0.00000000016,  0.65389503440,     3340.54511639700 },
     {      0.00000000016,  5.28427106012,     3333.49887969900 },
 };
-static constexpr int mars_r3_size{111};
-static constexpr struct PeriodicTerm mars_r4[]{
+static constexpr struct PeriodicTerm mars_r4[28]{
     {      0.00000019552,  3.58211650473,     3340.61242669980 },
     {      0.00000016323,  4.05116076923,     6681.22485339960 },
     {      0.00000005848,  4.46383962094,    10021.83728009940 },
@@ -16699,8 +16626,7 @@ static constexpr struct PeriodicTerm mars_r4[]{
     {      0.00000000014,  0.76591550754,     3894.18182954220 },
     {      0.00000000011,  5.47381242145,     3738.76143010800 },
 };
-static constexpr int mars_r4_size{28};
-static constexpr struct PeriodicTerm mars_r5[]{
+static constexpr struct PeriodicTerm mars_r5[9]{
     {      0.00000000476,  2.47617204701,     6681.22485339960 },
     {      0.00000000268,  2.91510547706,    10021.83728009940 },
     {      0.00000000115,  1.76888962311,     3340.61242669980 },
@@ -16711,35 +16637,34 @@ static constexpr struct PeriodicTerm mars_r5[]{
     {      0.00000000012,  4.88179002689,     3583.34103067380 },
     {      0.00000000012,  3.14159265359,        0.00000000000 },
 };
-static constexpr int mars_r5_size{9};
 static constexpr struct PeriodicTermTableDegree mars_l_table_degrees[]{
-    {mars_l0, mars_l0_size},
-    {mars_l1, mars_l1_size},
-    {mars_l2, mars_l2_size},
-    {mars_l3, mars_l3_size},
-    {mars_l4, mars_l4_size},
-    {mars_l5, mars_l5_size},
+    {mars_l0, 1217},
+    {mars_l1, 686},
+    {mars_l2, 310},
+    {mars_l3, 129},
+    {mars_l4, 36},
+    {mars_l5, 15},
 };
 static constexpr struct PeriodicTermTable mars_l_table {.degrees = mars_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mars_b_table_degrees[]{
-    {mars_b0, mars_b0_size},
-    {mars_b1, mars_b1_size},
-    {mars_b2, mars_b2_size},
-    {mars_b3, mars_b3_size},
-    {mars_b4, mars_b4_size},
-    {mars_b5, mars_b5_size},
+    {mars_b0, 441},
+    {mars_b1, 287},
+    {mars_b2, 130},
+    {mars_b3, 41},
+    {mars_b4, 11},
+    {mars_b5, 5},
 };
 static constexpr struct PeriodicTermTable mars_b_table {.degrees = mars_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree mars_r_table_degrees[]{
-    {mars_r0, mars_r0_size},
-    {mars_r1, mars_r1_size},
-    {mars_r2, mars_r2_size},
-    {mars_r3, mars_r3_size},
-    {mars_r4, mars_r4_size},
-    {mars_r5, mars_r5_size},
+    {mars_r0, 1118},
+    {mars_r1, 596},
+    {mars_r2, 313},
+    {mars_r3, 111},
+    {mars_r4, 28},
+    {mars_r5, 9},
 };
 static constexpr struct PeriodicTermTable mars_r_table {.degrees = mars_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm jupiter_l0[]{
+static constexpr struct PeriodicTerm jupiter_l0[760]{
     {      0.59954691495,  0.00000000000,        0.00000000000 },
     {      0.09695898711,  5.06191793105,      529.69096509460 },
     {      0.00573610145,  1.44406205976,        7.11354700080 },
@@ -17501,8 +17426,7 @@ static constexpr struct PeriodicTerm jupiter_l0[]{
     {      0.00000000085,  1.86831145784,    25028.52121138500 },
     {      0.00000000079,  2.90602202890,     2114.83170711530 },
 };
-static constexpr int jupiter_l0_size{760};
-static constexpr struct PeriodicTerm jupiter_l1[]{
+static constexpr struct PeriodicTerm jupiter_l1[369]{
     {    529.93480757497,  0.00000000000,        0.00000000000 },
     {      0.00489741194,  4.22066689928,      529.69096509460 },
     {      0.00228918538,  6.02647464016,        7.11354700080 },
@@ -17873,8 +17797,7 @@ static constexpr struct PeriodicTerm jupiter_l1[]{
     {      0.00000000080,  0.04539720100,     1080.72257119160 },
     {      0.00000000075,  4.26526686574,     1058.41872234270 },
 };
-static constexpr int jupiter_l1_size{369};
-static constexpr struct PeriodicTerm jupiter_l2[]{
+static constexpr struct PeriodicTerm jupiter_l2[191]{
     {      0.00047233598,  4.32148323554,        7.11354700080 },
     {      0.00030629053,  2.93021440216,      529.69096509460 },
     {      0.00038965550,  0.00000000000,        0.00000000000 },
@@ -18067,8 +17990,7 @@ static constexpr struct PeriodicTerm jupiter_l2[]{
     {      0.00000000091,  1.48896790758,     1567.73225428140 },
     {      0.00000000086,  4.34444949905,     1069.67687092770 },
 };
-static constexpr int jupiter_l2_size{191};
-static constexpr struct PeriodicTerm jupiter_l3[]{
+static constexpr struct PeriodicTerm jupiter_l3[109]{
     {      0.00006501665,  2.59862880482,        7.11354700080 },
     {      0.00001356524,  1.34635886411,      529.69096509460 },
     {      0.00000470716,  2.47503977883,       14.22709400160 },
@@ -18179,8 +18101,7 @@ static constexpr struct PeriodicTerm jupiter_l3[]{
     {      0.00000000079,  1.88533153220,      934.94851496820 },
     {      0.00000000077,  3.80503143236,     1603.29998928540 },
 };
-static constexpr int jupiter_l3_size{109};
-static constexpr struct PeriodicTerm jupiter_l4[]{
+static constexpr struct PeriodicTerm jupiter_l4[45]{
     {      0.00000669483,  0.85282421090,        7.11354700080 },
     {      0.00000099961,  0.74258947751,       14.22709400160 },
     {      0.00000114019,  3.14159265359,        0.00000000000 },
@@ -18227,8 +18148,7 @@ static constexpr struct PeriodicTerm jupiter_l4[]{
     {      0.00000000085,  5.02317256200,     1155.36115740700 },
     {      0.00000000075,  3.13198879608,      632.78373931320 },
 };
-static constexpr int jupiter_l4_size{45};
-static constexpr struct PeriodicTerm jupiter_l5[]{
+static constexpr struct PeriodicTerm jupiter_l5[10]{
     {      0.00000049577,  5.25658966184,        7.11354700080 },
     {      0.00000015761,  5.25126837478,       14.22709400160 },
     {      0.00000004343,  0.01461869263,      536.80451209540 },
@@ -18240,8 +18160,7 @@ static constexpr struct PeriodicTerm jupiter_l5[]{
     {      0.00000000293,  5.62909357048,     1059.38193018920 },
     {      0.00000000090,  0.21178119710,      529.69096509460 },
 };
-static constexpr int jupiter_l5_size{10};
-static constexpr struct PeriodicTerm jupiter_b0[]{
+static constexpr struct PeriodicTerm jupiter_b0[249]{
     {      0.02268615703,  3.55852606718,      529.69096509460 },
     {      0.00109971634,  3.90809347389,     1059.38193018920 },
     {      0.00110090358,  0.00000000000,        0.00000000000 },
@@ -18492,8 +18411,7 @@ static constexpr struct PeriodicTerm jupiter_b0[]{
     {      0.00000000074,  3.86865238736,     3067.93946934820 },
     {      0.00000000095,  1.66362447044,     1151.42900414390 },
 };
-static constexpr int jupiter_b0_size{249};
-static constexpr struct PeriodicTerm jupiter_b1[]{
+static constexpr struct PeriodicTerm jupiter_b1[141]{
     {      0.00177351787,  5.70166488486,      529.69096509460 },
     {      0.00003230171,  5.77941619340,     1059.38193018920 },
     {      0.00003081364,  5.47464296527,      522.57741809380 },
@@ -18636,8 +18554,7 @@ static constexpr struct PeriodicTerm jupiter_b1[]{
     {      0.00000000072,  5.57619428876,      530.44172462000 },
     {      0.00000000078,  5.97323507836,     1585.89150154610 },
 };
-static constexpr int jupiter_b1_size{141};
-static constexpr struct PeriodicTerm jupiter_b2[]{
+static constexpr struct PeriodicTerm jupiter_b2[81]{
     {      0.00008094051,  1.46322843658,      529.69096509460 },
     {      0.00000742415,  0.95691639003,      522.57741809380 },
     {      0.00000813244,  3.14159265359,        0.00000000000 },
@@ -18720,8 +18637,7 @@ static constexpr struct PeriodicTerm jupiter_b2[]{
     {      0.00000000089,  1.22926014128,     1898.35121793960 },
     {      0.00000000080,  0.62129648755,      831.85574074960 },
 };
-static constexpr int jupiter_b2_size{81};
-static constexpr struct PeriodicTerm jupiter_b3[]{
+static constexpr struct PeriodicTerm jupiter_b3[42]{
     {      0.00000251624,  3.38087923084,      529.69096509460 },
     {      0.00000121738,  2.73311837200,      522.57741809380 },
     {      0.00000048694,  1.03689996685,      536.80451209540 },
@@ -18765,8 +18681,7 @@ static constexpr struct PeriodicTerm jupiter_b3[]{
     {      0.00000000088,  3.26874502411,      213.29909543800 },
     {      0.00000000098,  2.00704668688,     1574.84580128220 },
 };
-static constexpr int jupiter_b3_size{42};
-static constexpr struct PeriodicTerm jupiter_b4[]{
+static constexpr struct PeriodicTerm jupiter_b4[12]{
     {      0.00000015050,  4.52956999637,      522.57741809380 },
     {      0.00000005370,  4.47427159142,      529.69096509460 },
     {      0.00000004456,  5.43908581047,      536.80451209540 },
@@ -18780,16 +18695,14 @@ static constexpr struct PeriodicTerm jupiter_b4[]{
     {      0.00000000142,  5.69936472988,        7.11354700080 },
     {      0.00000000112,  1.16718383135,       14.22709400160 },
 };
-static constexpr int jupiter_b4_size{12};
-static constexpr struct PeriodicTerm jupiter_b5[]{
+static constexpr struct PeriodicTerm jupiter_b5[5]{
     {      0.00000001445,  0.09198554072,      522.57741809380 },
     {      0.00000000368,  0.00874408003,      515.46387109300 },
     {      0.00000000304,  3.27902945138,      536.80451209540 },
     {      0.00000000129,  0.33959775247,      529.69096509460 },
     {      0.00000000095,  1.29305954542,      543.91805909620 },
 };
-static constexpr int jupiter_b5_size{5};
-static constexpr struct PeriodicTerm jupiter_r0[]{
+static constexpr struct PeriodicTerm jupiter_r0[745]{
     {      5.20887429471,  0.00000000000,        0.00000000000 },
     {      0.25209327020,  3.49108640015,      529.69096509460 },
     {      0.00610599902,  3.84115365602,     1059.38193018920 },
@@ -19536,8 +19449,7 @@ static constexpr struct PeriodicTerm jupiter_r0[]{
     {      0.00000000474,  0.71146352197,     2108.46891963990 },
     {      0.00000000509,  5.53328407404,     1128.53445446400 },
 };
-static constexpr int jupiter_r0_size{745};
-static constexpr struct PeriodicTerm jupiter_r1[]{
+static constexpr struct PeriodicTerm jupiter_r1[381]{
     {      0.01271801596,  2.64937511122,      529.69096509460 },
     {      0.00061661771,  3.00076251018,     1059.38193018920 },
     {      0.00053443592,  3.89717644226,      522.57741809380 },
@@ -19920,8 +19832,7 @@ static constexpr struct PeriodicTerm jupiter_r1[]{
     {      0.00000000392,  1.86527946688,      885.43971066640 },
     {      0.00000000416,  3.81408093105,     3156.80514956520 },
 };
-static constexpr int jupiter_r1_size{381};
-static constexpr struct PeriodicTerm jupiter_r2[]{
+static constexpr struct PeriodicTerm jupiter_r2[190]{
     {      0.00079644833,  1.35865896596,      529.69096509460 },
     {      0.00008251618,  5.77773935444,      522.57741809380 },
     {      0.00007029864,  3.27476965833,      536.80451209540 },
@@ -20113,8 +20024,7 @@ static constexpr struct PeriodicTerm jupiter_r2[]{
     {      0.00000000400,  3.13887720912,      540.73666535850 },
     {      0.00000000378,  0.86122450940,      525.02509864860 },
 };
-static constexpr int jupiter_r2_size{190};
-static constexpr struct PeriodicTerm jupiter_r3[]{
+static constexpr struct PeriodicTerm jupiter_r3[98]{
     {      0.00003519257,  6.05800633846,      529.69096509460 },
     {      0.00001073239,  1.67321345760,      536.80451209540 },
     {      0.00000915666,  1.41329676116,      522.57741809380 },
@@ -20214,8 +20124,7 @@ static constexpr struct PeriodicTerm jupiter_r3[]{
     {      0.00000000406,  3.93940190897,      316.39186965660 },
     {      0.00000000506,  0.18719982992,       10.29494073850 },
 };
-static constexpr int jupiter_r3_size{98};
-static constexpr struct PeriodicTerm jupiter_r4[]{
+static constexpr struct PeriodicTerm jupiter_r4[46]{
     {      0.00000128628,  0.08419309557,      536.80451209540 },
     {      0.00000113458,  4.24858855779,      529.69096509460 },
     {      0.00000082650,  3.29754909408,      522.57741809380 },
@@ -20263,8 +20172,7 @@ static constexpr struct PeriodicTerm jupiter_r4[]{
     {      0.00000000491,  1.52912023181,      405.25754987360 },
     {      0.00000000521,  0.24011424451,      433.71173787680 },
 };
-static constexpr int jupiter_r4_size{46};
-static constexpr struct PeriodicTerm jupiter_r5[]{
+static constexpr struct PeriodicTerm jupiter_r5[9]{
     {      0.00000011188,  4.75249399945,      536.80451209540 },
     {      0.00000004255,  5.91516229170,      522.57741809380 },
     {      0.00000002079,  5.56781555864,      515.46387109300 },
@@ -20275,35 +20183,34 @@ static constexpr struct PeriodicTerm jupiter_r5[]{
     {      0.00000001240,  3.77981722506,       14.22709400160 },
     {      0.00000001033,  4.50671820436,      529.69096509460 },
 };
-static constexpr int jupiter_r5_size{9};
 static constexpr struct PeriodicTermTableDegree jupiter_l_table_degrees[]{
-    {jupiter_l0, jupiter_l0_size},
-    {jupiter_l1, jupiter_l1_size},
-    {jupiter_l2, jupiter_l2_size},
-    {jupiter_l3, jupiter_l3_size},
-    {jupiter_l4, jupiter_l4_size},
-    {jupiter_l5, jupiter_l5_size},
+    {jupiter_l0, 760},
+    {jupiter_l1, 369},
+    {jupiter_l2, 191},
+    {jupiter_l3, 109},
+    {jupiter_l4, 45},
+    {jupiter_l5, 10},
 };
 static constexpr struct PeriodicTermTable jupiter_l_table {.degrees = jupiter_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree jupiter_b_table_degrees[]{
-    {jupiter_b0, jupiter_b0_size},
-    {jupiter_b1, jupiter_b1_size},
-    {jupiter_b2, jupiter_b2_size},
-    {jupiter_b3, jupiter_b3_size},
-    {jupiter_b4, jupiter_b4_size},
-    {jupiter_b5, jupiter_b5_size},
+    {jupiter_b0, 249},
+    {jupiter_b1, 141},
+    {jupiter_b2, 81},
+    {jupiter_b3, 42},
+    {jupiter_b4, 12},
+    {jupiter_b5, 5},
 };
 static constexpr struct PeriodicTermTable jupiter_b_table {.degrees = jupiter_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree jupiter_r_table_degrees[]{
-    {jupiter_r0, jupiter_r0_size},
-    {jupiter_r1, jupiter_r1_size},
-    {jupiter_r2, jupiter_r2_size},
-    {jupiter_r3, jupiter_r3_size},
-    {jupiter_r4, jupiter_r4_size},
-    {jupiter_r5, jupiter_r5_size},
+    {jupiter_r0, 745},
+    {jupiter_r1, 381},
+    {jupiter_r2, 190},
+    {jupiter_r3, 98},
+    {jupiter_r4, 46},
+    {jupiter_r5, 9},
 };
 static constexpr struct PeriodicTermTable jupiter_r_table {.degrees = jupiter_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm saturn_l0[]{
+static constexpr struct PeriodicTerm saturn_l0[1152]{
     {      0.87401354029,  0.00000000000,        0.00000000000 },
     {      0.11107659780,  3.96205090194,      213.29909543800 },
     {      0.01414150958,  4.58581515873,        7.11354700080 },
@@ -21457,8 +21364,7 @@ static constexpr struct PeriodicTerm saturn_l0[]{
     {      0.00000000099,  0.15018241445,      186.21176006410 },
     {      0.00000000072,  5.15715918322,      110.15813710960 },
 };
-static constexpr int saturn_l0_size{1152};
-static constexpr struct PeriodicTerm saturn_l1[]{
+static constexpr struct PeriodicTerm saturn_l1[642]{
     {    213.54295595986,  0.00000000000,        0.00000000000 },
     {      0.01296855005,  1.82820544701,      213.29909543800 },
     {      0.00564347566,  2.88500136429,        7.11354700080 },
@@ -22102,8 +22008,7 @@ static constexpr struct PeriodicTerm saturn_l1[]{
     {      0.00000000078,  5.59819387460,      364.34676528090 },
     {      0.00000000079,  3.53267171729,      969.62247809490 },
 };
-static constexpr int saturn_l1_size{642};
-static constexpr struct PeriodicTerm saturn_l2[]{
+static constexpr struct PeriodicTerm saturn_l2[321]{
     {      0.00116441181,  1.17987850633,        7.11354700080 },
     {      0.00091920844,  0.07425261094,      213.29909543800 },
     {      0.00090592251,  0.00000000000,        0.00000000000 },
@@ -22426,8 +22331,7 @@ static constexpr struct PeriodicTerm saturn_l2[]{
     {      0.00000000073,  4.85923277221,     2118.76386037840 },
     {      0.00000000071,  3.64551577433,      198.32124191100 },
 };
-static constexpr int saturn_l2_size{321};
-static constexpr struct PeriodicTerm saturn_l3[]{
+static constexpr struct PeriodicTerm saturn_l3[148]{
     {      0.00016038734,  5.73945377424,        7.11354700080 },
     {      0.00004249793,  4.58539675603,      213.29909543800 },
     {      0.00001906524,  4.76082050205,      220.41264243880 },
@@ -22577,8 +22481,7 @@ static constexpr struct PeriodicTerm saturn_l3[]{
     {      0.00000000072,  3.74361312157,     1485.98012106520 },
     {      0.00000000076,  3.33892447677,      195.89060769870 },
 };
-static constexpr int saturn_l3_size{148};
-static constexpr struct PeriodicTerm saturn_l4[]{
+static constexpr struct PeriodicTerm saturn_l4[68]{
     {      0.00001661894,  3.99826248978,        7.11354700080 },
     {      0.00000257107,  2.98436499013,      220.41264243880 },
     {      0.00000236344,  3.90241428075,       14.22709400160 },
@@ -22648,8 +22551,7 @@ static constexpr struct PeriodicTerm saturn_l4[]{
     {      0.00000000096,  2.93247663741,      224.34479570190 },
     {      0.00000000088,  4.48383632427,      423.41679713830 },
 };
-static constexpr int saturn_l4_size{68};
-static constexpr struct PeriodicTerm saturn_l5[]{
+static constexpr struct PeriodicTerm saturn_l5[27]{
     {      0.00000123615,  2.25923345732,        7.11354700080 },
     {      0.00000034190,  2.16250652689,       14.22709400160 },
     {      0.00000027546,  1.19868150215,      220.41264243880 },
@@ -22678,8 +22580,7 @@ static constexpr struct PeriodicTerm saturn_l5[]{
     {      0.00000000089,  1.36371070380,      412.37109687440 },
     {      0.00000000102,  0.49450039082,      117.31986822020 },
 };
-static constexpr int saturn_l5_size{27};
-static constexpr struct PeriodicTerm saturn_b0[]{
+static constexpr struct PeriodicTerm saturn_b0[500]{
     {      0.04330678040,  3.60284428399,      213.29909543800 },
     {      0.00240348303,  2.85238489390,      426.59819087600 },
     {      0.00084745939,  0.00000000000,        0.00000000000 },
@@ -23181,8 +23082,7 @@ static constexpr struct PeriodicTerm saturn_b0[]{
     {      0.00000000072,  4.85259171933,      392.65794093220 },
     {      0.00000000083,  0.11133738383,      402.21916848780 },
 };
-static constexpr int saturn_b0_size{500};
-static constexpr struct PeriodicTerm saturn_b1[]{
+static constexpr struct PeriodicTerm saturn_b1[260]{
     {      0.00397554998,  5.33289992556,      213.29909543800 },
     {      0.00049478641,  3.14159265359,        0.00000000000 },
     {      0.00018571607,  6.09919206378,      426.59819087600 },
@@ -23444,8 +23344,7 @@ static constexpr struct PeriodicTerm saturn_b1[]{
     {      0.00000000091,  5.97938003596,      556.51766803760 },
     {      0.00000000087,  2.71469794199,      617.80588578620 },
 };
-static constexpr int saturn_b1_size{260};
-static constexpr struct PeriodicTerm saturn_b2[]{
+static constexpr struct PeriodicTerm saturn_b2[111]{
     {      0.00020629977,  0.50482422817,      213.29909543800 },
     {      0.00003719555,  3.99833475829,      206.18554843720 },
     {      0.00001627158,  6.18189939500,      220.41264243880 },
@@ -23558,8 +23457,7 @@ static constexpr struct PeriodicTerm saturn_b2[]{
     {      0.00000000081,  1.16732337173,      217.96496188400 },
     {      0.00000000072,  5.47328223678,      337.73251065900 },
 };
-static constexpr int saturn_b2_size{111};
-static constexpr struct PeriodicTerm saturn_b3[]{
+static constexpr struct PeriodicTerm saturn_b3[58]{
     {      0.00000666252,  1.99006340181,      213.29909543800 },
     {      0.00000632350,  5.69778316807,      206.18554843720 },
     {      0.00000398051,  0.00000000000,        0.00000000000 },
@@ -23619,8 +23517,7 @@ static constexpr struct PeriodicTerm saturn_b3[]{
     {      0.00000000085,  1.18898817378,      728.76296653100 },
     {      0.00000000084,  4.10158366806,      224.34479570190 },
 };
-static constexpr int saturn_b3_size{58};
-static constexpr struct PeriodicTerm saturn_b4[]{
+static constexpr struct PeriodicTerm saturn_b4[26]{
     {      0.00000080384,  1.11918414679,      206.18554843720 },
     {      0.00000031660,  3.12218745098,      213.29909543800 },
     {      0.00000017143,  2.48073200414,      220.41264243880 },
@@ -23648,8 +23545,7 @@ static constexpr struct PeriodicTerm saturn_b4[]{
     {      0.00000000115,  5.03884718594,      117.31986822020 },
     {      0.00000000115,  0.44589613974,      110.20632121940 },
 };
-static constexpr int saturn_b4_size{26};
-static constexpr struct PeriodicTerm saturn_b5[]{
+static constexpr struct PeriodicTerm saturn_b5[11]{
     {      0.00000007895,  2.81927558645,      206.18554843720 },
     {      0.00000001014,  0.51187210270,      220.41264243880 },
     {      0.00000000772,  2.99484124049,      199.07200143640 },
@@ -23662,8 +23558,7 @@ static constexpr struct PeriodicTerm saturn_b5[]{
     {      0.00000000088,  6.17828532308,      440.82528487760 },
     {      0.00000000089,  0.58396864530,      213.29909543800 },
 };
-static constexpr int saturn_b5_size{11};
-static constexpr struct PeriodicTerm saturn_r0[]{
+static constexpr struct PeriodicTerm saturn_r0[1205]{
     {      9.55758135801,  0.00000000000,        0.00000000000 },
     {      0.52921382465,  2.39226219733,      213.29909543800 },
     {      0.01873679934,  5.23549605091,      206.18554843720 },
@@ -24870,8 +24765,7 @@ static constexpr struct PeriodicTerm saturn_r0[]{
     {      0.00000000827,  2.59300433753,      232.94281541100 },
     {      0.00000000735,  3.05650026582,       66.91729204110 },
 };
-static constexpr int saturn_r0_size{1205};
-static constexpr struct PeriodicTerm saturn_r1[]{
+static constexpr struct PeriodicTerm saturn_r1[639]{
     {      0.06182981282,  0.25843515034,      213.29909543800 },
     {      0.00506577574,  0.71114650941,      206.18554843720 },
     {      0.00341394136,  5.79635773960,      426.59819087600 },
@@ -25512,8 +25406,7 @@ static constexpr struct PeriodicTerm saturn_r1[]{
     {      0.00000000939,  1.85473712038,     5062.26991450560 },
     {      0.00000000721,  1.62872794201,     2200.51599359460 },
 };
-static constexpr int saturn_r1_size{639};
-static constexpr struct PeriodicTerm saturn_r2[]{
+static constexpr struct PeriodicTerm saturn_r2[342]{
     {      0.00436902464,  4.78671673044,      213.29909543800 },
     {      0.00071922760,  2.50069994874,      206.18554843720 },
     {      0.00049766792,  4.97168150870,      220.41264243880 },
@@ -25857,8 +25750,7 @@ static constexpr struct PeriodicTerm saturn_r2[]{
     {      0.00000000739,  3.33688408107,      953.10776223290 },
     {      0.00000000745,  6.22304530635,     1269.49963188950 },
 };
-static constexpr int saturn_r2_size{342};
-static constexpr struct PeriodicTerm saturn_r3[]{
+static constexpr struct PeriodicTerm saturn_r3[157]{
     {      0.00020315005,  3.02186626038,      213.29909543800 },
     {      0.00008923581,  3.19144205755,      220.41264243880 },
     {      0.00006908677,  4.35174889353,      206.18554843720 },
@@ -26017,8 +25909,7 @@ static constexpr struct PeriodicTerm saturn_r3[]{
     {      0.00000000772,  1.15596098579,     3053.71237534660 },
     {      0.00000000691,  3.13193109668,       56.62235130260 },
 };
-static constexpr int saturn_r3_size{157};
-static constexpr struct PeriodicTerm saturn_r4[]{
+static constexpr struct PeriodicTerm saturn_r4[64]{
     {      0.00001202050,  1.41499446465,      220.41264243880 },
     {      0.00000707796,  1.16153570102,      213.29909543800 },
     {      0.00000516121,  6.23973568330,      206.18554843720 },
@@ -26084,8 +25975,7 @@ static constexpr struct PeriodicTerm saturn_r4[]{
     {      0.00000000969,  1.00708261792,     1045.15483618760 },
     {      0.00000000716,  1.11042181341,     1169.58825140860 },
 };
-static constexpr int saturn_r4_size{64};
-static constexpr struct PeriodicTerm saturn_r5[]{
+static constexpr struct PeriodicTerm saturn_r5[28]{
     {      0.00000128612,  5.91282565136,      220.41264243880 },
     {      0.00000032273,  0.69256228602,        7.11354700080 },
     {      0.00000026698,  5.91428528629,      227.52618943960 },
@@ -26115,35 +26005,34 @@ static constexpr struct PeriodicTerm saturn_r5[]{
     {      0.00000000798,  0.37452846153,       28.45418800320 },
     {      0.00000000837,  5.04769794123,      124.43341522100 },
 };
-static constexpr int saturn_r5_size{28};
 static constexpr struct PeriodicTermTableDegree saturn_l_table_degrees[]{
-    {saturn_l0, saturn_l0_size},
-    {saturn_l1, saturn_l1_size},
-    {saturn_l2, saturn_l2_size},
-    {saturn_l3, saturn_l3_size},
-    {saturn_l4, saturn_l4_size},
-    {saturn_l5, saturn_l5_size},
+    {saturn_l0, 1152},
+    {saturn_l1, 642},
+    {saturn_l2, 321},
+    {saturn_l3, 148},
+    {saturn_l4, 68},
+    {saturn_l5, 27},
 };
 static constexpr struct PeriodicTermTable saturn_l_table {.degrees = saturn_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree saturn_b_table_degrees[]{
-    {saturn_b0, saturn_b0_size},
-    {saturn_b1, saturn_b1_size},
-    {saturn_b2, saturn_b2_size},
-    {saturn_b3, saturn_b3_size},
-    {saturn_b4, saturn_b4_size},
-    {saturn_b5, saturn_b5_size},
+    {saturn_b0, 500},
+    {saturn_b1, 260},
+    {saturn_b2, 111},
+    {saturn_b3, 58},
+    {saturn_b4, 26},
+    {saturn_b5, 11},
 };
 static constexpr struct PeriodicTermTable saturn_b_table {.degrees = saturn_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree saturn_r_table_degrees[]{
-    {saturn_r0, saturn_r0_size},
-    {saturn_r1, saturn_r1_size},
-    {saturn_r2, saturn_r2_size},
-    {saturn_r3, saturn_r3_size},
-    {saturn_r4, saturn_r4_size},
-    {saturn_r5, saturn_r5_size},
+    {saturn_r0, 1205},
+    {saturn_r1, 639},
+    {saturn_r2, 342},
+    {saturn_r3, 157},
+    {saturn_r4, 64},
+    {saturn_r5, 28},
 };
 static constexpr struct PeriodicTermTable saturn_r_table {.degrees = saturn_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm uranus_l0[]{
+static constexpr struct PeriodicTerm uranus_l0[947]{
     {      5.48129294299,  0.00000000000,        0.00000000000 },
     {      0.09260408252,  0.89106421530,       74.78159856730 },
     {      0.01504247826,  3.62719262195,        1.48447270830 },
@@ -27092,8 +26981,7 @@ static constexpr struct PeriodicTerm uranus_l0[]{
     {      0.00000000117,  5.37802827323,      293.70976829780 },
     {      0.00000000136,  2.80772094137,      374.49869366750 },
 };
-static constexpr int uranus_l0_size{947};
-static constexpr struct PeriodicTerm uranus_l1[]{
+static constexpr struct PeriodicTerm uranus_l1[426]{
     {     75.02543121646,  0.00000000000,        0.00000000000 },
     {      0.00154458244,  5.24201658072,       74.78159856730 },
     {      0.00024456413,  1.71255705309,        1.48447270830 },
@@ -27521,8 +27409,7 @@ static constexpr struct PeriodicTerm uranus_l1[]{
     {      0.00000000167,  2.74604167580,       69.15252427480 },
     {      0.00000000129,  2.87574897902,      156.15547927360 },
 };
-static constexpr int uranus_l1_size{426};
-static constexpr struct PeriodicTerm uranus_l2[]{
+static constexpr struct PeriodicTerm uranus_l2[151]{
     {      0.00053033277,  0.00000000000,        0.00000000000 },
     {      0.00002357636,  2.26014661705,       74.78159856730 },
     {      0.00000769129,  4.52561041823,       11.04570026390 },
@@ -27675,8 +27562,7 @@ static constexpr struct PeriodicTerm uranus_l2[]{
     {      0.00000000131,  2.73236351123,      522.57741809380 },
     {      0.00000000142,  5.03489222377,      536.80451209540 },
 };
-static constexpr int uranus_l2_size{151};
-static constexpr struct PeriodicTerm uranus_l3[]{
+static constexpr struct PeriodicTerm uranus_l3[46]{
     {      0.00000120936,  0.02418789918,       74.78159856730 },
     {      0.00000068064,  4.12084267733,        3.93215326310 },
     {      0.00000052828,  2.38964061260,       11.04570026390 },
@@ -27724,8 +27610,7 @@ static constexpr struct PeriodicTerm uranus_l3[]{
     {      0.00000000149,  0.13764106563,       71.81265315070 },
     {      0.00000000156,  2.90936922804,      153.49535039770 },
 };
-static constexpr int uranus_l3_size{46};
-static constexpr struct PeriodicTerm uranus_l4[]{
+static constexpr struct PeriodicTerm uranus_l4[7]{
     {      0.00000113855,  3.14159265359,        0.00000000000 },
     {      0.00000005599,  4.57882424417,       74.78159856730 },
     {      0.00000003203,  0.34623003207,       11.04570026390 },
@@ -27734,12 +27619,10 @@ static constexpr struct PeriodicTerm uranus_l4[]{
     {      0.00000000171,  3.80393539303,      149.56319713460 },
     {      0.00000000133,  4.35519131657,       63.73589830340 },
 };
-static constexpr int uranus_l4_size{7};
-static constexpr struct PeriodicTerm uranus_l5[]{
+static constexpr struct PeriodicTerm uranus_l5[1]{
     {      0.00000000873,  3.14159265359,        0.00000000000 },
 };
-static constexpr int uranus_l5_size{1};
-static constexpr struct PeriodicTerm uranus_b0[]{
+static constexpr struct PeriodicTerm uranus_b0[283]{
     {      0.01346277639,  2.61877810545,       74.78159856730 },
     {      0.00062341405,  5.08111175856,      149.56319713460 },
     {      0.00061601203,  3.14159265359,        0.00000000000 },
@@ -28024,8 +27907,7 @@ static constexpr struct PeriodicTerm uranus_b0[]{
     {      0.00000000120,  4.08565783859,      154.97982310600 },
     {      0.00000000133,  3.16576403244,      262.47783133970 },
 };
-static constexpr int uranus_b0_size{283};
-static constexpr struct PeriodicTerm uranus_b1[]{
+static constexpr struct PeriodicTerm uranus_b1[154]{
     {      0.00206366162,  4.12394311407,       74.78159856730 },
     {      0.00008563230,  0.33819986165,      149.56319713460 },
     {      0.00001725703,  2.12193159895,       73.29712585900 },
@@ -28181,8 +28063,7 @@ static constexpr struct PeriodicTerm uranus_b1[]{
     {      0.00000000121,  6.08239076370,      260.99335863140 },
     {      0.00000000154,  4.18369977366,       39.35687591520 },
 };
-static constexpr int uranus_b1_size{154};
-static constexpr struct PeriodicTerm uranus_b2[]{
+static constexpr struct PeriodicTerm uranus_b2[60]{
     {      0.00009211656,  5.80044305785,       74.78159856730 },
     {      0.00000556926,  0.00000000000,        0.00000000000 },
     {      0.00000286265,  2.17729776353,      149.56319713460 },
@@ -28244,8 +28125,7 @@ static constexpr struct PeriodicTerm uranus_b2[]{
     {      0.00000000127,  6.17908901556,       62.25142559510 },
     {      0.00000000116,  6.26646620658,      220.41264243880 },
 };
-static constexpr int uranus_b2_size{60};
-static constexpr struct PeriodicTerm uranus_b3[]{
+static constexpr struct PeriodicTerm uranus_b3[16]{
     {      0.00000267832,  1.25097888291,       74.78159856730 },
     {      0.00000011048,  3.14159265359,        0.00000000000 },
     {      0.00000006154,  4.00663614486,      149.56319713460 },
@@ -28263,16 +28143,11 @@ static constexpr struct PeriodicTerm uranus_b3[]{
     {      0.00000000168,  4.67745630044,       70.84944530420 },
     {      0.00000000170,  2.93672195979,       11.04570026390 },
 };
-static constexpr int uranus_b3_size{16};
-static constexpr struct PeriodicTerm uranus_b4[]{
+static constexpr struct PeriodicTerm uranus_b4[2]{
     {      0.00000005719,  2.85499529315,       74.78159856730 },
     {      0.00000000300,  3.14159265359,        0.00000000000 },
 };
-static constexpr int uranus_b4_size{2};
-static constexpr struct PeriodicTerm uranus_b5[]{
-};
-static constexpr int uranus_b5_size{0};
-static constexpr struct PeriodicTerm uranus_r0[]{
+static constexpr struct PeriodicTerm uranus_r0[1124]{
     {     19.21264847881,  0.00000000000,        0.00000000000 },
     {      0.88784984055,  5.60377526994,       74.78159856730 },
     {      0.03440835545,  0.32836098991,       73.29712585900 },
@@ -29398,8 +29273,7 @@ static constexpr struct PeriodicTerm uranus_r0[]{
     {      0.00000002317,  6.27946729049,      493.04240216510 },
     {      0.00000002420,  3.66436222896,        3.62333672240 },
 };
-static constexpr int uranus_r0_size{1124};
-static constexpr struct PeriodicTerm uranus_r1[]{
+static constexpr struct PeriodicTerm uranus_r1[514]{
     {      0.01479896370,  3.67205705317,       74.78159856730 },
     {      0.00071212085,  6.22601006675,       63.73589830340 },
     {      0.00068626972,  6.13411265052,      149.56319713460 },
@@ -29915,8 +29789,7 @@ static constexpr struct PeriodicTerm uranus_r1[]{
     {      0.00000002185,  6.07997119980,       63.62402371880 },
     {      0.00000002228,  1.42452148910,     6219.33995168800 },
 };
-static constexpr int uranus_r1_size{514};
-static constexpr struct PeriodicTerm uranus_r2[]{
+static constexpr struct PeriodicTerm uranus_r2[192]{
     {      0.00022439904,  0.69953118760,       74.78159856730 },
     {      0.00004727037,  1.69901641488,       63.73589830340 },
     {      0.00001681903,  4.64833551727,       70.84944530420 },
@@ -30110,8 +29983,7 @@ static constexpr struct PeriodicTerm uranus_r2[]{
     {      0.00000002236,  6.10115874045,      140.00196957900 },
     {      0.00000003053,  5.35047433775,      681.54178408960 },
 };
-static constexpr int uranus_r2_size{192};
-static constexpr struct PeriodicTerm uranus_r3[]{
+static constexpr struct PeriodicTerm uranus_r3[55]{
     {      0.00001164382,  4.73453291602,       74.78159856730 },
     {      0.00000212367,  3.34255734999,       63.73589830340 },
     {      0.00000196408,  2.98004616318,       70.84944530420 },
@@ -30168,8 +30040,7 @@ static constexpr struct PeriodicTerm uranus_r3[]{
     {      0.00000002291,  4.81424601600,      536.80451209540 },
     {      0.00000002213,  2.20360299816,      465.95506679120 },
 };
-static constexpr int uranus_r3_size{55};
-static constexpr struct PeriodicTerm uranus_r4[]{
+static constexpr struct PeriodicTerm uranus_r4[11]{
     {      0.00000052996,  3.00838033088,       74.78159856730 },
     {      0.00000009887,  1.91399083603,       56.62235130260 },
     {      0.00000007008,  5.08677527404,       11.04570026390 },
@@ -30182,38 +30053,32 @@ static constexpr struct PeriodicTerm uranus_r4[]{
     {      0.00000002288,  2.23425399117,      440.68227252570 },
     {      0.00000003093,  3.14159265359,        0.00000000000 },
 };
-static constexpr int uranus_r4_size{11};
-static constexpr struct PeriodicTerm uranus_r5[]{
-};
-static constexpr int uranus_r5_size{0};
 static constexpr struct PeriodicTermTableDegree uranus_l_table_degrees[]{
-    {uranus_l0, uranus_l0_size},
-    {uranus_l1, uranus_l1_size},
-    {uranus_l2, uranus_l2_size},
-    {uranus_l3, uranus_l3_size},
-    {uranus_l4, uranus_l4_size},
-    {uranus_l5, uranus_l5_size},
+    {uranus_l0, 947},
+    {uranus_l1, 426},
+    {uranus_l2, 151},
+    {uranus_l3, 46},
+    {uranus_l4, 7},
+    {uranus_l5, 1},
 };
 static constexpr struct PeriodicTermTable uranus_l_table {.degrees = uranus_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree uranus_b_table_degrees[]{
-    {uranus_b0, uranus_b0_size},
-    {uranus_b1, uranus_b1_size},
-    {uranus_b2, uranus_b2_size},
-    {uranus_b3, uranus_b3_size},
-    {uranus_b4, uranus_b4_size},
-    {uranus_b5, uranus_b5_size},
+    {uranus_b0, 283},
+    {uranus_b1, 154},
+    {uranus_b2, 60},
+    {uranus_b3, 16},
+    {uranus_b4, 2},
 };
-static constexpr struct PeriodicTermTable uranus_b_table {.degrees = uranus_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
+static constexpr struct PeriodicTermTable uranus_b_table {.degrees = uranus_b_table_degrees, .size = 5, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree uranus_r_table_degrees[]{
-    {uranus_r0, uranus_r0_size},
-    {uranus_r1, uranus_r1_size},
-    {uranus_r2, uranus_r2_size},
-    {uranus_r3, uranus_r3_size},
-    {uranus_r4, uranus_r4_size},
-    {uranus_r5, uranus_r5_size},
+    {uranus_r0, 1124},
+    {uranus_r1, 514},
+    {uranus_r2, 192},
+    {uranus_r3, 55},
+    {uranus_r4, 11},
 };
-static constexpr struct PeriodicTermTable uranus_r_table {.degrees = uranus_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
-static constexpr struct PeriodicTerm neptune_l0[]{
+static constexpr struct PeriodicTermTable uranus_r_table {.degrees = uranus_r_table_degrees, .size = 5, .method = PeriodicTermTable::Method::kCos };
+static constexpr struct PeriodicTerm neptune_l0[423]{
     {      5.31188633047,  0.00000000000,        0.00000000000 },
     {      0.01798475509,  2.90101273050,       38.13303563780 },
     {      0.01019727662,  0.48580923660,        1.48447270830 },
@@ -30638,8 +30503,7 @@ static constexpr struct PeriodicTerm neptune_l0[]{
     {      0.00000000074,  4.92511651321,     1549.45538693770 },
     {      0.00000000072,  5.06852406179,      249.94765836750 },
 };
-static constexpr int neptune_l0_size{423};
-static constexpr struct PeriodicTerm neptune_l1[]{
+static constexpr struct PeriodicTerm neptune_l1[183]{
     {     38.37687716731,  0.00000000000,        0.00000000000 },
     {      0.00016604187,  4.86319129565,        1.48447270830 },
     {      0.00015807148,  2.27923488532,       38.13303563780 },
@@ -30824,8 +30688,7 @@ static constexpr struct PeriodicTerm neptune_l1[]{
     {      0.00000000084,  2.64687252518,      536.80451209540 },
     {      0.00000000074,  3.90678924318,     1019.76442184310 },
 };
-static constexpr int neptune_l1_size{183};
-static constexpr struct PeriodicTerm neptune_l2[]{
+static constexpr struct PeriodicTerm neptune_l2[57]{
     {      0.00053892649,  0.00000000000,        0.00000000000 },
     {      0.00000281251,  1.19084538887,       38.13303563780 },
     {      0.00000295693,  1.85520292248,        1.48447270830 },
@@ -30884,8 +30747,7 @@ static constexpr struct PeriodicTerm neptune_l2[]{
     {      0.00000000104,  6.03262825314,      529.69096509460 },
     {      0.00000000076,  0.20932812381,      453.42489381900 },
 };
-static constexpr int neptune_l2_size{57};
-static constexpr struct PeriodicTerm neptune_l3[]{
+static constexpr struct PeriodicTerm neptune_l3[15]{
     {      0.00000031254,  0.00000000000,        0.00000000000 },
     {      0.00000012461,  6.04431418812,        1.48447270830 },
     {      0.00000014541,  1.35337075856,       76.26607127560 },
@@ -30902,17 +30764,14 @@ static constexpr struct PeriodicTerm neptune_l3[]{
     {      0.00000000160,  5.63111039032,      114.39910691340 },
     {      0.00000000149,  3.09327713923,       35.16409022120 },
 };
-static constexpr int neptune_l3_size{15};
-static constexpr struct PeriodicTerm neptune_l4[]{
+static constexpr struct PeriodicTerm neptune_l4[2]{
     {      0.00000113998,  3.14159265359,        0.00000000000 },
     {      0.00000000605,  3.18211885677,       76.26607127560 },
 };
-static constexpr int neptune_l4_size{2};
-static constexpr struct PeriodicTerm neptune_l5[]{
+static constexpr struct PeriodicTerm neptune_l5[1]{
     {      0.00000000874,  3.14159265359,        0.00000000000 },
 };
-static constexpr int neptune_l5_size{1};
-static constexpr struct PeriodicTerm neptune_b0[]{
+static constexpr struct PeriodicTerm neptune_b0[172]{
     {      0.03088622933,  1.44104372626,       38.13303563780 },
     {      0.00027780087,  5.91271882843,       76.26607127560 },
     {      0.00027623609,  0.00000000000,        0.00000000000 },
@@ -31086,8 +30945,7 @@ static constexpr struct PeriodicTerm neptune_b0[]{
     {      0.00000000075,  0.23453373368,       63.73589830340 },
     {      0.00000000071,  1.51961989690,      488.58898404020 },
 };
-static constexpr int neptune_b0_size{172};
-static constexpr struct PeriodicTerm neptune_b1[]{
+static constexpr struct PeriodicTerm neptune_b1[82]{
     {      0.00227279214,  3.80793089870,       38.13303563780 },
     {      0.00001803120,  1.97576485377,       76.26607127560 },
     {      0.00001385733,  4.82555548018,       36.64856292950 },
@@ -31171,8 +31029,7 @@ static constexpr struct PeriodicTerm neptune_b1[]{
     {      0.00000000082,  3.18401661435,       42.32582133180 },
     {      0.00000000084,  5.51669920239,        8.07675484730 },
 };
-static constexpr int neptune_b1_size{82};
-static constexpr struct PeriodicTerm neptune_b2[]{
+static constexpr struct PeriodicTerm neptune_b2[25]{
     {      0.00009690766,  5.57123750291,       38.13303563780 },
     {      0.00000078815,  3.62705474219,       76.26607127560 },
     {      0.00000071523,  0.45476688580,       36.64856292950 },
@@ -31199,8 +31056,7 @@ static constexpr struct PeriodicTerm neptune_b2[]{
     {      0.00000000085,  0.43712705655,        4.45341812490 },
     {      0.00000000104,  6.12597614674,      144.14657116320 },
 };
-static constexpr int neptune_b2_size{25};
-static constexpr struct PeriodicTerm neptune_b3[]{
+static constexpr struct PeriodicTerm neptune_b3[9]{
     {      0.00000273423,  1.01688979072,       38.13303563780 },
     {      0.00000002274,  2.36805657126,       36.64856292950 },
     {      0.00000002029,  5.33364321342,       76.26607127560 },
@@ -31211,16 +31067,13 @@ static constexpr struct PeriodicTerm neptune_b3[]{
     {      0.00000000155,  3.62376309338,       35.16409022120 },
     {      0.00000000157,  3.94195369610,        1.48447270830 },
 };
-static constexpr int neptune_b3_size{9};
-static constexpr struct PeriodicTerm neptune_b4[]{
+static constexpr struct PeriodicTerm neptune_b4[1]{
     {      0.00000005728,  2.66872693322,       38.13303563780 },
 };
-static constexpr int neptune_b4_size{1};
-static constexpr struct PeriodicTerm neptune_b5[]{
+static constexpr struct PeriodicTerm neptune_b5[1]{
     {      0.00000000113,  4.70646877989,       38.13303563780 },
 };
-static constexpr int neptune_b5_size{1};
-static constexpr struct PeriodicTerm neptune_r0[]{
+static constexpr struct PeriodicTerm neptune_r0[607]{
     {     30.07013206102,  0.00000000000,        0.00000000000 },
     {      0.27062259490,  1.32999458930,       38.13303563780 },
     {      0.01691764281,  3.25186138896,       36.64856292950 },
@@ -31829,8 +31682,7 @@ static constexpr struct PeriodicTerm neptune_r0[]{
     {      0.00000002266,  5.91286000054,        3.49021027840 },
     {      0.00000002231,  1.45038594906,      196.50670080260 },
 };
-static constexpr int neptune_r0_size{607};
-static constexpr struct PeriodicTerm neptune_r1[]{
+static constexpr struct PeriodicTerm neptune_r1[250]{
     {      0.00236338502,  0.70498011235,       38.13303563780 },
     {      0.00013220279,  3.32015499895,        1.48447270830 },
     {      0.00008621863,  6.21628951630,       35.16409022120 },
@@ -32082,8 +31934,7 @@ static constexpr struct PeriodicTerm neptune_r1[]{
     {      0.00000002962,  1.74151265966,     2080.63082474060 },
     {      0.00000002621,  1.74442251671,       35.21227433100 },
 };
-static constexpr int neptune_r1_size{250};
-static constexpr struct PeriodicTerm neptune_r2[]{
+static constexpr struct PeriodicTerm neptune_r2[72]{
     {      0.00004247412,  5.89910679117,       38.13303563780 },
     {      0.00000217570,  0.34581829080,        1.48447270830 },
     {      0.00000163025,  2.23872947130,      168.05251279940 },
@@ -32157,8 +32008,7 @@ static constexpr struct PeriodicTerm neptune_r2[]{
     {      0.00000002480,  4.59623030219,      693.55069220000 },
     {      0.00000002253,  0.74334306011,      976.00231191280 },
 };
-static constexpr int neptune_r2_size{72};
-static constexpr struct PeriodicTerm neptune_r3[]{
+static constexpr struct PeriodicTerm neptune_r3[22]{
     {      0.00000166297,  4.55243893489,       38.13303563780 },
     {      0.00000022380,  3.94830879358,      168.05251279940 },
     {      0.00000021348,  2.86296778794,      182.27960680100 },
@@ -32182,8 +32032,7 @@ static constexpr struct PeriodicTerm neptune_r3[]{
     {      0.00000002874,  6.19643340540,      815.06334611420 },
     {      0.00000002278,  3.66579603119,      497.18700374930 },
 };
-static constexpr int neptune_r3_size{22};
-static constexpr struct PeriodicTerm neptune_r4[]{
+static constexpr struct PeriodicTerm neptune_r4[7]{
     {      0.00000004227,  2.40375758563,      477.33083545520 },
     {      0.00000004333,  0.10459484545,      395.57870223900 },
     {      0.00000003545,  4.78431259422,     1028.36244155220 },
@@ -32192,34 +32041,29 @@ static constexpr struct PeriodicTerm neptune_r4[]{
     {      0.00000002294,  1.10879658603,      182.27960680100 },
     {      0.00000002295,  5.67776133184,      168.05251279940 },
 };
-static constexpr int neptune_r4_size{7};
-static constexpr struct PeriodicTerm neptune_r5[]{
-};
-static constexpr int neptune_r5_size{0};
 static constexpr struct PeriodicTermTableDegree neptune_l_table_degrees[]{
-    {neptune_l0, neptune_l0_size},
-    {neptune_l1, neptune_l1_size},
-    {neptune_l2, neptune_l2_size},
-    {neptune_l3, neptune_l3_size},
-    {neptune_l4, neptune_l4_size},
-    {neptune_l5, neptune_l5_size},
+    {neptune_l0, 423},
+    {neptune_l1, 183},
+    {neptune_l2, 57},
+    {neptune_l3, 15},
+    {neptune_l4, 2},
+    {neptune_l5, 1},
 };
 static constexpr struct PeriodicTermTable neptune_l_table {.degrees = neptune_l_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree neptune_b_table_degrees[]{
-    {neptune_b0, neptune_b0_size},
-    {neptune_b1, neptune_b1_size},
-    {neptune_b2, neptune_b2_size},
-    {neptune_b3, neptune_b3_size},
-    {neptune_b4, neptune_b4_size},
-    {neptune_b5, neptune_b5_size},
+    {neptune_b0, 172},
+    {neptune_b1, 82},
+    {neptune_b2, 25},
+    {neptune_b3, 9},
+    {neptune_b4, 1},
+    {neptune_b5, 1},
 };
 static constexpr struct PeriodicTermTable neptune_b_table {.degrees = neptune_b_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
 static constexpr struct PeriodicTermTableDegree neptune_r_table_degrees[]{
-    {neptune_r0, neptune_r0_size},
-    {neptune_r1, neptune_r1_size},
-    {neptune_r2, neptune_r2_size},
-    {neptune_r3, neptune_r3_size},
-    {neptune_r4, neptune_r4_size},
-    {neptune_r5, neptune_r5_size},
+    {neptune_r0, 607},
+    {neptune_r1, 250},
+    {neptune_r2, 72},
+    {neptune_r3, 22},
+    {neptune_r4, 7},
 };
-static constexpr struct PeriodicTermTable neptune_r_table {.degrees = neptune_r_table_degrees, .size = 6, .method = PeriodicTermTable::Method::kCos };
+static constexpr struct PeriodicTermTable neptune_r_table {.degrees = neptune_r_table_degrees, .size = 5, .method = PeriodicTermTable::Method::kCos };

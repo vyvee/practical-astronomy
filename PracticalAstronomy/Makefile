@@ -1,7 +1,7 @@
 CC       = gcc
 CXX      = g++
-CFLAGS   = -Wall -W -Werror
-CXXFLAGS = -std=c++17 -Wall -W -Werror
+CFLAGS   = -Wall -W -Werror # -pedantic
+CXXFLAGS = -std=c++2a -Wall -W -Werror # -pedantic
 LDFLAGS  =
 COBJS    =
 CXXOBJS  = main.o misc.o solver.o test.o

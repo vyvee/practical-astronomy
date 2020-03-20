@@ -3,6 +3,8 @@
 
 // - Algorithms from [Jean99], based on ELP-2000/82 lunar theory
 //   - Accuracy: Approx. 10" in longitude, 4" in latitude
+//   - Moon moves about 0.5" in longitude per second, so this corresponds to
+//     about 20 seconds
 
 #include "date.h"
 #include "radian.h"
