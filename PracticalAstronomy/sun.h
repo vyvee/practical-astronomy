@@ -27,6 +27,7 @@ class Sun {
  private:
   double julian_date_;
 
+  constexpr void ComputeGeocentricPositionLowAccuracy() noexcept;
   constexpr void ComputeGeocentricPositionVSOP87() noexcept;
   constexpr void ComputeGeocentricPosition() noexcept;
   bool geocentric_position_is_valid_{false};
@@ -41,6 +42,9 @@ class Sun {
   double aberration_longitude_{0.0};
   double aberration_latitude_{0.0};
 
+  constexpr void ComputeApparentPositionLowAccuracy() noexcept;
+  constexpr void ComputeApparentPositionHighAccuracy(
+      const EarthNutation& earth_nutation) noexcept;
   constexpr void ComputeApparentPosition(
       const EarthNutation& earth_nutation) noexcept;
   constexpr void ComputeApparentPosition() noexcept;
@@ -120,10 +124,26 @@ constexpr double Sun::GetApparentLatitude() noexcept {
   return apparent_latitude_;
 }
 
-// Low Accuracy
-// - Accuracy: < 0.01 degree in longitude
-//   - This corresponds to about 15 minutes
-// - [Jean99] p.163
+constexpr void Sun::ComputeGeocentricPositionLowAccuracy() noexcept {
+  // Low Accuracy
+  // - Accuracy: < 0.01 degree in longitude
+  //   - This corresponds to about 15 minutes
+  // - [Jean99] p.163
+  double t{(julian_date_ - EpochJ2000) / 36525.0};
+  double l0 = 280.46646_deg + (36000.76983_deg + 0.0003032_deg * t) * t;
+  double m = 357.52911_deg + (35999.05029_deg + 0.0001537_deg * t) * t;
+  double e = 0.016708634 + (-0.000042037 - 0.0000001267 * t) * t;
+  double c =
+      (1.914602_deg + (-0.004817_deg - 0.000014_deg * t) * t) * std::sin(m) +
+      (0.019993_deg - 0.000101_deg * t) * std::sin(2 * m) +
+      0.000289_deg * std::sin(3 * m);
+  double true_lon = l0 + c;
+  double v = m + c;
+  geocentric_longitude_ = RadUnwind(true_lon);
+  geocentric_latitude_ = 0.0;
+  radius_vector_au_ = 1.000001018 * (1 - e * e) / (1 + e * std::cos(v));
+  geocentric_position_is_valid_ = true;
+}
 
 constexpr void Sun::ComputeGeocentricPositionVSOP87() noexcept {
   // VSOP87
@@ -140,6 +160,7 @@ constexpr void Sun::ComputeGeocentricPositionVSOP87() noexcept {
 }
 
 constexpr void Sun::ComputeGeocentricPosition() noexcept {
+  // ComputeGeocentricPositionLowAccuracy();
   ComputeGeocentricPositionVSOP87();
 }
 
@@ -260,7 +281,16 @@ constexpr void Sun::ComputeAberration() noexcept {
   ComputeAberrationHighAccuracy();
 }
 
-constexpr void Sun::ComputeApparentPosition(
+constexpr void Sun::ComputeApparentPositionLowAccuracy() noexcept {
+  double t{(julian_date_ - EpochJ2000) / 36525.0};
+  double omega = 125.04_deg - 1934.136_deg * t;
+  apparent_longitude_ =
+      GetGeocentricLongitude() - 0.00569_deg - 0.00478_deg * std::sin(omega);
+  apparent_latitude_ = GetGeocentricLatitude();
+  apparent_position_is_valid_ = true;
+}
+
+constexpr void Sun::ComputeApparentPositionHighAccuracy(
     const EarthNutation& earth_nutation) noexcept {
   apparent_longitude_ = GetGeocentricLongitude() +
                         earth_nutation.GetNutationLongitude() +
@@ -269,8 +299,15 @@ constexpr void Sun::ComputeApparentPosition(
   apparent_position_is_valid_ = true;
 }
 
+constexpr void Sun::ComputeApparentPosition(
+    const EarthNutation& earth_nutation) noexcept {
+  // ComputeApparentPositionLowAccuracy();
+  ComputeApparentPositionHighAccuracy(earth_nutation);
+}
+
 constexpr void Sun::ComputeApparentPosition() noexcept {
-  ComputeApparentPosition(EarthNutation{julian_date_});
+  // ComputeApparentPositionLowAccuracy();
+  ComputeApparentPositionHighAccuracy(EarthNutation{julian_date_});
 }
 
 }  // namespace PA
