@@ -2,15 +2,15 @@
 
 Implementation of astronomical algorithms.
 
-Aims to implementation methods that achieve accuracy for `practical' use. Main source material is the amazing book [Astronomical Algorithms][Jean99] by Jean Meeus. However, some useful methods (such as the full version of VSOP87) are also included.
+Aims to implementat methods that achieve accuracy for "practical" use. Main source material is the amazing book [Astronomical Algorithms][Jean99] by Jean Meeus. However, some useful methods (such as the full version of VSOP87) are also included.
 
 ## Features
 
 - Date: Julian Date, Calendar (TT), Delta-T
-- Sun: Position
 - Earth: Obliquity, Nutation
+- Sun: Position
 - Moon: Position (ELP82-Abridged)
-- Planets: VSOP87 (Full)
+- All Planets: VSOP87 (Full)
 - Solver: Kepler's equation
 - Equation of Time
 
@@ -20,22 +20,42 @@ Aims to implementation methods that achieve accuracy for `practical' use. Main s
 $ make
 ```
 
-The code is written in C++17 and currently depends on G++ extension to support designated initializers from C99.
+The code is written in C++20 and currently depends on G++ extension to support designated initializers from C99.
 
 ## TODOs
 
-- Sunrise, Sunset, Twilight time
-- Moonrise, Moonset time
-- Moon Phase
-- Illuminated Fraction of the Moon's Disk
 - Moon: Apparent position, Equatorial coordinate
 - Correction for Parallax
 - Coordinate Transformation
 - Time: UT
-- Calculation of Eclipses
 - Better error handling (E.g., invalid julian date, invalid parameters, algorithms not applicable and not available for the time interested, etc.)
 - C++: Better and more use move semantics, noexcept, etc.
-- Many others...
+- Revise APIs:
+  - Body:
+    - Earth, Sun, Moon, ...
+  - Astrometric:
+    - Input:
+      - Observer
+        - Input
+          - Earth?
+          - (Optional) Topocentric
+          - Accuracy Required: Low, Medium, High, ...
+          - at.(time)
+          - observe.(object)
+        - Output
+          - Compute: Nutation: Longitude, Obliquity
+          - Obliquity: Mean, True
+    - Output:
+      - Geocentric: Longitude, Latitude
+      - Apparent: Longitude, Latitude, Right Ascension, Declination
+      - Rising, Setting, Twilight
+  - Combination / Almanac:
+    - Moon Phase: Illuminated Fraction of the Moon's Disk
+    - Eclipse
+    - Equation of Time
+  - Units
+    - AU
+    - TT <-> UT
 
 ## Main References
 
