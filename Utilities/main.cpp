@@ -1,3 +1,4 @@
+#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -10,6 +11,9 @@
 #define FILENAME_IAU2000B        \
   (std::string(getenv("HOME")) + \
    "/utils/Nutation/Nutation_IAU_2000B_Raw_Data.txt")
+
+#define DIRECTORY_ELPMPP02 \
+  (std::string(getenv("HOME")) + "/utils/2_lunar_solutions/2_elpmpp02/")
 
 bool process_vsop87() {
   std::cout << "Processing VSOP87 files..." << std::endl;
@@ -177,9 +181,132 @@ bool process_iau2000b() {
   return true;
 }
 
+bool process_elpmpp02() {
+  std::cout << "Processing ELPMPP02 file..." << std::endl;
+
+  std::ofstream outfile{"/tmp/elpmpp02_internal.dat"};
+
+  for (int i = 1; i <= 3; i++) {
+    std::string in_filename{DIRECTORY_ELPMPP02};
+    in_filename += "ELP_MAIN.S" + std::to_string(i);
+    std::ifstream infile{in_filename};
+    if (!infile) {
+      std::cout << "ERROR opening " << in_filename << "!" << std::endl;
+      return false;
+    }
+
+    std::string line;
+
+    std::getline(infile, line);
+    if (infile.eof() || (line[0] == '\0')) {
+      std::cout << "ERROR abnormally short file!" << std::endl;
+      return false;
+    }
+    int num_terms;
+    num_terms = std::stoi(line.substr(30, 5));
+
+    std::string suffix{(i <= 2) ? "_arcsec" : ""};
+
+    outfile << "static constexpr struct PeriodicTerm ";
+    outfile << "elp_main_s" << i << "[" << num_terms << "]{" << std::endl;
+    for (int k = 0; k < num_terms; k++) {
+      std::getline(infile, line);
+      if (infile.eof() || (line[0] == '\0')) {
+        std::cout << "ERROR abnormally short file!" << std::endl;
+        return false;
+      }
+
+      int cols[] = {0, 3, 6, 9, 12, 14, 27, 39, 51, 63, 75, 87, 99};
+      std::string cols_strs[12];
+      for (int i = 0; i < 11; i++) {
+        cols_strs[i] = line.substr(cols[i], cols[i + 1] - cols[i]);
+      }
+
+      outfile << "  { ";
+      for (int i = 0; i < 4; i++) {
+        outfile << cols_strs[i] << ", ";
+      }
+      assert(cols_strs[4] == "  ");
+      for (int i = 5; i < 11; i++) {
+        outfile << cols_strs[i] << suffix << ", ";
+      }
+      outfile << cols_strs[11] << suffix << " ";
+      outfile << "}," << std::endl;
+    }
+    outfile << "};" << std::endl;
+
+    infile.close();
+  }
+
+  for (int i = 1; i <= 3; i++) {
+    std::string in_filename{DIRECTORY_ELPMPP02};
+    in_filename += "ELP_PERT.S" + std::to_string(i);
+    std::ifstream infile{in_filename};
+    if (!infile) {
+      std::cout << "ERROR opening " << in_filename << "!" << std::endl;
+      return false;
+    }
+
+    std::string line;
+
+    outfile << "static constexpr struct PeriodicTerm ";
+    outfile << "elp_pert_s" << i << "[4]{" << std::endl;
+    for (int n = 0; n < 4; n++) {
+      std::getline(infile, line);
+      if (infile.eof() || (line[0] == '\0')) {
+        std::cout << "ERROR abnormally short file!" << std::endl;
+        return false;
+      }
+      int num_terms;
+      num_terms = std::stoi(line.substr(30, 5));
+
+      std::string suffix{(i <= 2) ? "_arcsec" : ""};
+
+      outfile << "  {" << std::endl;
+      for (int k = 0; k < num_terms; k++) {
+        std::getline(infile, line);
+        if (infile.eof() || (line[0] == '\0')) {
+          std::cout << "ERROR abnormally short file!" << std::endl;
+          return false;
+        }
+
+        int cols[] = {
+            0,  5,  21, 22, 25, 41, 42, 45, 48, 51, 54, 57,
+            60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93,
+        };
+        std::string cols_strs[23];
+        for (int i = 0; i < 23; i++) {
+          cols_strs[i] = line.substr(cols[i], cols[i + 1] - cols[i]);
+        }
+
+        outfile << "    { ";
+        outfile << cols_strs[1] << "E" << cols_strs[3] << ", ";
+        outfile << cols_strs[4] << "E" << cols_strs[6] << ", ";
+        for (int i = 7; i < 19; i++) {
+          outfile << cols_strs[i] << ", ";
+        }
+        outfile << cols_strs[19] << " ";
+        assert(cols_strs[20] == "  0");
+        assert(cols_strs[21] == "  0");
+        assert(cols_strs[22] == "  0");
+        outfile << "}," << std::endl;
+      }
+      outfile << "  }," << std::endl;
+    }
+    outfile << "};" << std::endl;
+
+    infile.close();
+  }
+
+  outfile.close();
+
+  return true;
+}
+
 int main(void) {
   process_vsop87();
   process_iau1980();
   process_iau2000b();
+  process_elpmpp02();
   return 0;
 }
