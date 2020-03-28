@@ -26,7 +26,7 @@ class Moon {
   double distance_km_{0.0};
 
   constexpr void ComputeApparentPosition(
-      const EarthNutation& earth_nutation) noexcept;
+      const EarthNutationOld& earth_nutation) noexcept;
   constexpr void ComputeApparentPosition() noexcept;
   bool apparent_position_is_valid_{false};
   double apparent_longitude_{0.0};
@@ -79,7 +79,7 @@ constexpr void Moon::ComputeGeocentricPosition() noexcept {
 }
 
 constexpr void Moon::ComputeApparentPosition(
-    const EarthNutation& earth_nutation) noexcept {
+    const EarthNutationOld& earth_nutation) noexcept {
   // [Jean99] p.343
   // [Jean99] p.337: ?? The effect of aberration has been accounted for?
   // (-0.70")
@@ -94,7 +94,7 @@ constexpr void Moon::ComputeApparentPosition(
 }
 
 constexpr void Moon::ComputeApparentPosition() noexcept {
-  ComputeApparentPosition(EarthNutation{julian_date_});
+  ComputeApparentPosition(EarthNutationOld{julian_date_});
 }
 
 }  // namespace PA

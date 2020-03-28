@@ -3,11 +3,11 @@
 
 #include <cmath>
 
-#include "date.h"
 #include "radian.h"
 #include "utils.h"
 
 namespace PA {
+
 class VSOP87 {
  public:
   enum class Planet {
@@ -19,16 +19,16 @@ class VSOP87 {
     kSaturn,
     kUranus,
     kNeptune,
+    kMax,
   };
 
-  constexpr VSOP87(double julian_date) noexcept : julian_date_(julian_date) {}
-
-  constexpr double GetPlanetLongitude(Planet planet) noexcept;  // in FK5
-  constexpr double GetPlanetLatitude(Planet planet) noexcept;   // in FK5
-  constexpr double GetPlanetRadiusVectorAU(Planet planet) noexcept;
+  static constexpr void Compute(double tt, Planet planet, double *p_longitude, double *p_latitude,
+                                double *radius_vector_au) noexcept;
+  static constexpr void VSOP87DFrameToFK5(double tt, double *p_longitude,
+                                          double *p_latitude) noexcept;
 
  private:
-  double julian_date_;
+  constexpr VSOP87() noexcept {}
 
 #include "vsop87_internal.dat"
 
@@ -64,27 +64,18 @@ class VSOP87 {
       [static_cast<int>(Planet::kUranus)] = uranus_r_table,
       [static_cast<int>(Planet::kNeptune)] = neptune_r_table,
   };
-
-  constexpr void ComputePlanetPosition(Planet planet) noexcept;
-
-  bool planet_position_valid_[8]{false};
-  double planet_longitude_[8]{0.0};
-  double planet_latitude_[8]{0.0};
-  double planet_radius_vector_au_[8]{0.0};
-
-  static inline void ProcessDataFiles();
 };
 
-constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept {
+constexpr void VSOP87::Compute(double tt, VSOP87::Planet planet, double *p_longitude,
+                               double *p_latitude, double *p_radius_vector_au) noexcept {
   // References:
-  // - [Jean99] Chapter 32 (Positions of Planets)
+  // - [Jean99] p.217: Chapter 32 (Positions of Planets)
   // - [Jean99] Chapter 25 (Solar Coordinates)
-  // - [Jean99] Appendix III (Planets: Periodic Terms)
+  // - [Jean99] p.413: Appendix III (Planets: Periodic Terms)
   // - ftp://ftp.imcce.fr/pub/ephem/planets/vsop87
   // - http://neoprogrammics.com/vsop87/
 
-  double t{(julian_date_ - EpochJ2000) / 36525.0};
-  double tau{t / 10.0};
+  double tau{(tt - EpochJ2000) / 365250.0};
   double longitude{0.0};
   double latitude{0.0};
   double radius_vector_au{0.0};
@@ -93,42 +84,20 @@ constexpr void VSOP87::ComputePlanetPosition(Planet planet) noexcept {
   latitude = PeriodicTermCompute(periodic_term_b_tables[static_cast<int>(planet)], tau);
   radius_vector_au = PeriodicTermCompute(periodic_term_r_tables[static_cast<int>(planet)], tau);
 
+  if (p_longitude) *p_longitude = longitude;
+  if (p_latitude) *p_latitude = latitude;
+  if (p_radius_vector_au) *p_radius_vector_au = radius_vector_au;
+}
+
+constexpr void VSOP87::VSOP87DFrameToFK5(double tt, double *p_longitude,
+                                         double *p_latitude) noexcept {
   // Conversion: Mean *dynamical* equinox and ecliptic of the date to FK5
   // - Reference [Jean99] p.219
-  double lp{longitude + (-1.397_deg - 0.00031_deg * t) * t};
-  double delta_l{-0.09033_arcsec +
-                 0.03916_arcsec * (std::cos(lp) + std::sin(lp)) * std::tan(latitude)};
-  double delta_b{0.03916_arcsec * (std::cos(lp) - std::sin(lp))};
-
-  longitude += delta_l;
-  latitude += delta_b;
-
-  planet_longitude_[static_cast<int>(planet)] = RadUnwind(longitude);
-  planet_latitude_[static_cast<int>(planet)] = RadNormalize(latitude);
-  planet_radius_vector_au_[static_cast<int>(planet)] = radius_vector_au;
-
-  planet_position_valid_[static_cast<int>(planet)] = true;
-}
-
-constexpr double VSOP87::GetPlanetLongitude(Planet planet) noexcept {
-  if (!planet_position_valid_[static_cast<int>(planet)]) {
-    ComputePlanetPosition(planet);
-  }
-  return planet_longitude_[static_cast<int>(planet)];
-}
-
-constexpr double VSOP87::GetPlanetLatitude(Planet planet) noexcept {
-  if (!planet_position_valid_[static_cast<int>(planet)]) {
-    ComputePlanetPosition(planet);
-  }
-  return planet_latitude_[static_cast<int>(planet)];
-}
-
-constexpr double VSOP87::GetPlanetRadiusVectorAU(Planet planet) noexcept {
-  if (!planet_position_valid_[static_cast<int>(planet)]) {
-    ComputePlanetPosition(planet);
-  }
-  return planet_radius_vector_au_[static_cast<int>(planet)];
+  double t{(tt - EpochJ2000) / 36525.0};
+  double lp{*p_longitude + (-1.397_deg - 0.00031_deg * t) * t};
+  *p_longitude +=
+      -0.09033_arcsec + 0.03916_arcsec * (std::cos(lp) + std::sin(lp)) * std::tan(*p_latitude);
+  *p_latitude += 0.03916_arcsec * (std::cos(lp) - std::sin(lp));
 }
 
 }  // namespace PA

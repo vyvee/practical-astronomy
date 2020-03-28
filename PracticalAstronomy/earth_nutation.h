@@ -1,70 +1,42 @@
 #ifndef EARTH_NUTATION_H_
 #define EARTH_NUTATION_H_
 
-// - IAU 2000B Nutation Model
-//   - Accuracy: <= 0.001" difference with respect to IAU2000A model
-//     during 1995-2050
-//
-// Comparison:
-// - IAU 2000A Nutation Model
-//   - Accuracy: 0.0002"
-
 #include "radian.h"
 #include "utils.h"
 
 namespace PA {
+
 class EarthNutation {
  public:
-  constexpr EarthNutation(double jd) noexcept : julian_date_(jd) {}
+  static constexpr void ComputeNutationIAU1980MeeusTruncated(
+      double tt, double *p_longitude, double *p_obliquity) noexcept;
+  static constexpr void ComputeNutationIAU1980(double tt, double *p_longitude,
+                                               double *p_obliquity) noexcept;
+  static constexpr void ComputeNutationIAU2000B(double tt, double *p_longitude,
+                                                double *p_obliquity) noexcept;
 
-  constexpr double GetNutationLongitude() const noexcept;
-  constexpr double GetNutationObliquity() const noexcept;
-
- private:
-  double julian_date_;
-
-  constexpr void ComputeNutationLowAccuracy() const noexcept;
-  constexpr void ComputeNutationIAU1980() const noexcept;
-  constexpr void ComputeNutationIAU2000B() const noexcept;
-  constexpr void ComputeNutation() const noexcept;
-  mutable bool nutation_is_valid_{false};
-  mutable double nutation_longitude_{0.0};
-  mutable double nutation_obliquity_{0.0};
+ protected:
+  constexpr EarthNutation() noexcept {}
 };
 
-constexpr double EarthNutation::GetNutationLongitude() const noexcept {
-  if (!nutation_is_valid_) {
-    ComputeNutation();
-  }
-  return nutation_longitude_;
-}
-
-constexpr double EarthNutation::GetNutationObliquity() const noexcept {
-  if (!nutation_is_valid_) {
-    ComputeNutation();
-  }
-  return nutation_obliquity_;
-}
-
-constexpr void EarthNutation::ComputeNutationLowAccuracy() const noexcept {
-  // Low Accuracy
+constexpr void EarthNutation::ComputeNutationIAU1980MeeusTruncated(
+    double tt, double *p_longitude, double *p_obliquity) noexcept {
   // Accuracy: 0".5 in longitude, 0."1 in obliquity
   // - [Jean99] Chapter, p.143
-  double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
+  double t{(tt - PA::EpochJ2000) / 36525.0};
   double om{125.04452_deg - 1934.136261_deg * t};
   double l{280.4665_deg + 36000.7698_deg * t};
   double lm{218.3165_deg + 481267.8813_deg * t};
 
-  nutation_longitude_ =
-      -17.20_arcsec * std::sin(om) - 1.32_arcsec * std::sin(2 * l) -
-      0.23_arcsec * std::sin(2 * lm) + 0.21_arcsec * std::sin(2 * om);
-  nutation_obliquity_ =
-      9.20_arcsec * std::cos(om) + 0.57_arcsec * std::cos(2 * l) +
-      0.10_arcsec * std::cos(2 * lm) - 0.09_arcsec * cos(2 * om);
-  nutation_is_valid_ = true;
+  *p_longitude = -17.20_arcsec * std::sin(om) - 1.32_arcsec * std::sin(2 * l) -
+                 0.23_arcsec * std::sin(2 * lm) +
+                 0.21_arcsec * std::sin(2 * om);
+  *p_obliquity = 9.20_arcsec * std::cos(om) + 0.57_arcsec * std::cos(2 * l) +
+                 0.10_arcsec * std::cos(2 * lm) - 0.09_arcsec * cos(2 * om);
 }
 
-constexpr void EarthNutation::ComputeNutationIAU1980() const noexcept {
+constexpr void EarthNutation::ComputeNutationIAU1980(
+    double tt, double *p_longitude, double *p_obliquity) noexcept {
   // IAU 1980 Nutation Model
   // Accuracy: 0.002"
   // References:
@@ -195,7 +167,7 @@ constexpr void EarthNutation::ComputeNutationIAU1980() const noexcept {
       {0, 1, 0, 1, 0, 1.0_arcsec, 0.0_arcsec, 0.0_arcsec, 0.0_arcsec},
   };
 
-  double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
+  double t{(tt - PA::EpochJ2000) / 36525.0};
   double lm{
       horner_polynomial({134_deg + 57_arcmin + 46.733_arcsec,
                          1325 * 360_deg + 198_deg + 52_arcmin + 2.633_arcsec,
@@ -222,21 +194,23 @@ constexpr void EarthNutation::ComputeNutationIAU1980() const noexcept {
 
   double sum_dpsi{0.0};
   double sum_deps{0.0};
-  for (auto& pt : periodic_terms) {
+  for (auto &pt : periodic_terms) {
     double arg{lm * pt.lm + ls * pt.ls + f * pt.f + d * pt.d + om * pt.om};
     double dpsi{(pt.psi_sin + pt.psi_t_sin * t) * std::sin(arg)};
     double deps{(pt.eps_cos + pt.eps_t_cos * t) * std::cos(arg)};
     sum_dpsi += dpsi;
     sum_deps += deps;
   }
-  nutation_longitude_ = sum_dpsi / 10000;
-  nutation_obliquity_ = sum_deps / 10000;
-  nutation_is_valid_ = true;
+
+  if (p_longitude) *p_longitude = sum_dpsi / 10000;
+  if (p_obliquity) *p_obliquity = sum_deps / 10000;
 }
 
-constexpr void EarthNutation::ComputeNutationIAU2000B() const noexcept {
+constexpr void EarthNutation::ComputeNutationIAU2000B(
+    double tt, double *p_longitude, double *p_obliquity) noexcept {
   // IAU 2000B Nutation Model
-  // Accuracy: 0.001" during 1995-2050
+  // Accuracy: <= 0.001" difference with respect to IAU2000A model during
+  //           1995-2050
   // References:
   // - http://www.neoprogrammics.com/nutations/
   // - http://www.iausofa.org/2018_0130_F/sofa/nut00b.for
@@ -245,6 +219,7 @@ constexpr void EarthNutation::ComputeNutationIAU2000B() const noexcept {
   // -
   // https://www.iers.org/SharedDocs/Publikationen/EN/IERS/Publications/tn/TechnNote29/tn29_111.pdf
   // - [Jean99] Chapter, p.143
+
   struct {
     int m1;
     int m2;
@@ -414,7 +389,7 @@ constexpr void EarthNutation::ComputeNutationIAU2000B() const noexcept {
        0_arcsec},
   };
 
-  double t{(julian_date_ - PA::EpochJ2000) / 36525.0};
+  double t{(tt - PA::EpochJ2000) / 36525.0};
   double l{
       horner_polynomial({+485868.249036_arcsec, +1717915923.2178_arcsec,
                          +31.8792_arcsec, +0.051635_arcsec, -0.00024470_arcsec},
@@ -438,22 +413,54 @@ constexpr void EarthNutation::ComputeNutationIAU2000B() const noexcept {
 
   double sum_dpsi{0.0};
   double sum_deps{0.0};
-  for (auto& pt : periodic_terms) {
+  for (auto &pt : periodic_terms) {
     double arg{l * pt.m1 + lp * pt.m2 + f * pt.m3 + d * pt.m4 + om * pt.m5};
     double dpsi{(pt.aa + pt.bb * t) * std::sin(arg) + pt.cc * std::cos(arg)};
     double deps{(pt.dd + pt.ee * t) * std::cos(arg) + pt.ff * std::sin(arg)};
     sum_dpsi += dpsi;
     sum_deps += deps;
   }
-  nutation_longitude_ = sum_dpsi / 10000000.0;
-  nutation_obliquity_ = sum_deps / 10000000.0;
-  nutation_is_valid_ = true;
+
+  if (p_longitude) *p_longitude = sum_dpsi / 10000000.0;
+  if (p_obliquity) *p_obliquity = sum_deps / 10000000.0;
 }
 
-constexpr void EarthNutation::ComputeNutation() const noexcept {
-  // ComputeNutationLowAccuracy();
-  // ComputeNutationIAU1980();
-  ComputeNutationIAU2000B();
+/*--- ??? Obsolete ---*/
+
+class EarthNutationOld {
+ public:
+  constexpr EarthNutationOld(double jd) noexcept : julian_date_(jd) {}
+
+  constexpr double GetNutationLongitude() const noexcept;
+  constexpr double GetNutationObliquity() const noexcept;
+
+ private:
+  double julian_date_;
+
+  constexpr void ComputeNutation() const noexcept;
+  mutable bool nutation_is_valid_{false};
+  mutable double nutation_longitude_{0.0};
+  mutable double nutation_obliquity_{0.0};
+};
+
+constexpr double EarthNutationOld::GetNutationLongitude() const noexcept {
+  if (!nutation_is_valid_) {
+    ComputeNutation();
+  }
+  return nutation_longitude_;
+}
+
+constexpr double EarthNutationOld::GetNutationObliquity() const noexcept {
+  if (!nutation_is_valid_) {
+    ComputeNutation();
+  }
+  return nutation_obliquity_;
+}
+
+constexpr void EarthNutationOld::ComputeNutation() const noexcept {
+  EarthNutation::ComputeNutationIAU2000B(julian_date_, &nutation_longitude_,
+                                         &nutation_obliquity_);
+  nutation_is_valid_ = true;
 }
 
 }  // namespace PA

@@ -39,9 +39,9 @@ The code is written in C++20 and currently depends on G++ extension to support d
         - Input
           - Earth?
           - (Optional) Topocentric
-          - Accuracy Required: Low, Medium, High, ...
-          - at.(time)
-          - observe.(object)
+          - Algorithm: Meeus, Low, High, ...
+          - at(time)
+          - observe(object)
         - Output
           - Compute: Nutation: Longitude, Obliquity
           - Obliquity: Mean, True

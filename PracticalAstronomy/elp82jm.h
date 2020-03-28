@@ -6,7 +6,6 @@
 //   - Moon moves about 0.5" in longitude per second, so this corresponds to
 //     about 20 seconds
 
-#include "date.h"
 #include "radian.h"
 #include "utils.h"
 

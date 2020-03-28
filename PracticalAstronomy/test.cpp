@@ -2,13 +2,11 @@
 
 #include <cmath>
 
-#include "coordinate.h"
 #include "date.h"
-#include "earth.h"
 #include "moon.h"
+#include "observer.h"
 #include "radian.h"
 #include "solver.h"
-#include "sun.h"
 
 #define VERBOSE
 
@@ -153,54 +151,48 @@ bool test_coordinate()
 }
 #endif
 
-static void test_earth() {
-  std::cout << "Earth: Nutation... ";
+static void test_nutation_obliquity() {
+  std::cout << "Earth: Nutation and Obliquity... ";
+
   {
-    Date date{1987, 4, 10};
     // [Jean99] p.148
     // https://www.erdrotation.de/sofa_001.html
-    Earth earth{date.GetJulianDate()};
-    double nutation_longitude{earth.GetNutationLongitude()};
-    double nutation_obliquity{earth.GetNutationObliquity()};
-    // Values according to IAU2000B
-    // - But in [Jean99] p.148, they are -3".788 and 9".443 according to IAU1980
-    expect_double(nutation_longitude, -3.781_arcsec, 0.0, 0.001_arcsec);
-    expect_double(nutation_obliquity, 9.445_arcsec, 0.0, 0.001_arcsec);
     // https://www.astro.com/swisseph/ae/1900/ae_1987d.pdf
-    expect_double(nutation_longitude, -4.0_arcsec, 0.0, 0.5_arcsec);
-    // expect_double(nutation_obliquity, 9.443_arcsec, 0.0, 0.003_arcsec);
-  }
-  {
-    Date date{1988, 9, 1};
-    // [Peter11] p.77
-    Earth earth{date.GetJulianDate()};
-    double nutation_longitude{earth.GetNutationLongitude()};
-    double nutation_obliquity{earth.GetNutationObliquity()};
-    expect_double(nutation_longitude, 5.1_arcsec, 0.0, 0.1_arcsec);
-    expect_double(nutation_obliquity, 9.2_arcsec, 0.0, 0.1_arcsec);
-  }
-  std::cout << "OK!" << std::endl;
+    Observer observer{Date{1987, 4, 10}.GetJulianDate()};
 
-  std::cout << "Earth: Obliquity... ";
-  {
-    Date date{1987, 4, 10.0};
-    // [Jean99] p.148
-    Earth earth{date.GetJulianDate()};
-    double obliquity_mean{earth.GetObliquityMean()};
-    expect_double(obliquity_mean, 23_deg + 26_arcmin + 27.41_arcsec, 0.0,
-                  0.01_arcsec);
-    double obliquity{earth.GetObliquity()};
-    expect_double(obliquity, 23_deg + 26_arcmin + 36.85_arcsec, 0.0,
-                  0.01_arcsec);
+    observer.SetNutationAlgorithm(
+        Observer::NutationAlgorithm::kIAU1980MeeusTruncated);
+    expect_double(observer.GetNutationLongitude(), -4.0_arcsec, 0.0, 1_arcsec);
+
+    observer.SetNutationAlgorithm(Observer::NutationAlgorithm::kIAU1980);
+    expect_double(observer.GetNutationLongitude(), -3.788_arcsec, 0.0,
+                  0.001_arcsec);
+    expect_double(observer.GetNutationObliquity(), 9.443_arcsec, 0.0,
+                  0.001_arcsec);
+    expect_double(observer.GetObliquityMean(),
+                  23_deg + 26_arcmin + 27.41_arcsec, 0.0, 0.01_arcsec);
+    expect_double(observer.GetObliquity(), 23_deg + 26_arcmin + 36.85_arcsec,
+                  0.0, 0.01_arcsec);
+
+    // However, according to IAU2000B:
+    // - Nutation Longitude: -3".781
+    // - Nutation Obliquity: 9".445
   }
+
   {
-    Date date{2018, 8, 1};
-    // https://www.astro.com/swisseph/ae/2000/ae_2018d.pdf
-    // [Peter11] p.54
-    Earth earth{date.GetJulianDate()};
-    double obliquity{earth.GetObliquity()};
-    expect_double(obliquity, 23_deg + 26_arcmin + 7_arcsec, 0.0, 1_arcsec);
+    // [Peter11] p.77
+    Observer observer{Date{1988, 9, 1}.GetJulianDate()};
+    expect_double(observer.GetNutationLongitude(), 5.1_arcsec, 0.0, 0.1_arcsec);
+    expect_double(observer.GetNutationObliquity(), 9.2_arcsec, 0.0, 0.1_arcsec);
   }
+
+  {
+    // [Peter11] pp.51-52
+    Observer observer{Date{2009, 7, 6}.GetJulianDate()};
+    expect_double(observer.GetObliquityMean(), 23_deg + 26_arcmin + 17_arcsec,
+                  0.0, 0.1_arcsec);
+  }
+
   std::cout << "OK!" << std::endl;
 }
 
@@ -209,67 +201,40 @@ static void test_sun() {
 
   {
     // [Peter11] p.105
-    Date date{2003, 7, 27.0};
-    Sun sun{date.GetJulianDate()};
-    double apparent_longitude{sun.GetApparentLongitude()};
-    double apparent_latitude{sun.GetApparentLatitude()};
-    EarthObliquity earth_obliquity{date.GetJulianDate()};
-    double obliquity{earth_obliquity.GetObliquity()};
-    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-        apparent_longitude, apparent_latitude, obliquity)};
-    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-        apparent_longitude, apparent_latitude, obliquity)};
-
-    expect_double(apparent_ra, 8.0_h + 23.0_m + 33.0_s, 0.0, 1.0_s);
-    expect_double(apparent_decl, 19.0_deg + 21.0_arcmin + 16.0_arcsec, 0.0,
-                  1.0_arcsec);
+    Observer observer{Date{2003, 7, 27.0}.GetJulianDate()};
+    expect_double(observer.GetApparentRightAscension(Observer::Body::kSun),
+                  8.0_h + 23.0_m + 33.0_s, 0.0, 1.0_s);
+    expect_double(observer.GetApparentDeclination(Observer::Body::kSun),
+                  19.0_deg + 21.0_arcmin + 16.0_arcsec, 0.0, 1.0_arcsec);
   }
 
   {
     // [Peter11] p.109
-    Date date{1988, 7, 27.0};
-    Sun sun{date.GetJulianDate()};
-    double apparent_longitude{sun.GetApparentLongitude()};
-    double apparent_latitude{sun.GetApparentLatitude()};
-    EarthObliquity earth_obliquity{date.GetJulianDate()};
-    double obliquity{earth_obliquity.GetObliquity()};
-    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-        apparent_longitude, apparent_latitude, obliquity)};
-    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-        apparent_longitude, apparent_latitude, obliquity)};
-
-    expect_double(apparent_ra, 8.0_h + 26.0_m + 3.0_s, 0.0, 1.0_s);
-    expect_double(apparent_decl, 19.0_deg + 12.0_arcmin + 52.0_arcsec, 0.0,
-                  1.0_arcsec);
+    Observer observer{Date{1988, 7, 27.0}.GetJulianDate()};
+    expect_double(observer.GetApparentRightAscension(Observer::Body::kSun),
+                  8.0_h + 26.0_m + 3.0_s, 0.0, 1.0_s);
+    expect_double(observer.GetApparentDeclination(Observer::Body::kSun),
+                  19.0_deg + 12.0_arcmin + 52.0_arcsec, 0.0, 1.0_arcsec);
   }
 
   {
     // [Jean99] p.165
     // http://www.astro.com/swisseph/ae/1900/ae_1992d.pdf
-    Date date{1992, 10, 13.0};
-    Sun sun{date.GetJulianDate()};
-    double geocentric_longitude{sun.GetGeocentricLongitude()};
-    double apparent_longitude{sun.GetApparentLongitude()};
-    double apparent_latitude{sun.GetApparentLatitude()};
-    double radius_vector{sun.GetRadiusVectorAU()};
-    EarthObliquity earth_obliquity{date.GetJulianDate()};
-    double obliquity{earth_obliquity.GetObliquity()};
-    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-        apparent_longitude, apparent_latitude, obliquity)};
-    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-        apparent_longitude, apparent_latitude, obliquity)};
-
-    expect_double(geocentric_longitude, 199.0_deg + 54.0_arcmin + 26.18_arcsec,
-                  0.0, 0.01_arcsec);
+    Observer observer{Date{1992, 10, 13.0}.GetJulianDate()};
+    expect_double(observer.GetLongitude(Observer::Body::kSun),
+                  199.0_deg + 54.0_arcmin + 26.18_arcsec, 0.0, 0.01_arcsec);
     // - With Complete VSOP87 Theory: 199d 54' 21.56"
     // - From Swiss Ephemeris: 199d 54' 21.5909"
-    expect_double(apparent_longitude, 199.0_deg + 54.0_arcmin + 21.56_arcsec,
-                  0.0, 0.01_arcsec);
-    expect_double(apparent_latitude, 0.72_arcsec, 0.0, 0.01_arcsec);
-    expect_double(radius_vector, 0.99760853, 0.0, 0.00000001);
-    expect_double(apparent_ra, 13.0_h + 13.0_m + 30.749_s, 0.0, 0.001_s);
-    expect_double(apparent_decl, -(7.0_deg + 47.0_arcmin + 01.74_arcsec), 0.0,
-                  0.01_arcsec);
+    expect_double(observer.GetApparentLongitude(Observer::Body::kSun),
+                  199.0_deg + 54.0_arcmin + 21.56_arcsec, 0.0, 0.01_arcsec);
+    expect_double(observer.GetApparentLatitude(Observer::Body::kSun),
+                  0.72_arcsec, 0.0, 0.01_arcsec);
+    expect_double(observer.GetRadiusVectorAU(Observer::Body::kSun), 0.99760853,
+                  0.0, 0.00000001);
+    expect_double(observer.GetApparentRightAscension(Observer::Body::kSun),
+                  13.0_h + 13.0_m + 30.749_s, 0.0, 0.001_s);
+    expect_double(observer.GetApparentDeclination(Observer::Body::kSun),
+                  -(7.0_deg + 47.0_arcmin + 01.74_arcsec), 0.0, 0.01_arcsec);
   }
 
   std::cout << "OK!" << std::endl;
@@ -284,7 +249,7 @@ static void test_moon() {
     Moon moon{date.GetJulianDate()};
     double apparent_longitude{moon.GetApparentLongitude()};
     double apparent_latitude{moon.GetApparentLatitude()};
-    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    EarthObliquityOld earth_obliquity{date.GetJulianDate()};
     double obliquity{earth_obliquity.GetObliquity()};
     double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
         apparent_longitude, apparent_latitude, obliquity)};
@@ -306,7 +271,7 @@ static void test_moon() {
     expect_double(apparent_latitude, -(3.0_deg + 13.0_arcmin + 45.0_arcsec),
                   0.0, 4.0_arcsec);
 
-    EarthObliquity earth_obliquity{date.GetJulianDate()};
+    EarthObliquityOld earth_obliquity{date.GetJulianDate()};
     double obliquity{earth_obliquity.GetObliquity()};
     double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
         apparent_longitude, apparent_latitude, obliquity)};
@@ -354,7 +319,8 @@ void test_internal() {
   // std::cout << RadToHMSStr(-(6_h + 59_m + 59.95_s), 1) << std::endl;
 
   test_julian_date();
-  test_earth();
+
+  test_nutation_obliquity();
   test_sun();
   test_moon();
   test_solver();
