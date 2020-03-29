@@ -1,9 +1,12 @@
 #ifndef OBSERVER_H_
 #define OBSERVER_H_
 
+#include <string>
+
 #include "coordinate.h"
 #include "earth_nutation.h"
 #include "earth_obliquity.h"
+#include "elp82jm.h"
 #include "misc.h"
 #include "sun.h"
 #include "vsop87.h"
@@ -28,6 +31,19 @@ class Observer {
     */
     kMax,
   };
+
+  /* Body Name */
+
+  static inline std::string BodyName(Body body) noexcept {
+    switch (body) {
+      case Body::kSun:
+        return std::string("Sun");
+      case Body::kMoon:
+        return std::string("Moon");
+      default:
+        return std::string("Unknown");
+    }
+  }
 
   // constexpr Observer(double tt, Body observe) noexcept
   //     : tt_(tt), observe_(observe) {
@@ -76,8 +92,8 @@ class Observer {
 
   /* Geocentric Position */
 
-  constexpr double GetLongitude(Body body) const noexcept;
-  constexpr double GetLatitude(Body body) const noexcept;
+  constexpr double GetGeocentricLongitude(Body body) const noexcept;
+  constexpr double GetGeocentricLatitude(Body body) const noexcept;
   constexpr double GetRadiusVectorAU(Body body) const noexcept;
 
   /* Abberation */
@@ -188,7 +204,10 @@ constexpr double Observer::GetObliquity() const noexcept {
   return obliquity_;
 }
 
-/* Position */
+/* Geocentric Position
+ * - [Jean99] p.217 (Positions of the Planets)
+ * - [Jean99] p.223 (Elliptic Motion)
+ */
 
 constexpr void Observer::ComputePosition(Body body) const noexcept {
   if (LookupBodyPositionIsValid(body)) return;
@@ -211,17 +230,31 @@ constexpr void Observer::ComputePosition(Body body) const noexcept {
       LookupBodyPositionSetIsValid(body, true);
     } break;
 
+    case Body::kMoon: {
+      double moon_longitude{0.0}, moon_latitude{0.0},
+          moon_radius_vector_km{0.0};
+      ELP82JM::Compute(tt_, &moon_longitude, &moon_latitude,
+                       &moon_radius_vector_km);
+      // We removed the light-time correction and moved this to the section for
+      // aberration and light-time correction
+      // - Reference: [Jean99] p.337
+      LookupBodySetLongitude(body, moon_longitude + 0.704_arcsec);
+      LookupBodySetLatitude(body, moon_latitude);
+      LookupBodySetRadiusVectorAU(body, moon_radius_vector_km / 149597870.7);
+      LookupBodyPositionSetIsValid(body, true);
+    } break;
+
     default:
       assert(0);
   }
 }
 
-constexpr double Observer::GetLongitude(Body body) const noexcept {
+constexpr double Observer::GetGeocentricLongitude(Body body) const noexcept {
   ComputePosition(body);
   return LookupBodyLongitude(body);
 }
 
-constexpr double Observer::GetLatitude(Body body) const noexcept {
+constexpr double Observer::GetGeocentricLatitude(Body body) const noexcept {
   ComputePosition(body);
   return LookupBodyLatitude(body);
 }
@@ -270,6 +303,12 @@ constexpr void Observer::LookupBodySetRadiusVectorAU(
 
 /* Aberration */
 
+// Aberration and light-time correction of Moon:
+// - https://en.wikipedia.org/wiki/New_moon
+// - http://adsabs.harvard.edu/full/1952AJ.....57...46C
+// -
+// https://books.google.com.my/books?id=uDRBAQAAIAAJ&pg=RA3-PA67&lpg=RA3-PA67&dq=aberration+of+moon&source=bl&ots=Q3Vy0DtmZv&sig=ACfU3U3gTf7paQjVNEYNwq-kPz-9YhX7RA&hl=en&sa=X&ved=2ahUKEwiz7eXVwL3oAhXbZCsKHeAXBFI4ChDoATADegQIChAB#v=onepage&q=aberration%20of%20moon&f=false
+
 constexpr double Observer::GetAberrationLongitude(Body body) const noexcept {
   switch (body) {
     case Body::kSun: {
@@ -278,15 +317,27 @@ constexpr double Observer::GetAberrationLongitude(Body body) const noexcept {
       // aberration_longitude_ = -20.4898_arcsec / radius_vector_au_;
       // aberration_latitude_ = 0.0;
       // aberration_is_valid_ = true;
-      // return AberrationLongitude(GetLongitude(body), GetLatitude(body),
-      //                            GetTT(), GetLongitude(body));
+      // return AberrationLongitude(GetGeocentricLongitude(body),
+      //                            GetGeocentricLatitude(body),
+      //                            GetTT(), GetGeocentricLongitude(body));
       // [Jean99] p.167
       // Accuracy: < 0".001
       return -0.005775518 * GetRadiusVectorAU(body) *
              Sun::GetDailyVariation(GetTT());
     };
 
+    case Body::kMoon: {
+      // We apply the light-time correction here
+      // - Reference: [Jean99] p.337
+      return -0.704_arcsec;
+    };
+
     default:
+      // Planets: [Jean99] p.223
+      // Pluto: [Jean99] p.263
+      // return AberrationLongitude(GetGeocentricLongitude(body),
+      // GetGeocentricLatitude(body), GetTT(),
+      //                            GetGeocentricLongitude(Body::kSun));
       assert(0);
       return 0.0;
   }
@@ -296,23 +347,35 @@ constexpr double Observer::GetAberrationLatitude(Body body) const noexcept {
   switch (body) {
     case Body::kSun: {
       // Should be less than 0.00001 arsec
-      return AberrationLatitude(GetLongitude(body), GetLatitude(body), GetTT(),
-                                GetLongitude(body));
+      return AberrationLatitude(GetGeocentricLongitude(body),
+                                GetGeocentricLatitude(body), GetTT(),
+                                GetGeocentricLongitude(Body::kSun));
+    };
+
+    case Body::kMoon: {
+      return 0.0;
     };
 
     default:
+      // return AberrationLatitude(GetGeocentricLongitude(body),
+      // GetGeocentricLatitude(body), GetTT(),
+      //                           GetGeocentricLongitude(Body::kSun));
       assert(0);
       return 0.0;
   }
 }
 
+/* Apparent Position
+ * - [Jean99] p.149 (Apparent Place of a Star)
+ */
+
 constexpr double Observer::GetApparentLongitude(Body body) const noexcept {
-  return GetLongitude(body) + GetNutationLongitude() +
+  return GetGeocentricLongitude(body) + GetNutationLongitude() +
          GetAberrationLongitude(body);
 }
 
 constexpr double Observer::GetApparentLatitude(Body body) const noexcept {
-  return GetLatitude(body) + GetAberrationLatitude(body);
+  return GetGeocentricLatitude(body) + GetAberrationLatitude(body);
 }
 
 constexpr double Observer::GetApparentRightAscension(Body body) const noexcept {

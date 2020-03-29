@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "date.h"
-#include "moon.h"
 #include "observer.h"
 #include "radian.h"
 #include "solver.h"
@@ -221,7 +220,7 @@ static void test_sun() {
     // [Jean99] p.165
     // http://www.astro.com/swisseph/ae/1900/ae_1992d.pdf
     Observer observer{Date{1992, 10, 13.0}.GetJulianDate()};
-    expect_double(observer.GetLongitude(Observer::Body::kSun),
+    expect_double(observer.GetGeocentricLongitude(Observer::Body::kSun),
                   199.0_deg + 54.0_arcmin + 26.18_arcsec, 0.0, 0.01_arcsec);
     // - With Complete VSOP87 Theory: 199d 54' 21.56"
     // - From Swiss Ephemeris: 199d 54' 21.5909"
@@ -245,41 +244,24 @@ static void test_moon() {
 
   {
     // [Peter11] p.166
-    Date date{2003, 9, 1.0};
-    Moon moon{date.GetJulianDate()};
-    double apparent_longitude{moon.GetApparentLongitude()};
-    double apparent_latitude{moon.GetApparentLatitude()};
-    EarthObliquityOld earth_obliquity{date.GetJulianDate()};
-    double obliquity{earth_obliquity.GetObliquity()};
-    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-        apparent_longitude, apparent_latitude, obliquity)};
-    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-        apparent_longitude, apparent_latitude, obliquity)};
-    expect_double(apparent_ra, 14.0_h + 12.0_m + 10.0_s, 0.0, 10.0_arcsec);
-    expect_double(apparent_decl, -(11.0_deg + 34.0_arcmin + 52.0_arcsec), 0.0,
-                  4.0_arcsec);
+    Observer observer{Date{2003, 9, 1.0}.GetJulianDate()};
+    expect_double(observer.GetApparentRightAscension(Observer::Body::kMoon),
+                  14.0_h + 12.0_m + 10.0_s, 0.0, 10.0_arcsec);
+    expect_double(observer.GetApparentDeclination(Observer::Body::kMoon),
+                  -(11.0_deg + 34.0_arcmin + 52.0_arcsec), 0.0, 4.0_arcsec);
   }
 
   {
     // [Jean99] p.342
-    Date date{1992, 4, 12.0};
-    Moon moon{date.GetJulianDate()};
-    double apparent_longitude{moon.GetApparentLongitude()};
-    double apparent_latitude{moon.GetApparentLatitude()};
-    expect_double(apparent_longitude, 133.0_deg + 10.0_arcmin + 0.0_arcsec, 0.0,
-                  10.0_arcsec);
-    expect_double(apparent_latitude, -(3.0_deg + 13.0_arcmin + 45.0_arcsec),
-                  0.0, 4.0_arcsec);
-
-    EarthObliquityOld earth_obliquity{date.GetJulianDate()};
-    double obliquity{earth_obliquity.GetObliquity()};
-    double apparent_ra{Coordinate::EclipticalToEquatorialRightAscension(
-        apparent_longitude, apparent_latitude, obliquity)};
-    double apparent_decl{Coordinate::EclipticalToEquatorialDeclination(
-        apparent_longitude, apparent_latitude, obliquity)};
-    expect_double(apparent_ra, 8.0_h + 58.0_m + 45.1_s, 0.0, 10.0_arcsec);
-    expect_double(apparent_decl, 13.0_deg + 46.0_arcmin + 6.0_arcsec, 0.0,
-                  4.0_arcsec);
+    Observer observer{Date{1992, 4, 12.0}.GetJulianDate()};
+    expect_double(observer.GetApparentLongitude(Observer::Body::kMoon),
+                  133.0_deg + 10.0_arcmin + 0.0_arcsec, 0.0, 10.0_arcsec);
+    expect_double(observer.GetApparentLatitude(Observer::Body::kMoon),
+                  -(3.0_deg + 13.0_arcmin + 45.0_arcsec), 0.0, 4.0_arcsec);
+    expect_double(observer.GetApparentRightAscension(Observer::Body::kMoon),
+                  8.0_h + 58.0_m + 45.1_s, 0.0, 10.0_arcsec);
+    expect_double(observer.GetApparentDeclination(Observer::Body::kMoon),
+                  13.0_deg + 46.0_arcmin + 6.0_arcsec, 0.0, 4.0_arcsec);
   }
 
   std::cout << "OK!" << std::endl;

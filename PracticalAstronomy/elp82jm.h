@@ -1,62 +1,33 @@
 #ifndef ELP82JM_H_
 #define ELP82JM_H_
 
-// - Algorithms from [Jean99], based on ELP-2000/82 lunar theory
-//   - Accuracy: Approx. 10" in longitude, 4" in latitude
-//   - Moon moves about 0.5" in longitude per second, so this corresponds to
-//     about 20 seconds
-
 #include "radian.h"
 #include "utils.h"
 
 using namespace PA;
 
+// - Algorithms from [Jean99], based on ELP-2000/82 lunar theory
+//   - Accuracy: Approx. 10" in longitude, 4" in latitude
+//   - Moon moves about 0.5" in longitude per second, so this corresponds to
+//     about 20 seconds
+
 namespace PA {
 class ELP82JM {
  public:
-  constexpr ELP82JM(double jd) noexcept : julian_date_(jd){};
-
-  constexpr double GetLongitude() noexcept;
-  constexpr double GetLatitude() noexcept;
-  // referred to the mean equinox of the date
-
-  constexpr double GetDistanceKm() noexcept;
+  static constexpr void Compute(double tt, double* p_longitude,
+                                double* p_latitude,
+                                double* p_radius_vector_km) noexcept;
 
  private:
-  double julian_date_;
-
-  constexpr void ComputePosition() noexcept;
-  bool position_is_valid_{false};
-  double longitude_{0.0};
-  double latitude_{0.0};
-  double distance_km_{0.0};
+  constexpr ELP82JM() noexcept {};
 };
 
-constexpr double ELP82JM::GetLongitude() noexcept {
-  if (!position_is_valid_) {
-    ComputePosition();
-  }
-  return longitude_;
-}
-
-constexpr double ELP82JM::GetLatitude() noexcept {
-  if (!position_is_valid_) {
-    ComputePosition();
-  }
-  return latitude_;
-}
-
-constexpr double ELP82JM::GetDistanceKm() noexcept {
-  if (!position_is_valid_) {
-    ComputePosition();
-  }
-  return distance_km_;
-}
-
-constexpr void ELP82JM::ComputePosition() noexcept {
+constexpr void ELP82JM::Compute(double tt, double* p_longitude,
+                                double* p_latitude,
+                                double* p_radius_vector_km) noexcept {
   // References:
   // - [Jean99] Chapter 47, pp.337-344
-  double t{(julian_date_ - EpochJ2000) / 36525.0};
+  double t{(tt - EpochJ2000) / 36525.0};
   // Moon's mean longitude, referred to the mean equinox of the date, and
   // including the constant term of the effect of the light-time (-0.70")
   double lp{
@@ -213,28 +184,10 @@ constexpr void ELP82JM::ComputePosition() noexcept {
     double arg{pt.d * d + pt.m * m + pt.mp * mp + pt.f * f};
     sum_b += es[pt.m] * pt.b * std::sin(arg);
   }
-  longitude_ = RadUnwind(lp + sum_l / 1000000.0);
-  latitude_ = RadNormalize(sum_b / 1000000.0);
-  distance_km_ = sum_r / 1000.0;
-#if 0
-    std::cout << std::fixed << std::setprecision(8);
-    std::cout << " t: " << t << std::endl;
-    std::cout << "lp: " << Degree(lp).GetUnwind().DegStr(8) << std::endl;
-    std::cout << " d: " << Degree(d).GetUnwind().DegStr(8) << std::endl;
-    std::cout << " m: " << Degree(m).GetUnwind().DegStr(8) << std::endl;
-    std::cout << "mp: " << Degree(mp).GetUnwind().DegStr(8) << std::endl;
-    std::cout << " f: " << Degree(f).GetUnwind().DegStr(8) << std::endl;
-    std::cout << "a1: " << Degree(a1).GetUnwind().DegStr(8) << std::endl;
-    std::cout << "a2: " << Degree(a2).GetUnwind().DegStr(8) << std::endl;
-    std::cout << "a3: " << Degree(a3).GetUnwind().DegStr(8) << std::endl;
-    std::cout << " e: " << e << std::endl;
-    std::cout << " sum_l: " << sum_l << std::endl;
-    std::cout << " sum_b: " << sum_b << std::endl;
-    std::cout << " sum_r: " << sum_r << std::endl;
-    std::cout << " lon.: " << longitude_.DegStr(8) << std::endl;
-    std::cout << " lat.: " << latitude_.DegStr(8) << std::endl;
-    std::cout << "dist.: " << distance_km_ << std::endl;
-#endif
+
+  if (p_longitude) *p_longitude = RadUnwind(lp + sum_l / 1000000.0);
+  if (p_latitude) *p_latitude = RadNormalize(sum_b / 1000000.0);
+  if (p_radius_vector_km) *p_radius_vector_km = sum_r / 1000.0;
 }
 
 }  // namespace PA
